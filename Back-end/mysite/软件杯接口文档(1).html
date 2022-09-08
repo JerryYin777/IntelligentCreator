@@ -1,0 +1,1670 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="version" content="For Json viewer">
+    <title>ApiPost接口文档</title>
+    <link href="https://img.cdn.apipost.cn/v6/docs/img/doc_favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="https://img.cdn.apipost.cn/docs/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="https://img.cdn.apipost.cn/docs/css/font-awesome-4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="https://img.cdn.apipost.cn/docs/css/github.css">
+    <script type="text/javascript"></script>
+    <script type="text/javascript" src="https://img.cdn.apipost.cn/docs/js/jquery-3.4.1.min.js"></script>
+    <script src="https://img.cdn.apipost.cn/docs/js/colResizable-1.6.min.js"></script>
+    <script type="text/javascript" src="https://img.cdn.apipost.cn/docs/js/marked.min.js"></script>
+    <script type="text/javascript" src="https://img.cdn.apipost.cn/docs/js/template-web.js"></script>
+    <script type="text/javascript" src="https://img.cdn.apipost.cn/docs/js/highlight.js"></script>
+    <script type="text/javascript" src="https://img.cdn.apipost.cn/docs/js/clipboard.min.js"></script>
+    <script type="text/javascript" src="https://img.cdn.apipost.cn/statics/libs/crypto-js/crypto-js.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="https://img.cdn.apipost.cn/docs/js/json5.min.js"></script>
+    <script type="text/javascript" src="https://img.cdn.apipost.cn/docs/js/enc.min.js"></script>
+    <script type="text/javascript" src="https://img.cdn.apipost.cn/docs/json-viewer/json-viewer.min.js"></script>
+    <script src="https://img.cdn.apipost.cn/docs/js/indent.js"></script>
+
+    <script>
+        Date.prototype.format = function (fmt) {
+            var o = {
+                "M+": this.getMonth() + 1,                 //月份
+                "d+": this.getDate(),                    //日
+                "h+": this.getHours(),                   //小时
+                "m+": this.getMinutes(),                 //分
+                "s+": this.getSeconds(),                 //秒
+                "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+                "S": this.getMilliseconds()             //毫秒
+            };
+            if (/(y+)/.test(fmt)) {
+                fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+            }
+            for (var k in o) {
+                if (new RegExp("(" + k + ")").test(fmt)) {
+                    fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+                }
+            }
+            return fmt;
+        }
+    </script>
+    <style type="text/css">
+        .preview-markdown table td {
+            position: relative;
+        }
+
+        .indent-fold {
+            border: 0;
+            background: transparent;
+            position: absolute;
+            left: -25px;
+            top: 10px;
+            font-size: 24px;
+            color: #999;
+            cursor: pointer;
+            text-align: center;
+            width: 15px;
+            height: 15px;
+            padding: 0;
+        }
+
+        .indent-fold img {
+            position: static !important;
+            transform: translateY(0);
+        }
+
+        .indent-fold.right img {
+            transform: rotate(0);
+        }
+
+        .indent-fold.down img {
+            transform: rotate(-90deg);
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://img.cdn.apipost.cn/docs/css/docs.css">
+    <link rel="stylesheet" href="https://img.cdn.apipost.cn/docs/css/v6.css">
+    <link rel="stylesheet" href="https://img.cdn.apipost.cn/docs/css/jsonview.css">
+    <style>
+       .body .box{
+            height: calc(100vh - 60px);
+        }
+
+        .JCLRgrip .JColResizer {
+            cursor: col-resize;
+        }
+
+        table tr td,
+        th {
+            text-indent: 8px;
+        }
+
+        .JColResizer>tbody>tr>td,
+        .JColResizer>tbody>tr>th {
+            overflow: visible !important;
+        }
+    </style>
+</head>
+
+<body>
+<!-- <body> -->
+<div class="body">
+    <div class="doc-head">
+        <div class="left">
+            <a href="https://www.apipost.cn/" target="_blank" title="ApiPost接口与文档管理系统">
+                <img src="https://img.cdn.apipost.cn/v6/docs/img/logov6.svg" alt="ApiPost接口与文档管理系统">
+            </a>
+        </div>
+        <div class="container">
+
+        </div>
+    </div>
+    <div class="box">
+        <div class="box-first" style="display: flex; flex-direction: column;justify-content: flex-end;">
+            <div class="sreachInput">
+                <img src="https://img.cdn.apipost.cn/v6/docs/img/search.svg" alt="">
+                <input type="text" class="search" placeholder="搜索目录/接口">
+            </div>
+            <div class="title">
+
+            </div>
+            <div class="target top" data-target_id="001">
+                <div class="globals_select"></div>
+                全局参数
+            </div>
+            <div class="new">
+
+            </div>
+            <!-- <a href="https://www.toutiao.com/i6960487351701275149/" id = "advertise" target="_blank" style="display: inline-block; width: 300px;height: 70px;background: url('https://img.cdn.apipost.cn/cdn/images/a-long-letter.svg?0424') no-repeat left"></a> -->
+            <div class="bar"></div>
+            <script type="text/html" id="template-target-sidebar-list-tpl">
+                {{each list value}}
+                <div>
+                    <div class="target {{value.target_type == 'folder' ? 'folder':'api'}}"
+                         data-type="{{value.target_type}}"
+                         data-target_id="{{value.local_target_id}}">
+                        {{if value.target_type == 'folder'}}
+                        <span>
+                       <span class="control">
+                           {{if value.children}}
+                           <div class="folder_select">
+
+                           </div>
+                           {{/if}}
+                        </span>
+                       <span>
+                         <div class="img">
+
+                         </div>
+                         {{value.name}}
+                        </span>
+                       </span>
+                        {{else}}
+                        <span>
+                         <em class="{{((value.target_type == 'doc') || (value.target_type == 'example' && value.is_doc == 1)) ? 'DOC' : value.target_type != 'example' ? value.method : value.method}}">{{(value.target_type == 'doc' || (value.target_type == 'example' && value.is_doc == '1')) ? '文本' :  value.method == 'OPTIONS' ? 'OPT' : value.method == 'DELETE' ? 'DEL' : value.method == 'UNLINK' ? 'UNLNK' : value.method == 'UNLOCK' ? 'UNLCK' : value.method == 'PROPFIND' ? 'PROP' : value.method}}</em>
+                       <span>{{value.name}}</span>
+                       </span>
+                        <span></span>
+                        {{/if}}
+                    </div>
+                    {{if value.children!=null}}
+                    {{each value.children data}}
+                    {{set a=data["index"]=3}}
+                    {{include 'list1' data}}
+                    {{/each}}
+                    {{/if}}
+                </div>
+                {{/each}}
+            </script>
+            <script type="text/html" id="list1">
+                <div>
+                    <div class="target {{target_type == 'folder' ? 'folder':'api'}}" data-type="{{target_type}}"
+                         data-target_id="{{local_target_id}}"
+                         style="padding-left:{{index * 15}}px">
+                        {{if target_type == 'folder'}}
+                        <span>
+                           <span class="control">
+                              {{if children}}
+                              <div class="folder_select">
+
+                              </div>
+                              {{/if}}
+                            </span>
+                        <span>
+                           <div class="img">
+
+                         </div>
+                          {{name}}
+                        </span>
+                       </span>
+                        {{else}}
+                        <span>
+                          <em class="{{((target_type == 'doc') || (target_type == 'example' && is_doc == 1)) ? 'DOC' : target_type != 'example' ? method : method}}">{{(target_type == 'doc' || (target_type == 'example' && is_doc == '1')) ? '文本' :  method == 'OPTIONS' ? 'OPT' : method == 'DELETE' ? 'DEL' : method == 'UNLINK' ? 'UNLNK' : method == 'UNLOCK' ? 'UNLCK' : method == 'PROPFIND' ? 'PROP' : method}}</em>
+                          <span>{{name}}</span>
+                          </span>
+                        <span></span>
+                        {{/if}}
+                    </div>
+                    {{if children!=null}}
+                    {{each children data}}
+                    {{if index}}
+                    {{set b=data.index=index+1}}
+                    {{else}}
+                    {{set c=data["index"] = 3}}
+                    {{/if}}
+                    {{include 'list1' data}}
+                    {{/each}}
+                    {{/if}}
+                </div>
+            </script>
+        </div>
+        <div class="box-third">
+            <div class=" preview-markdown">
+
+            </div>
+            <div style="width: 100%;">
+
+            </div>
+            <div class="box-nav" style="background: #fff;">
+                <ul class="api template-nav-menu">
+                    <script type="text/html" id="template-nav-menu-tpl">
+                        <!--                            {{if target_type == "api" || target_type == "folder" || (target_type == "example" && is_doc == 0) }}-->
+                        {{if request.description}}
+                        <li class="cur nav-btn" data-id="0" style="display: block"><a href="javascript:;">
+                                <img src="https://img.cdn.apipost.cn/v6/docs/img/arrow.svg" alt="">
+                                接口说明</a></li>
+                        <li class="nav-btn" data-id="1"><a href="javascript:;">
+                                <img src="https://img.cdn.apipost.cn/v6/docs/img/arrow.svg" alt="">
+                                基本信息</a></li>
+                        {{else}}
+                        <li class="nav-btn" data-id="0" style="display: none"><a href="javascript:;">
+                                <img src="https://img.cdn.apipost.cn/v6/docs/img/arrow.svg" alt="">
+                                接口说明</a></li>
+                        <li class="cur nav-btn" data-id="1"><a href="javascript:;">
+                                <img src="https://img.cdn.apipost.cn/v6/docs/img/arrow.svg" alt="">
+                                基本信息</a></li>
+                        {{/if}}
+                        <!--                            {{/if}}-->
+                        {{if request.header.parameter.length > 0 || request.query.parameter.length > 0 ||
+                        request.resful.parameter.length > 0 || request.body.parameter.length>0 || request.body.raw !=''}}
+                        <li class="nav-btn" data-id="2" style="display: block"><a href="javascript:;">
+                                <img src="https://img.cdn.apipost.cn/v6/docs/img/arrow.svg" alt="">
+                                请求参数</a></li>
+                        {{else}}
+                        <li class="nav-btn" data-id="2" style="display: none"><a href="javascript:;">
+                                <img src="https://img.cdn.apipost.cn/v6/docs/img/arrow.svg" alt="">
+                                请求参数</a></li>
+                        {{/if}}
+                        <ul>
+                            {{if request.header.parameter.length > 0}}
+                            <li class="nav-btn" data-id="3" style="display: block"><a href="javascript:;">
+                                    <img src="https://img.cdn.apipost.cn/v6/docs/img/arrow.svg" alt="">
+                                    header参数及说明</a></li>
+                            {{else}}
+                            <li class="nav-btn" data-id="3" style="display: none"><a href="javascript:;">
+                                    <img src="https://img.cdn.apipost.cn/v6/docs/img/arrow.svg" alt="">
+                                    header参数及说明</a></li>
+                            {{/if}}
+                            {{if request.query.parameter.length > 0}}
+                            <li class="nav-btn" data-id="4" style="display: block"><a href="javascript:;">
+                                    <img src="https://img.cdn.apipost.cn/v6/docs/img/arrow.svg" alt="">
+                                    query参数及说明</a></li>
+                            {{else}}
+                            <li class="nav-btn" data-id="4" style="display: none"><a href="javascript:;">
+                                    <img src="https://img.cdn.apipost.cn/v6/docs/img/arrow.svg" alt="">
+                                    query参数及说明</a></li>
+                            {{/if}}
+                            {{if request.resful.parameter.length > 0}}
+                            <li class="nav-btn" data-id="5" style="display: block"><a href="javascript:;">
+                                    <img src="https://img.cdn.apipost.cn/v6/docs/img/arrow.svg" alt="">
+                                    路径参数及说明</a></li>
+                            {{else}}
+                            <li class="nav-btn" data-id="5" style="display: none"><a href="javascript:;">
+                                    <img src="https://img.cdn.apipost.cn/v6/docs/img/arrow.svg" alt="">
+                                    路径参数及说明</a></li>
+                            {{/if}}
+
+                            {{if request?.auth?.type && request?.auth?.type != 'noauth'}}
+                            <li class="nav-btn" data-id="6" style="display: block"><a href="javascript:;">
+                                    <img src="https://img.cdn.apipost.cn/v6/docs/img/arrow.svg" alt="">
+                                    认证及说明</a></li>
+                            {{else}}
+                            <li class="nav-btn" data-id="6" style="display: none"><a href="javascript:;">
+                                    <img src="https://img.cdn.apipost.cn/v6/docs/img/arrow.svg" alt="">
+                                    认证及说明</a></li>
+                            {{/if}}
+                            {{if request.body.parameter.length>0 || request.body.raw !='' }}
+                            <li class="nav-btn" data-id="7" style="display: block"><a href="javascript:;">
+                                    <img src="https://img.cdn.apipost.cn/v6/docs/img/arrow.svg" alt="">
+                                    body参数及说明</a></li>
+                            {{else}}
+                            <li class="nav-btn" data-id="7" style="display: none"><a href="javascript:;">
+                                    <img src="https://img.cdn.apipost.cn/v6/docs/img/arrow.svg" alt="">
+                                    body参数及说明</a></li>
+                            {{/if}}
+                            <!--                        <li class="nav-btn" data-id="6"><a href="javascript:;">预执行脚本</a></li>-->
+                            <!--                        <li class="nav-btn" data-id="7"><a href="javascript:;">后执行脚本</a></li>-->
+
+                        </ul>
+                        {{if response.success.raw || response.success.parameter.length > 0 || response.error.raw ||
+                        response.error.parameter.length > 0}}
+                        <li class="nav-btn" data-id="8" style="display: block"><a href="javascript:;">
+                                <img src="https://img.cdn.apipost.cn/v6/docs/img/arrow.svg" alt="">
+                                响应示例</a></li>
+                        {{else}}
+                        <li class="nav-btn" data-id="8" style="display:none"><a href="javascript:;">
+                                <img src="https://img.cdn.apipost.cn/v6/docs/img/arrow.svg" alt="">
+                                响应示例</a></li>
+                        <!-- <ul>-->
+                        <!--                            {{if response.success.raw || response.success.parameter.length > 0}}-->
+                        <!--                            <li class="nav-btn" data-id="9"><a href="javascript:;">成功响应示例</a></li>-->
+                        <!--                            {{/if}}-->
+                        <!---->
+                        <!--                            {{if response.error.raw || response.error.parameter.length > 0}}-->
+                        <!--                            <li class="nav-btn" data-id="10"><a href="javascript:;">失败响应示例</a></li>-->
+                        <!--                            {{/if}}-->
+                        <!--                        </ul> -->
+                        {{/if}}
+                    </script>
+                </ul>
+
+                <ul class="folder">
+                    <li class="cur nav-folder-btn" data-id="0"><a href="javascript:;">
+                            <img src="https://img.cdn.apipost.cn/v6/docs/img/arrow.svg" alt="">
+                            目录说明</a></li>
+                    <li class="nav-folder-btn" data-id="1"><a href="javascript:;">
+                            <img src="https://img.cdn.apipost.cn/v6/docs/img/arrow.svg" alt="">
+                            公共参数</a></li>
+                    <ul>
+                        <li class="nav-folder-btn" data-id="2"><a href="javascript:;">
+                                <img src="https://img.cdn.apipost.cn/v6/docs/img/arrow.svg" alt="">
+                                header参数及说明</a></li>
+                        <li class="nav-folder-btn" data-id="3"><a href="javascript:;">
+                                <img src="https://img.cdn.apipost.cn/v6/docs/img/arrow.svg" alt="">
+                                query参数及说明</a></li>
+                        <li class="nav-folder-btn" data-id="4"><a href="javascript:;">
+                                <img src="https://img.cdn.apipost.cn/v6/docs/img/arrow.svg" alt="">
+                                body参数及说明</a></li>
+                        <li class="nav-folder-btn" data-id="5"><a href="javascript:;">
+                                <img src="https://img.cdn.apipost.cn/v6/docs/img/arrow.svg" alt="">
+                                认证及说明</a></li>
+                        <!-- <li class="nav-folder-btn" data-id="4"><a href="javascript:;">预执行脚本</a></li>-->
+                        <!-- <li class="nav-folder-btn" data-id="5"><a href="javascript:;">后执行脚本</a></li>-->
+                    </ul>
+                </ul>
+
+            </div>
+            <script type="text/html" id="template-example-doc-tpl">
+                <h2 class="top" style="display: block">
+                    <div style="display: flex;align-items: center;">
+                        <span>{{name}}</span>
+                        {{if target_type != 'folder'}}
+                        <!-- <button title="复制当前文档/接口数据到剪贴板" class="CopyCurrentData" data-clipboard-action="copy" data-clipboard-text="" data-target_id="{{local_target_id}}">
+                          <img src="https://img.cdn.apipost.cn/v6/docs/img/copy.svg" alt="" style="margin-right:2px">
+                          复制接口
+                          <a  style="margin-left:2px" href="https://wiki.apipost.cn/document/00091641-1e36-490d-9caf-3e47cd38bcde/0b622ce8-68c0-4a00-88ba-287bdae336ad" target="_blank" rel="noopener noreferrer">
+                            <img style="cursor: pointer;" src="https://img.cdn.apipost.cn/v6/docs/img/vars.svg"  alt="">
+                          </a>
+                        </button> -->
+                        <!-- <button class="opneApis" data-target_id="{{local_target_id}}">
+                          <img src="https://img.cdn.apipost.cn/v6/docs/img/open.svg" alt="">
+                          在工作台打开
+                        </button> -->
+                        <!-- <a href="https://wiki.apipost.cn/document/00091641-1e36-490d-9caf-3e47cd38bcde/0b622ce8-68c0-4a00-88ba-287bdae336ad" title="什么是复制接口？" target="_blank"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a> -->
+                        {{/if}}
+                    </div>
+                    <span class="metadata">创建人：{{create_users.create_user}} &nbsp;&nbsp;&nbsp;&nbsp; 最后更新：{{create_users.update_user}} &nbsp;&nbsp;&nbsp;&nbsp;更新时间：{{@dateFormat(update_dtime * 1000,'yyyy-MM-dd hh:mm:ss')}}</span>
+                </h2>
+                {{if target_type == 'folder'}}
+                <h3 class="title" style="{{request.description ? 'visibility: visible;':'visibility:hidden;height:0;margin:0;'}}" ><a href="javascript:;" class="maodian">
+                        <img src="https://img.cdn.apipost.cn/v6/docs/img/book.svg" alt="">
+                    </a> 目录说明 <i class="fa fa-angle-down"></i></h3>
+                {{if request.description}}
+                <div class="editor-preview desc markdown-section">
+                    {{@marked(request.description)}}
+                </div>
+                {{/if}}
+                {{else}}
+                <h3 class="title" style="{{request.description ? 'visibility: visible;':'visibility:hidden;height:0;margin:0;'}}" ><a href="javascript:;" class="maodian">
+                        <img src="https://img.cdn.apipost.cn/v6/docs/img/book.svg" alt="">
+                    </a> 接口说明 <i class="fa fa-angle-down"></i></h3>
+                {{if request.description}}
+                <div class="editor-preview desc markdown-section">
+                    {{@marked(request.description)}}
+                </div>
+                {{/if}}
+                {{/if}}
+                {{if (target_type == 'example' && is_doc == '0') || target_type == 'api'}}
+                <h3 class="title"><a href="javascript:;" class="maodian">
+                        <img src="https://img.cdn.apipost.cn/v6/docs/img/info.svg" alt="">
+                    </a> 基本信息 <i class="fa fa-angle-down"></i></h3>
+                <ul class="editor-preview-info">
+                    <li><strong>接口状态：</strong> <code class="span" style="color: {{markColor}};">{{markName}}</code></li>
+                    <li><strong>接口URL：</strong> <code class="span">{{request.url ? request.url : 'url为空...'}}</code>
+                    </li>
+                    <li><strong>请求方式：</strong> <code class="span">{{method}}</code></li>
+                    <li><strong>Content-Type：</strong> <code class="span">{{request.body.mode}}</code></li>
+                </ul>
+
+                <h3 class="title" style="{{request.header.parameter.length > 0 || request.query.parameter.length > 0 || request.resful.parameter.length > 0 || request.body.parameter.length>0 ||request.body.raw !='' || (request?.auth?.type && request?.auth?.type != 'noauth') ? 'visibility:visible':'visibility:hidden;height:0;margin:0;'}}"><a href="javascript:;" class="maodian">
+                        <img src="https://img.cdn.apipost.cn/v6/docs/img/globals.svg" alt="">
+                    </a> 请求参数 <i class="fa fa-angle-down"></i></h3>
+                {{if request.header.parameter.length > 0 || request.query.parameter.length > 0 || request.resful.parameter.length > 0 || request.body.parameter.length>0 ||request.body.raw !='' || (request?.auth?.type && request?.auth?.type != 'noauth')}}
+                <div class="markdown-request">
+                    <h4 class="title" style="{{request.header.parameter.length > 0? 'visibility:visible':'visibility:hidden;height:0;margin:0;'}}"><a href="javascript:;" class="maodian"></a> Header参数及说明</h4>
+                    {{if request.header.parameter.length > 0}}
+                    <div>
+                        <table>
+                            <tr>
+                                <th>参数名</th>
+                                <th>示例值</th>
+                                <th>参数类型</th>
+                                <th>是否必填</th>
+                                <th>参数描述</th>
+                            </tr>
+                            {{each request.header.parameter item}}
+                            {{if item.key}}
+                            <tr>
+                                <td>
+                                    {{if item.key_var}}
+                                    {{item.key_var}}
+                                    <img src="https://img.cdn.apipost.cn/v6/docs/img/vars.svg" alt="">
+                                    <div class="vars_title">
+                                        变量{{item.key}} 生成
+                                    </div>
+                                    {{else}}
+                                    {{item.key}}
+                                    {{/if}}
+                                </td>
+                                <td>
+                                    {{if item.value_var}}
+                                    {{item.value_var}}
+                                    <img src="https://img.cdn.apipost.cn/v6/docs/img/vars.svg" alt="">
+                                    <div class="vars_title">
+                                        变量{{item.value}} 生成
+                                    </div>
+                                    {{else}}
+                                    {{item.value == '' ? '-' : item.value }}
+                                    {{/if}}
+                                </td>
+                                <td>{{item.field_type == "" || item.field_type == "[]"? (typeof item.value) :
+                                    item.field_type}}
+                                </td>
+                                <td>{{item.not_null == "1" ? '是' : '否'}}</td>
+                                <td><pre>{{item.description == '' ? '-' : item.description }}</pre></td>
+                            </tr>
+                            {{/if}}
+                            {{/each}}
+                        </table>
+                    </div>
+                    {{/if}}
+
+                    <h4 class="title" style="{{request.query.parameter.length > 0 ? 'visibility:visible':'visibility:hidden;height:0;margin:0;'}}"><a href="javascript:;" class="maodian"></a> Query参数及说明</h4>
+                    {{if request.query.parameter.length > 0}}
+                    <div>
+                        <table>
+                            <tr>
+                                <th>参数名</th>
+                                <th>示例值</th>
+                                <th>参数类型</th>
+                                <th>是否必填</th>
+                                <th>参数描述</th>
+                            </tr>
+
+                            {{each request.query.parameter item}}
+                            {{if item.key}}
+                            <tr>
+                                <td>
+                                    {{if item.key_var}}
+                                    {{item.key_var}}
+                                    <img src="https://img.cdn.apipost.cn/v6/docs/img/vars.svg" alt="">
+                                    <div class="vars_title">
+                                        变量{{item.key}} 生成
+                                    </div>
+                                    {{else}}
+                                    {{item.key}}
+                                    {{/if}}
+                                </td>
+                                <td>
+                                    {{if item.value_var}}
+                                    {{item.value_var}}
+                                    <img src="https://img.cdn.apipost.cn/v6/docs/img/vars.svg" alt="">
+                                    <div class="vars_title">
+                                        变量{{item.value}} 生成
+                                    </div>
+                                    {{else}}
+                                    {{item.value == '' ? '-' : item.value }}
+                                    {{/if}}
+                                </td>
+                                <td>{{item.field_type == "" || item.field_type == "[]"? (typeof item.value) :
+                                    item.field_type}}
+                                </td>
+                                <td>{{item.not_null == "1" ? '是' : '否'}}</td>
+                                <td><pre>{{item.description == '' ? '-' : item.description }}</pre></td>
+                            </tr>
+                            {{/if}}
+                            {{/each}}
+                        </table>
+                    </div>
+                    {{/if}}
+
+                    <h4 class="title" style="{{request.resful.parameter.length ? 'visibility:visible':'visibility:hidden;height:0;margin:0;'}}"><a href="javascript:;" class="maodian"></a> 路径参数及说明</h4>
+                    {{if request.resful.parameter.length > 0}}
+                    <div>
+                        <table>
+                            <tr>
+                                <th>参数名</th>
+                                <th>示例值</th>
+                                <!--
+                                <th>参数类型</th>
+                                <th>是否必填</th>
+                                -->
+                                <th>参数描述</th>
+                            </tr>
+
+                            {{each request.resful.parameter item}}
+                            {{if item.key}}
+                            <tr>
+                                <td>
+                                    {{if item.key_var}}
+                                    {{item.key_var}}
+                                    <img src="https://img.cdn.apipost.cn/v6/docs/img/vars.svg" alt="">
+                                    <div class="vars_title">
+                                        变量{{item.key}} 生成
+                                    </div>
+                                    {{else}}
+                                    {{item.key}}
+                                    {{/if}}
+                                </td>
+                                <td>
+                                    {{if item.value_var}}
+                                    {{item.value_var}}
+                                    <img src="https://img.cdn.apipost.cn/v6/docs/img/vars.svg" alt="">
+                                    <div class="vars_title">
+                                        变量{{item.value}} 生成
+                                    </div>
+                                    {{else}}
+                                    {{item.value == '' ? '-' : item.value }}
+                                    {{/if}}
+                                </td>
+                                <!--
+                                <td>{{item.field_type == "" || item.field_type == "[]"? (typeof item.value) :
+                                    item.field_type}}
+                                </td>
+                                <td>{{item.not_null == "1" ? '是' : '否'}}</td>
+                                -->
+                                <td><pre>{{item.description == '' ? '-' : item.description }}</pre></td>
+                            </tr>
+                            {{/if}}
+                            {{/each}}
+                        </table>
+                    </div>
+                    {{/if}}
+
+                    <h4 class="title" style="{{ request?.auth.type && request?.auth.type != 'noauth' ? 'visibility:visible':'visibility:hidden;height:0;margin:0;'}}"><a href="javascript:;" class="maodian"></a> 认证及说明</h4>
+                    {{if request?.auth.type && request?.auth.type != 'noauth'}}
+                    <div>
+                        {{if request?.auth?.type == 'kv'}}
+                        <table class="auth">
+                            <tr>
+                                <td>认证类型：私密键值对</td>
+                                <td> 键： {{request?.auth?.kv?.key}}</td>
+                                <td> 值：{{request?.auth?.kv?.value}}</td>
+                            </tr>
+                        </table>
+                        {{/if}}
+                        {{if request.auth.type == 'basic'}}
+                        <table class="auth">
+                            <tr>
+                                <td>认证类型：Basic auth认证</td>
+                                <td>用户名： {{request?.auth?.basic?.username}}</td>
+                                <td>密码： {{request?.auth?.basic?.password}}</td>
+                            </tr>
+                        </table>
+                        {{/if}}
+                        {{if request?.auth?.type == 'bearer'}}
+                        <table class="auth">
+                            <tr>
+                                <td>认证类型：Bearer auth认证</td>
+                                <td>Token：{{request?.auth?.bearer?.key}}</td>
+                            </tr>
+                        </table>
+                        {{/if}}
+                    </div>
+                    {{/if}}
+
+                    <h4 class="title" style="{{request.body.parameter.length > 0 || request.body.raw !='' ? 'visibility:visible':'visibility:hidden;height:0;margin:0;'}}"><a href="javascript:;" class="maodian"></a> body参数及说明</h4>
+                    {{if request.body.parameter.length>0 ||request.body.raw !='' }}
+                    {{if request.body.mode == 'form-data' || request.body.mode == 'multipart/form-data' ||
+                    request.body.mode =='application/x-www-form-urlencoded' || request.body.mode=="urlencoded"}}
+                    <div>
+                        <table>
+                            <tr>
+                                <th>参数名</th>
+                                <th>示例值</th>
+                                <th>参数类型</th>
+                                <th>是否必填</th>
+                                <th>参数描述</th>
+                            </tr>
+                            {{if request.body.parameter.length > 0}}
+                            {{each request.body.parameter item}}
+                            {{if item.key}}
+                            <tr>
+                                <td>
+                                    {{if item.key_var}}
+                                    {{item.key_var}}
+                                    <img src="https://img.cdn.apipost.cn/v6/docs/img/vars.svg" alt="">
+                                    <div class="vars_title">
+                                        变量{{item.key}} 生成
+                                    </div>
+                                    {{else}}
+                                    {{item.key}}
+                                    {{/if}}
+                                </td>
+                                <td>
+                                    {{if item.value_var}}
+                                    {{item.value_var}}
+                                    <img src="https://img.cdn.apipost.cn/v6/docs/img/vars.svg" alt="">
+                                    <div class="vars_title">
+                                        变量{{item.value}} 生成
+                                    </div>
+                                    {{else}}
+                                    {{item.value == '' ? '-' : item.value }}
+                                    {{/if}}
+                                </td>
+                                <td>{{item.field_type == "" || item.field_type == "[]"? (typeof item.value) :
+                                    item.field_type}}
+                                </td>
+                                <td>{{item.not_null == "1" ? '是' : '否'}}</td>
+                                <td><pre>{{item.description == '' ? '-' : item.description }}</pre></td>
+                            </tr>
+                            {{/if}}
+                            {{/each}}
+                            {{else}}
+                            <tr>
+                                <td colspan="5" style="text-align:center">暂无数据</td>
+                            </tr>
+                            {{/if}}
+                        </table>
+                    </div>
+                    {{else}}
+                    <div class="editor-preview">
+                        <input type="hidden" id="request_body_raw_editor_input" value="{{request.body.raw}}">
+                        <pre id="request_body_raw_editor_json"><code class="hljs json">{{request.body.raw}}</code></pre>
+
+                        <!-- <pre><code class="hljs json">{{request.body.raw}}</code></pre> -->
+                    </div>
+                    {{if request.body.raw_para.length > 0}}
+                    <h4><a href="javascript:;" class="maodian"></a> 字段描述</h4>
+                    <table>
+                        <tr>
+                            <th>参数名</th>
+                            <th>示例值</th>
+                            <th>参数类型</th>
+                            <!-- <th>是否必填</th> -->
+                            <th>参数描述</th>
+                        </tr>
+                        {{each request.body.raw_para item}}
+                        {{if item.key}}
+                        <tr>
+                            <td>{{@keyFormat(item.key)}}</td>
+                            <td>{{item.value == '' ? '-' : item.value }}</td>
+                            <td>{{item.field_type}}</td>
+                            <!-- <td>{{item.not_null == "1" ? '是' : '否'}}</td> -->
+                            <td><pre>{{item.description == '' ? '-' : item.description }}</pre></td>
+                        </tr>
+                        {{/if}}
+                        {{/each}}
+                    </table>
+                    {{/if}}
+                    {{/if}}
+                    <!--                    {{if request.event.pre_script != ''}}-->
+                    <!--                    <h4 class="title"><a href="javascript:;" class="maodian"></a> 预执行脚本</h4>-->
+                    <!--                    <div class="editor-preview">-->
+                    <!--                        <pre><code class="hljs">{{request.event.pre_script}}</code></pre>-->
+                    <!--                    </div>-->
+                    <!--                    {{/if}}-->
+                    <!--                    {{if request.event.test != ''}}-->
+                    <!--                    <h4 class="title"><a href="javascript:;" class="maodian"></a> 后执行脚本</h4>-->
+                    <!--                    <div class="editor-preview">-->
+                    <!--                        <pre><code class="hljs">{{request.event.test}}</code></pre>-->
+                    <!--                    </div>-->
+                    <!--                    {{/if}}-->
+
+                    {{/if}}
+                </div>
+                {{/if}}
+                <!--respond-->
+
+                <h3 class="title" style="{{response.success.raw || response.success.parameter.length > 0 || response.error.raw || response.error.parameter.length > 0 ? 'visibility: visible;':'visibility: hidden'}}"><a href="javascript:;" class="maodian">
+                        <img src="https://img.cdn.apipost.cn/v6/docs/img/globals.svg" alt="">
+                    </a> 响应示例<i class="fa fa-angle-down"></i></h3>
+                {{if response.success.raw || response.success.parameter.length > 0 || response.error.raw || response.error.parameter.length > 0}}
+                <div class="markdown-response">
+                    {{if response.success.raw || response.success.parameter.length > 0}}
+                    <h4 ><a href="javascript:;" class="maodian"></a> 成功响应示例</h4>
+                    <div class="editor-preview">
+                        <input type="hidden" id="response_success_editor_input" value="{{response.success.raw}}">
+                        <pre id="response_success_editor_json"><code class=" json">{{response.success.raw}}</code></pre>
+                    </div>
+                    {{if response.success.parameter.length > 0}}
+                    <h4><a href="javascript:;" class="maodian"></a> 字段描述</h4>
+                    <table class="response-parameter">
+                        <tr>
+                            <th>参数名</th>
+                            <th>示例值</th>
+                            <th>参数类型</th>
+                            <th>参数描述</th>
+                        </tr>
+                        {{each response.success.parameter item}}
+                        <tr>
+                            <td>{{@keyFormat(item.key)}}</td>
+                            <td>{{item.value == '' ? '-' : item.value }}</td>
+                            <td>{{item.field_type}}</td>
+                            <td><pre>{{item.description == '' ? '-' : item.description }}</pre></td>
+                        </tr>
+                        {{/each}}
+                    </table>
+                    {{/if}}
+                    {{/if}}
+                    {{if response.error.raw || response.error.parameter.length > 0}}
+                    <h4 ><a href="javascript:;" class="maodian"></a> 失败响应示例</h4>
+                    <div class="editor-preview">
+                        <input type="hidden" id="response_error_editor_input" value="{{response.error.raw}}">
+                        <pre id="response_error_editor_json">
+                            <code class="hljs json">{{response.error.raw}}</code>
+                        </pre>
+                    </div>
+                    {{if response.error.parameter.length > 0}}
+                    <h4><a href="javascript:;" class="maodian"></a> 字段描述</h4>
+                    <table class="response-parameter">
+                        <tr>
+                            <th>参数名</th>
+                            <th>示例值</th>
+                            <th>参数类型</th>
+                            <th>参数描述</th>
+                        </tr>
+                        {{each response.error.parameter item}}
+                        <tr>
+                            <td>{{@keyFormat(item.key)}}</td>
+                            <td>{{item.value == '' ? '-' : item.value }}</td>
+                            <td>{{item.field_type}}</td>
+                            <td><pre>{{item.description == '' ? '-' : item.description }}</pre></td>
+                        </tr>
+                        {{/each}}
+                    </table>
+                    {{/if}}
+                    {{/if}}
+                </div>
+                {{/if}}
+                {{else if target_type == 'folder'}}
+                <h3 class="title"><a href="javascript:;" class="maodian">
+                        <img src="https://img.cdn.apipost.cn/v6/docs/img/globals.svg" alt="">
+                    </a>公共参数<i class="fa fa-angle-down"></i></h3>
+                <div class="markdown-request">
+                    <h4 class="title" style="{{ request.header.length > 0 ?'visibility:visible':'visibility:hidden;height:0;margin:0;'}}"><a href="javascript:;" class="maodian"></a> Header参数及说明</h4>
+                    {{if request.header.length > 0}}
+                    <div>
+                        <table class="header">
+                            <tr>
+                                <th>参数名</th>
+                                <th>示例值</th>
+                                <!-- <th>参数类型</th> -->
+                                <th>参数描述</th>
+                            </tr>
+                            {{each request.header item}}
+                            {{if item.key}}
+                            <tr>
+                                <td>
+                                    {{if item.key_var}}
+                                    {{item.key_var}}
+                                    <img src="https://img.cdn.apipost.cn/v6/docs/img/vars.svg" alt="">
+                                    <div class="vars_title">
+                                        变量{{item.key}} 生成
+                                    </div>
+                                    {{else}}
+                                    {{item.key}}
+                                    {{/if}}
+                                </td>
+                                <td>
+                                    {{if item.value_var}}
+                                    {{item.value_var}}
+                                    <img src="https://img.cdn.apipost.cn/v6/docs/img/vars.svg" alt="">
+                                    <div class="vars_title">
+                                        变量{{item.value}} 生成
+                                    </div>
+                                    {{else}}
+                                    {{item.value == '' ? '-' : item.value}}
+                                    {{/if}}
+                                </td>
+                                <!-- <td>{{item.field_type == "" || item.field_type == "[]"? (typeof item.value) :
+                                    item.field_type}}
+                                </td> -->
+                                <td><pre>{{item.description == '' ? '-' : item.description }}</pre></td>
+                            </tr>
+                            {{/if}}
+                            {{/each}}
+                        </table>
+                    </div>
+                    {{/if}}
+                    <h4 class="title" style="{{ request.query.length > 0 ?'visibility:visible':'visibility:hidden;height:0;margin:0;'}}"><a href="javascript:;" class="maodian"></a> Query参数及说明</h4>
+                    {{if request.query.length > 0}}
+                    <div>
+                        <table class="query">
+                            <tr>
+                                <th>参数名</th>
+                                <th>示例值</th>
+                                <!-- <th>参数类型</th> -->
+                                <th>参数描述</th>
+                            </tr>
+                            {{each request.query item}}
+                            {{if item.key}}
+                            <tr>
+                                <td>
+                                    {{if item.key_var}}
+                                    {{item.key_var}}
+                                    <img src="https://img.cdn.apipost.cn/v6/docs/img/vars.svg" alt="">
+                                    <div class="vars_title">
+                                        变量{{item.key}} 生成
+                                    </div>
+                                    {{else}}
+                                    {{item.key}}
+                                    {{/if}}
+                                </td>
+                                <td>
+                                    {{if item.value_var}}
+                                    {{item.value_var}}
+                                    <img src="https://img.cdn.apipost.cn/v6/docs/img/vars.svg" alt="">
+                                    <div class="vars_title">
+                                        变量{{item.value}} 生成
+                                    </div>
+                                    {{else}}
+                                    {{item.value == '' ? '-' : item.value}}
+                                    {{/if}}
+                                </td>
+                                <!-- <td>{{item.field_type == "" || item.field_type == "[]"? (typeof item.value) :
+                                    item.field_type}}
+                                </td> -->
+                                <td><pre>{{item.description == '' ? '-' : item.description }}</pre></td>
+                            </tr>
+                            {{/if}}
+                            {{/each}}
+                        </table>
+                    </div>
+                    {{/if}}
+                    <h4 class="title" style="{{ request.body.length > 0 ?'visibility:visible':'visibility:hidden;height:0;margin:0;'}}"><a href="javascript:;" class="maodian"></a> Body参数及说明</h4>
+                    {{if request.body.length > 0}}
+                    <div>
+                        <table class="body">
+                            <tr>
+                                <th>参数名</th>
+                                <th>示例值</th>
+                                <!-- <th>参数类型</th> -->
+                                <th>参数描述</th>
+                            </tr>
+                            {{each request.body item}}
+                            {{if item.key}}
+                            <tr>
+                                <td>
+                                    {{if item.key_var}}
+                                    {{item.key_var}}
+                                    <img src="https://img.cdn.apipost.cn/v6/docs/img/vars.svg" alt="">
+                                    <div class="vars_title">
+                                        变量{{item.key}} 生成
+                                    </div>
+                                    {{else}}
+                                    {{item.key}}
+                                    {{/if}}
+                                </td>
+                                <td>
+                                    {{if item.value_var}}
+                                    {{item.value_var}}
+                                    <img src="https://img.cdn.apipost.cn/v6/docs/img/vars.svg" alt="">
+                                    <div class="vars_title">
+                                        变量{{item.value}} 生成
+                                    </div>
+                                    {{else}}
+                                    {{item.value == '' ? '-' : item.value}}
+                                    {{/if}}
+                                </td>
+                                <!-- <td>{{item.field_type == "" || item.field_type == "[]"? (typeof item.value) :
+                                    item.field_type}}
+                                </td> -->
+                                <td><pre>{{item.description == '' ? '-' : item.description }}</pre></td>
+                            </tr>
+                            {{/if}}
+                            {{/each}}
+                        </table>
+                    </div>
+                    {{/if}}
+                    {{if request?.auth?.type != 'noauth' && request?.auth?.type}}
+                    <h4 class="title">认证及说明</h4>
+                    {{if request?.auth?.type == 'kv'}}
+                    <table class="auth">
+                        <tr>
+                            <td>认证类型：私密键值对</td>
+                            <td>键：{{request?.auth?.kv?.key}}</td>
+                            <td>值：{{request?.auth?.kv?.value}}</td>
+                        </tr>
+                    </table>
+                    {{/if}}
+                    {{if request.auth.type == 'basic'}}
+                    <table class="auth">
+                        <tr>
+                            <td>认证类型：Basic auth认证</td>
+                            <td>用户名：{{request?.auth?.basic?.username}}</td>
+                            <td>密码：{{request?.auth?.basic?.password}}</td>
+                        </tr>
+                    </table>
+                    {{/if}}
+                    {{if request?.auth?.type == 'bearer'}}
+                    <table class="auth">
+                        <tr>
+                            <td>认证类型：Bearer auth认证</td>
+                            <td>Token：{{request?.auth?.bearer?.key}}</td>
+                        </tr>
+                    </table>
+                    {{/if}}
+                    {{/if}}
+                </div>
+                <!--respond-->
+                {{/if}}
+                <div class="footer" style="text-align: center;margin: 35px 0;height: 50px">本文档由 <a href="https://www.apipost.cn/" target="_blank" style="color:#3a86ff">APIPOST接口调试与管理工具</a> 生成</div>
+            </script>
+        </div>
+    </div>
+</div>
+<script type="text/html" id="golbal-env-tpl">
+    <h2 class="top">
+        <span>全局参数</span>
+        <span class="metadata">
+            创建时间：{{@dateFormat(create_dtime * 1000,'yyyy-MM-dd hh:mm:ss')}}
+            {{if expire_time != -1}}
+                <span style="color: #f44336; margin-left: 15px; font-weight: bold;"> 过期时间： {{@dateFormat(expire_time * 1000,'yyyy-MM-dd hh:mm:ss')}}</span>
+            {{/if}}
+        </span>
+
+    </h2>
+    <div class="editor-preview desc">
+    <!-- <p>本文档是软件杯的接口文档，以下为当前项目下的公共参数。</p> -->
+    </div>
+
+    <h3 class="title">
+        <a href="javascript:;" class="maodian">
+            <img src="https://img.cdn.apipost.cn/v6/docs/img/globals.svg" alt="">
+        </a>
+        全局参数
+        {{if vars?.request?.header?.length > 0 || vars?.request?.query?.length > 0 || vars?.request?.body?.length > 0 || vars?.auth?.type != 'noauth'}}
+        <i class="fa fa-angle-down"></i>
+        {{/if}}
+    </h3>
+    {{if vars?.request?.header?.length > 0 || vars?.request?.query?.length > 0 || vars?.request?.body?.length > 0 || vars?.auth?.type != 'noauth'}}
+    <div>
+        {{if vars.request.header.length > 0}}
+        <h4>Header参数及说明</h4>
+        <table>
+            <tr>
+                <th>参数名</th>
+                <th>参数值</th>
+                <th>参数描述</th>
+            </tr>
+            {{each vars.request.header item}}
+            <tr>
+                <td>
+                    {{if item.key_var}}
+                    {{item.key_var}}
+                    <img src="https://img.cdn.apipost.cn/v6/docs/img/vars.svg" alt="">
+                    <div class="vars_title">
+                        变量{{item.key}} 生成
+                    </div>
+                    {{else}}
+                    {{item.key}}
+                    {{/if}}
+                </td>
+                <td>
+                    {{if item.value_var}}
+                    {{item.value_var}}
+                    <img src="https://img.cdn.apipost.cn/v6/docs/img/vars.svg" alt="">
+                    <div class="vars_title">
+                        变量{{item.value}} 生成
+                    </div>
+                    {{else}}
+                    {{item.value == '' ? '-' : item.value }}
+                    {{/if}}
+                </td>
+                <td><pre>{{item.description == '' ? '-' : item.description }}</pre></td>
+            </tr>
+            {{/each}}
+        </table>
+        {{/if}}
+
+        {{if vars.request.query.length > 0}}
+        <h4>Query参数及说明</h4>
+        <table>
+            <tr>
+                <th>参数名</th>
+                <th>参数值</th>
+                <th>参数描述</th>
+            </tr>
+
+            {{each vars.request.query item}}
+            <tr>
+                <td>
+                    {{if item.key_var}}
+                    {{item.key_var}}
+                    <img src="https://img.cdn.apipost.cn/v6/docs/img/vars.svg" alt="">
+                    <div class="vars_title">
+                        变量{{item.key}} 生成
+                    </div>
+                    {{else}}
+                    {{item.key}}
+                    {{/if}}
+                </td>
+                <td>
+                    {{if item.value_var}}
+                    {{item.value_var}}
+                    <img src="https://img.cdn.apipost.cn/v6/docs/img/vars.svg" alt="">
+                    <div class="vars_title">
+                        变量{{item.value}} 生成
+                    </div>
+                    {{else}}
+                    {{item.value == '' ? '-' : item.value }}
+                    {{/if}}
+                </td>
+                <td>
+                    <pre>{{item.description == '' ? '-' : item.description }}</pre>
+                </td>
+            </tr>
+            {{/each}}
+        </table>
+        {{/if}}
+
+        {{if vars?.request?.body?.length > 0}}
+        <h4>Body参数及说明</h4>
+        <table>
+            <tr>
+                <th>参数名</th>
+                <th>参数值</th>
+                <th>参数描述</th>
+            </tr>
+            {{each vars?.request?.body item}}
+            <tr>
+                <td>
+                    {{if item.key_var}}
+                    {{item.key_var}}
+                    <img src="https://img.cdn.apipost.cn/v6/docs/img/vars.svg" alt="">
+                    <div class="vars_title">
+                        变量{{item.key}} 生成
+                    </div>
+                    {{else}}
+                    {{item.key}}
+                    {{/if}}
+                </td>
+                <td>
+                    {{if item.value_var}}
+                    {{item.value_var}}
+                    <img src="https://img.cdn.apipost.cn/v6/docs/img/vars.svg" alt="">
+                    <div class="vars_title">
+                        变量{{item.value}} 生成
+                    </div>
+                    {{else}}
+                    {{item.value == '' ? '-' : item.value }}
+                    {{/if}}
+                </td>
+                <td><pre>{{item.description == '' ? '-' : item.description }}</pre></td>
+            </tr>
+            {{/each}}
+        </table>
+        {{/if}}
+        {{if vars?.auth?.type != 'noauth'}}
+        <h4>认证及说明</h4>
+        {{if vars?.auth?.type == 'kv'}}
+        <table>
+            <tr>
+                <td>认证类型：私密键值对</td>
+                <td>键：{{vars?.auth?.kv?.key}}</td>
+                <td>值：{{vars?.auth?.kv?.value}}</td>
+            </tr>
+        </table>
+        {{/if}}
+        {{if vars.auth.type == 'basic'}}
+        <table>
+            <tr>
+                <td>认证类型：Basic auth认证</td>
+                <td>用户名：{{vars?.auth?.basic?.username}}</td>
+                <td>密码：{{vars?.auth?.basic?.password}}</td>
+            </tr>
+        </table>
+        {{/if}}
+        {{if vars?.auth?.type == 'bearer'}}
+        <table>
+            <tr>
+                <td>认证类型：Bearer auth认证</td>
+                <td>Token：{{vars?.auth?.bearer?.key}}</td>
+            </tr>
+        </table>
+        {{/if}}
+        {{/if}}
+        <!--        {{if vars.script.pre_script != ""}}-->
+        <!--        <h4 class="title"><a href="javascript:;" class="maodian"></a> 预执行脚本</h4>-->
+        <!--        <div class="editor-preview">-->
+        <!--            <pre><code class="hljs">{{vars.script.pre_script}}</code></pre>-->
+        <!--        </div>-->
+        <!--        {{/if}}-->
+        <!--        {{if vars.script.test != "" }}-->
+        <!--        <h4 class="title"><a href="javascript:;" class="maodian"></a> 后执行脚本</h4>-->
+        <!--        <div class="editor-preview">-->
+        <!--            <pre><code class="hljs">{{vars.script.test}}</code></pre>-->
+        <!--        </div>-->
+        <!--        {{/if}}-->
+    </div>
+    {{else}}
+    <div style="text-align: center;display: block"><img src="https://img.cdn.apipost.cn/v6/docs/img/emptyglobals.svg" style="width: 100px;margin:20px auto 20px;">暂无参数</div>
+    {{/if}}
+
+    <div class="footer" style="text-align: center;margin: 35px 24px;height: 50px;">本文档由 <a href="https://www.apipost.cn/" target="_blank" style="color:#3a86ff">APIPOST接口调试与管理工具</a> 生成</div>
+</script>
+<script type="text/html" id="doc-head-tpl">
+    <div class="export">
+
+    </div>
+    <div class="user_photo">
+        <img src="{{portrait}}"alt="">
+    </div>
+</script>
+<script type="text/html" id="project-name-tpl">
+    <img src="https://img.cdn.apipost.cn/v6/docs/img/project.svg" alt="">
+    {{project_name}}
+</script>
+<script>
+    template.defaults.imports.marked = function (md) {
+        marked.setOptions({
+            renderer: new marked.Renderer(),
+            highlight: function (code) {
+                return hljs.highlight('javascript', code).value;
+            },
+            breaks: true,
+            sanitize: true
+        });
+        return marked(md).replace(/<pre>/g, "<pre class='hljs javascript'>");
+    }
+    function dateFormat(date, format) {
+        date = new Date(date);
+        var map = {
+            "M": date.getMonth() + 1, //月份
+            "d": date.getDate(), //日
+            "h": date.getHours(), //小时
+            "m": date.getMinutes(), //分
+            "s": date.getSeconds(), //秒
+            "q": Math.floor((date.getMonth() + 3) / 3), //季度
+            "S": date.getMilliseconds() //毫秒
+        };
+        format = format.replace(/([yMdhmsqS])+/g, function (all, t) {
+            var v = map[t];
+            if (v !== undefined) {
+                if (all.length > 1) {
+                    v = '0' + v;
+                    v = v.substr(v.length - 2);
+                }
+                return v;
+            } else if (t === 'y') {
+                return (date.getFullYear() + '').substr(4 - all.length);
+            }
+            return all;
+        });
+        return format;
+    };
+    template.defaults.imports.dateFormat = dateFormat;
+    function dragControllerDiv(resize, left, mid, box) {
+        for (let i = 0; i < resize.length; i++) {
+            // 鼠标按下事件
+            resize[i].onmousedown = function (e) {
+                //颜色改变提醒
+                resize[i].style.borderColor = "#9d9d9d";
+                var startX = e.clientX;
+                resize[i].left = resize[i].offsetLeft;
+                // 鼠标拖动事件
+                document.onmousemove = function (e) {
+                    var endX = e.clientX;
+                    var moveLen = resize[i].left + (endX - startX); // （endx-startx）=移动的距离。resize[i].left+移动的距离=左边区域最后的宽度
+                    var maxT = box[i].clientWidth - resize[i].offsetWidth; // 容器宽度 - 左边区域的宽度 = 右边区域的宽度
+
+                    if (moveLen < 300) moveLen = 300; // 左边区域的最小宽度为32px
+                    if (moveLen > maxT - 150) moveLen = maxT - 150; //右边区域最小宽度为150px
+
+                    resize[i].style.left = moveLen; // 设置左侧区域的宽度
+                    $('.target.title').css({ maxWidth: moveLen + 'px' })
+                    for (let j = 0; j < left.length; j++) {
+                        left[j].style.width = moveLen + "px";
+                        mid[j].style.width = box[i].clientWidth - moveLen - 10 + "px";
+                    }
+                };
+                // 鼠标松开事件
+                document.onmouseup = function (evt) {
+                    //颜色恢复
+                    resize[i].style.borderColor = "#d6d6d6";
+                    document.onmousemove = null;
+                    document.onmouseup = null;
+                    resize[i].releaseCapture && resize[i].releaseCapture(); //当你不在需要继续获得鼠标消息就要应该调用ReleaseCapture()释放掉
+                };
+                resize[i].setCapture && resize[i].setCapture(); //该函数在属于当前线程的指定窗口里设置鼠标捕获
+                return false;
+            };
+        }
+    }
+    function keyFormat(params) {
+        let arr = params.split('.');
+        let str = ''
+        for (let i = 0; i < arr.length - 1; i++) {
+            str += `<span style="color:#999">${arr[i]}.</span>`
+        }
+        str += arr[arr.length - 1];
+        return str;
+    }
+    template.defaults.imports.keyFormat = keyFormat;
+    let timer = null
+    let arr = {"id":504799,"project_id":2481332,"name":"软件杯","url":"dc71750e0f2974ef","salt":"ea23ebd484fd0b20","password":"","env_id":"-1","create_time":1656745186,"target_id":2481332,"target_type":"project","expire_days":-1,"expire_time":-1,"project_name":"软件杯","portrait":"https:\/\/img.cdn.apipost.cn\/user\/default_profile_photo\/Vector-6.png","nick_name":"chenthirteen","publisher":"chenthirteen","pub_name":"软件杯","project":{"vars":{"request":{"header":[{"is_checked":"1","type":"Text","key":"","value":"","description":""}],"query":[{"is_checked":"1","type":"Text","key":"","value":"","description":""}],"cookie":[],"body":[{"is_checked":"1","type":"Text","key":"","value":"","description":""}]},"script":{"pre_script":"","test":""},"variable":[],"auth":{"type":"noauth","kv":{"key":"","value":""},"bearer":{"key":""},"basic":{"username":"","password":""}},"methods":["POST","GET","PUT","PATCH","DELETE","COPY","HEAD","OPTIONS","LINK","UNLINK","PURGE","LOCK","UNLOCK","PROPFIND","VIEW"],"mark":[{"key":"developing","name":"开发中","color":"#3A86FF"},{"key":"complated","name":"已完成","color":"#2BA58F"},{"key":"modifying","name":"需修改","color":"#EC4646"}]}},"children":[{"local_target_id":"84b577ec-9ef1-44d7-97b4-8e07eab57d77","local_parent_id":"0","name":"单条新闻文本预测","method":"POST","mark":"complated","is_doc":0,"target_type":"api","status":1,"sort":1,"create_dtime":1656660007,"update_dtime":1656747191,"target_id":32104406,"create_users":{"create_user":"chenthirteen","update_user":"chenthirteen"},"request":{"url":"http:\/\/127.0.0.1:8000\/summary\/signal_generate?{news_text}","description":"","auth":{"type":"noauth","kv":{"key":"","value":""},"bearer":{"key":""},"basic":{"username":"","password":""}},"body":{"mode":"form-data","parameter":[{"is_checked":1,"type":"Text","key":"news_text","value":"近期，美国国会众院通过法案，重申美国对台湾的承诺。对此，中国外交部发言人表示，有关法案严重违反一个中国原则和中美三个联合公报规定，粗暴干涉中国内政，中方对此坚决反对并已向美方提出严正交涉。\\n事实上，中国高度关注美国国内打“台湾牌”、挑战一中原则的危险动向。近年来，作为“亲台”势力大本营的美国国会动作不断，先后通过“与台湾交往法”“亚洲再保证倡议法”等一系列“挺台”法案，“2019财年国防授权法案”也多处触及台湾问题。今年3月，美参院亲台议员再抛“台湾保证法”草案。众院议员继而在4月提出众院版的草案并在近期通过。上述法案的核心目标是强化美台关系，并将台作为美“印太战略”的重要伙伴。同时，“亲台”议员还有意制造事端。今年2月，5名共和党参议员致信众议院议长，促其邀请台湾地区领导人在国会上发表讲话。这一动议显然有悖于美国与台湾的非官方关系，其用心是实质性改变美台关系定位。\\n上述动向出现并非偶然。在中美建交40周年之际，两国关系摩擦加剧，所谓“中国威胁论”再次沉渣泛起。美国对华认知出现严重偏差，对华政策中负面因素上升，保守人士甚至成立了“当前中国威胁委员会”。在此背景下，美国将台海关系作为战略抓手，通过打“台湾牌”在双边关系中增加筹码。特朗普就任后，国会对总统外交政策的约束力和塑造力加强。其实国会推动通过涉台法案对行政部门不具约束力，美政府在2018年并未提升美台官员互访级别，美军舰也没有“访问”台湾港口，保持着某种克制。但从美总统签署国会通过的法案可以看出，国会对外交产生了影响。立法也为政府对台政策提供更大空间。\\n然而，美国需要认真衡量打“台湾牌”成本。首先是美国应对危机的代价。美方官员和学者已明确发出警告，美国卷入台湾问题得不偿失。美国学者曾在媒体发文指出，如果台海爆发危机，美国可能需要“援助”台湾，进而导致新的冷战乃至与中国大陆的冲突。但如果美国让台湾自己面对，则有损美国的信誉，影响美盟友对同盟关系的支持。其次是对中美关系的危害。历史证明，中美合则两利、斗则两伤。中美关系是当今世界最重要的双边关系之一，保持中美关系的稳定发展，不仅符合两国和两国人民的根本利益，也是国际社会的普遍期待。美国蓄意挑战台湾问题的底线，加剧中美关系的复杂性和不确定性，损害两国在重要领域合作，损人又害己。\\n美国打“台湾牌”是一场危险的赌博。台湾问题是中国核心利益，中国政府和人民决不会对此坐视不理。中国敦促美方恪守一个中国原则和中美三个联合公报规定，阻止美国会审议推进有关法案，妥善处理涉台问题。美国悬崖勒马，才是明智之举。","not_null":1,"description":"文本框中输入的新闻文本","field_type":"Text","__DATAKEY__":"0f4de30c-6c78-4aad-aca9-ea2ae9336cec","key_var":"","value_var":""}],"raw":"","raw_para":[]},"event":{"pre_script":"","test":""},"header":{"parameter":[]},"query":{"parameter":[{"description":"","is_checked":1,"key":"{news_text}","type":"Text","not_null":"1","field_type":"Text","value":"","key_var":"","value_var":""}]},"cookie":{"parameter":[]},"resful":{"parameter":[]},"url_var":"http:\/\/127.0.0.1:8000\/summary\/signal_generate?{news_text}"},"response":{"success":{"raw":"{\n\t\"title\": \"\",\n\t\"summary\": \"\",\n\t\"time\": 4.76837158203125e-7\n}","parameter":[{"key":"title","value":"","description":"生成的标题","not_null":1,"field_type":"Object","type":"Text","is_checked":1},{"key":"summary","value":"","description":"生成的摘要","not_null":1,"field_type":"Object","type":"Text","is_checked":1},{"key":"time","value":4.76837158203125e-7,"description":"生成花费时间","not_null":1,"field_type":"Number","type":"Text","is_checked":1}]},"error":{"raw":"","parameter":[]}}},{"local_target_id":"e628bca2-3c1b-4d08-97d0-3d3ba3815fbc","local_parent_id":"b83eaaa5-fa24-4911-bcbb-ce9ab4c6abdd","name":"批量生成标题摘要","method":"POST","mark":"developing","is_doc":0,"target_type":"example","status":1,"sort":1,"create_dtime":1656745212,"update_dtime":1656745212,"target_id":32154665,"create_users":{"create_user":"chenthirteen","update_user":"chenthirteen"},"request":{"url":"http:\/\/127.0.0.1:8000\/summary\/batch_generate?{file}=","description":"","auth":{"type":"noauth","kv":{"key":"","value":""},"bearer":{"key":""},"basic":{"username":"","password":""}},"body":{"mode":"form-data","parameter":[{"is_checked":1,"type":"Text","key":"file","value":"\/home\/chi\/Desktop\/train.json","not_null":1,"description":"","field_type":"Text","__DATAKEY__":"8a4fb39e-98bc-40a4-8def-7fb340312547","key_var":"","value_var":""}],"raw":"","raw_para":[]},"event":{"pre_script":"","test":""},"header":{"parameter":[]},"query":{"parameter":[{"description":"选择的文件路径(绝对路径)","is_checked":1,"key":"{file}","type":"Text","not_null":"1","field_type":"Text","value":"","__DATAKEY__":"34cddbb4-b3e3-48ff-9c57-5804d50274a1","key_var":"","value_var":""}]},"cookie":{"parameter":[]},"resful":{"parameter":[]}},"response":{"success":{"raw":"[\n\t{\n\t\t\"id\": 1,\n\t\t\"title\": \"\",\n\t\t\"summary\": \"\",\n\t\t\"content\": \"近期，美国国会众院通过法案，重申美国对台湾的承诺。对此，中国外交部发言人表示，有关法案严重违反一个中国原则和中美三个联合公报规定，粗暴干涉中国内政，中方对此坚决反对并已向美方提出严正交涉。事实上，中国高度关注美国国内打“台湾牌”、挑战一中原则的危险动向。近年来，作为“亲台”势力大本营的美国国会动作不断，先后通过“与台湾交往法”“亚洲再保证倡议法”等一系列“挺台”法案，“2019财年国防授权法案”也多处触及台湾问题。今年3月，美参院亲台议员再抛“台湾保证法”草案。众院议员继而在4月提出众院版的草案并在近期通过。上述法案的核心目标是强化美台关系，并将台作为美“印太战略”的重要伙伴。同时，“亲台”议员还有意制造事端。今年2月，5名共和党参议员致信众议院议长，促其邀请台湾地区领导人在国会上发表讲话。这一动议显然有悖于美国与台湾的非官方关系，其用心是实质性改变美台关系定位。上述动向出现并非偶然。在中美建交40周年之际，两国关系摩擦加剧，所谓“中国威胁论”再次沉渣泛起。美国对华认知出现严重偏差，对华政策中负面因素上升，保守人士甚至成立了“当前中国威胁委员会”。在此背景下，美国将台海关系作为战略抓手，通过打“台湾牌”在双边关系中增加筹码。特朗普就任后，国会对总统外交政策的约束力和塑造力加强。其实国会推动通过涉台法案对行政部门不具约束力，美政府在2018年并未提升美台官员互访级别，美军舰也没有“访问”台湾港口，保持着某种克制。但从美总统签署国会通过的法案可以看出，国会对外交产生了影响。立法也为政府对台政策提供更大空间。然而，美国需要认真衡量打“台湾牌”成本。首先是美国应对危机的代价。美方官员和学者已明确发出警告，美国卷入台湾问题得不偿失。美国学者曾在媒体发文指出，如果台海爆发危机，美国可能需要“援助”台湾，进而导致新的冷战乃至与中国大陆的冲突。但如果美国让台湾自己面对，则有损美国的信誉，影响美盟友对同盟关系的支持。其次是对中美关系的危害。历史证明，中美合则两利、斗则两伤。中美关系是当今世界最重要的双边关系之一，保持中美关系的稳定发展，不仅符合两国和两国人民的根本利益，也是国际社会的普遍期待。美国蓄意挑战台湾问题的底线，加剧中美关系的复杂性和不确定性，损害两国在重要领域合作，损人又害己。美国打“台湾牌”是一场危险的赌博。台湾问题是中国核心利益，中国政府和人民决不会对此坐视不理。中国敦促美方恪守一个中国原则和中美三个联合公报规定，阻止美国会审议推进有关法案，妥善处理涉台问题。美国悬崖勒马，才是明智之举。（作者系中国国际问题研究院国际战略研究所副所长）\",\n\t\t\"time\": 2.384185791015625e-7\n\t},\n\t{\n\t\t\"id\": 2,\n\t\t\"title\": \"\",\n\t\t\"summary\": \"\",\n\t\t\"content\": \"在推进“双一流”高校建设进程中，我们要紧紧围绕为党育人、为国育才，找准问题、破解难题，以一流意识和担当精神，大力推进高校的治理能力建设。增强政治引领力。坚持党对高校工作的全面领导，始终把政治建设摆在首位，增强校党委的政治领导力，全面推进党的建设各项工作。落实立德树人根本任务，把培养社会主义建设者和接班人放在中心位置。紧紧抓住思想政治工作这条生命线，全面加强师生思想政治工作，推进“三全育人”综合改革，将思想政治工作贯穿学校教育管理服务全过程，努力让学生成为德才兼备、全面发展的人才。提升人才聚集力。人才是创新的核心要素，创新驱动本质上是人才驱动。要坚持引育并举，建立绿色通道，探索知名专家举荐制，完善“一事一议”支持机制。在大力支持自然科学人才队伍建设的同时，实施哲学社会科学人才工程。立足实际，在条件成熟的学院探索“一院一策”改革。创新科研组织形式，为人才成长创设空间，建设更加崇尚学术、更加追求卓越、更加关爱学生、更加担当有为的学术共同体。培养学生竞争力。遵循学生成长成才的规律培育人才，着力培养具有国际竞争力的拔尖创新人才和各类专门人才，使优势学科、优秀教师、优质资源、优良环境围绕立德树人的根本任务配置。淘汰“水课”，打造“金课”，全力打造世界一流本科教育。深入推进研究生教育综合改革，加强事关国家重大战略的高精尖急缺人才培养，建设具有国际竞争力的研究生教育。激发科技创新力。在国家急需发展的领域挑大梁，就要更加聚焦科技前沿和国家需求，狠抓平台建设，包括加快牵头“武汉光源”建设步伐，积极参与国家实验室建设，建立校级大型科研仪器设备共享平台。关键核心技术领域“卡脖子”问题，归根结底是基础科学研究薄弱。要加大基础研究的支持力度，推进理论、技术和方法创新，鼓励支持重大原创和颠覆性技术创新，催生一批高水平、原创性研究成果。发展社会服务力。在贡献和服务中体现价值，推动合作共建、多元投入的格局，大力推进政产学研用结合，强化科技成果转移转化及产业化。探索校城融合发展、校地联动发展的新模式，深度融入地方创新发展网络，为地方经济社会发展提供人才支撑，不断拓展和优化社会服务网络。涵育文化软实力。加快体制机制改革，优化学校、学部、学院三级评审机制，充分发挥优秀学者特别是德才兼备的年轻学者在学术治理中的重要作用。牢固树立一流意识、紧紧围绕一流目标、认真执行一流标准，让成就一流事业成为普遍追求和行动自觉。培育具有强大凝聚力的大学文化，营造积极团结、向上向善、干事创业的氛围，让大学成为吸引和留住一大批优秀人才建功立业的沃土，让敢干事、肯干事、能干事的人有更多的荣誉感和获得感。建设中国特色、世界一流大学不是等得来、喊得来的，而是脚踏实地拼出来、干出来的。对标一流，深化改革，坚持按章程办学，构建以一流质量标准为核心的制度规范体系，扎实推进学校综合改革，探索更具活力、更富效率的管理体制和运行机制，我们就一定能构建起具有中国特色的现代大学治理体系，进一步提升管理服务水平和工作效能。（作者系武汉大学校长）\",\n\t\t\"time\": 2.384185791015625e-7\n\t},\n\t{\n\t\t\"id\": 3,\n\t\t\"title\": \"\",\n\t\t\"summary\": \"\",\n\t\t\"content\": \"育才造士，为国之本。党的干部是党和国家事业的中坚力量。习近平总书记深刻指出，“历史和现实都表明，一个政党、一个国家能不能不断培养出优秀领导人才，在很大程度上决定着这个政党、这个国家的兴衰存亡。”新修订的《党政领导干部选拔任用工作条例》，坚持以推进伟大事业为导向，将“事业为上、人岗相适、人事相宜”作为一条重要原则，为做好新时代选人用人工作、建设忠诚干净担当的高素质专业化干部队伍，进一步指明了正确方向。党的干部总是与党的事业紧紧连在一起，伟大事业需要高素质干部，干部要在事业发展中锻炼成长。党的十八大以来，党和国家事业之所以取得历史性成就、发生历史性变革，根本原因是有以习近平同志为核心的党中央坚强领导，有习近平新时代中国特色社会主义思想的科学指引，同时也与广大干部奋发有为、改革创新、干事创业、担当奉献密不可分。当前，中国特色社会主义进入新时代，站在新的历史起点上，我们党要肩负起新的历史使命，必须贯彻新时代党的组织路线，坚持从党和人民事业需要出发选干部、用干部，突出实践实干选贤能，坚持有为有位聚英才，真正做到事业发展需要什么样的人就用什么样的人，什么样的人最合适就选什么样的人。为官择人者治，为人择官者乱。新修订的《干部任用条例》，通篇贯穿事业导向、事业要求，在提出深入考察干部政治素质、道德品行、作风素养、廉政情况的同时，强调要突出工作实绩、履职尽责等方面的考察，大力选拔敢于负责、勇于担当、善于作为、实绩突出的优秀干部。贯彻落实条例，必须正确把握事业发展需要和干部成长进步的关系，知事识人、依事择人、精准选人，把善于统筹推进“五位一体”总体布局和协调推进“四个全面”战略布局，贯彻落实新发展理念、推进高质量发展、深化供给侧结构性改革、打好“三大攻坚战”的优秀干部及时发现出来、合理使用起来，进而示范引领更多干部勇于担当作为，心无旁骛干事业、坚定信心促发展。不拒众流，方为江海。五湖四海的事业，需要五湖四海的人来干。新修订的《干部任用条例》，鲜明提出要注意从企业、高等学校、科研院所等单位以及社会组织中发现选拔党政领导干部，对推动国有企事业单位、社会组织干部人才及时进入党政机关作出制度性安排，这是我们党选人用人成功经验的深刻总结和运用。贯彻落实条例，就要坚持干部工作一盘棋，进一步开阔视野、拓宽渠道，放眼各条战线、各个领域、各个行业、各个层级，充分盘活干部资源，广开进贤之路。要坚持公道正派、公正用人，选拔干部论能力、看水平、凭实绩，而不能搞平衡照顾、论资排辈、降格以求，更不能搞小圈子、任人唯亲，在少数人中选人。要突出政治过硬、本领高强，深入考察识别干部的专业能力、专业素养、专业精神。坚持立足当前、着眼长远，注重发现培养和选拔使用在改革发展稳定一线特别是在重大斗争中经过磨砺的优秀年轻干部，为党和国家事业发展源源不断地注入生机和活力。要坚持严管和厚爱结合、激励和约束并重，认真贯彻习近平总书记关于“三个区分开来”的重要要求，宽容干部在改革创新中的失误错误，保护干部干事创业的积极性。对那些符合有关规定给予容错的干部，要认真落实条例的要求，给予客观公正对待，为他们重整旗鼓、轻装上阵、贡献才智搭建平台。宏伟的事业，离不开高素质专业化的干部。各级党委（党组）及其组织人事部门，要以贯彻落实新修订的《干部任用条例》为契机，坚持党的原则第一、党的事业第一、人民利益第一，大力选拔党和人民需要的好干部，为推动中国特色社会主义伟大事业乘风破浪、不断前进提供坚强组织保证。《 人民日报 》（ 2019年03月20日   06 版）\",\n\t\t\"time\": 0\n\t},\n\t{\n\t\t\"id\": 4,\n\t\t\"title\": \"\",\n\t\t\"summary\": \"\",\n\t\t\"content\": \"今天（6月1日）是“六一”国际儿童节。公园里，跃动着孩子们快乐嬉戏的身影；校园里，回荡着孩子们清脆悦耳的歌声。“少年智则国智，少年富则国富，少年强则国强”。少年儿童是祖国的未来，是民族的希望。少年儿童的茁壮成长，始终牵动着习近平总书记的心。作为孩子们的“大朋友”，他勉励孩子们珍惜时光，努力学习，“像海绵吸水一样学习知识”；他告诉孩子们，有梦想，还要脚踏实地，好好读书，才能梦想成真；他寄语孩子们，多想一想，就会促使自己多做一做，日积月累，自己身上的好思想、好品德就会越来越多了。话语暖人，寄望殷殷。志向是人生的航标。一个人要做出一番成就，就要有自己的志向。所以，我们要教育孩子们从小树立远大志向，不能做无舵的小舟，漫无方向。做人要以品德为先。品德就像大树的根脉，根扎得深、长得正，人生才会有高度。所以，我们要注重孩子们的品德修养，引导他们从人生一开始就要扣好“第一粒扣子”。幸福不是免费午餐。实现梦想、创造幸福，需要一步一个脚印，一点一滴积累。所以，我们要教育孩子们从小珍惜时间，学知识，长本领，勤思考，多实践，将来才能让人生出彩、为社会添彩。让我们把“大朋友”的话牢记心头，引导孩子们在金色的童年中放飞梦想、播种希望，让他们健康成长，成为建设祖国的栋梁之才。\",\n\t\t\"time\": 0\n\t},\n\t{\n\t\t\"id\": 5,\n\t\t\"title\": \"\",\n\t\t\"summary\": \"\",\n\t\t\"content\": \"11月22日晚，习近平主席在北京以视频方式出席二十国集团领导人第十五次峰会第二阶段会议，重点阐述关于可持续发展问题的看法。他指出，要打造包容性、可持续、有韧性的未来，不断推进全球减贫事业至关重要。面对新冠肺炎疫情冲击，我们比以往任何时候都更需要拿出切实举措。当前，世纪疫情和百年变局交织、全球经济陷入严重衰退、世界进入动荡变革期。破解一系列全球性问题，可持续发展是一把 “金钥匙”。能不能用好这把“金钥匙”，关乎各国眼前乃至长远利益，考验人类智慧与道义。用好这把“金钥匙”需要共商共建。一个人的努力是加法，一个团队的努力是乘法。面对重重挑战，二十国集团应加强沟通交流、团结合作，以落实联合国2030年可持续发展议程为引领，加大支持发展中国家克服疫情，推动经济复苏和增长，缩小数字鸿沟，努力营造良好的国际经济环境。同时，减少碳排放，促进绿色低碳发展，合力应对气候变化和生态环境恶化等全球性挑战。用好这把“金钥匙”需要共创共享。消除贫困是人类的共同使命。改革开放40多年来，中国7亿多人摆脱贫困，对世界减贫贡献率超过70%。时下，中国即将提前10年实现《联合国2030年可持续发展议程》减贫目标，完成这项对中华民族、对人类社会都具有重大意义的伟业。“中国式扶贫”作为全球可持续发展的典范，为世界各国尤其是贫困国家提供了参考方案。作为二十国集团重要一员，中国愿与世界分享“中国式扶贫”的经验做法，提供减贫的“中国方案”，同各国一道，合力建设远离贫困、共同发展的美好世界。“万物并育而不相害，道并行而不相悖。”今天的世界，人类交往比过去任何时候都更深入、更广泛、更紧密。面对新冠疫情对世界政治和经济生活带来的巨大冲击，世界各国坚持用好可持续发展这把“金钥匙”，合作共治、开放共享、互利共赢，必将穿过全球不确定性迷雾，走出一条包容性、可持续、有韧性的康庄大道。（文字：宋燕 海报：张倩）\",\n\t\t\"time\": 2.384185791015625e-7\n\t},\n\t{\n\t\t\"id\": 6,\n\t\t\"title\": \"\",\n\t\t\"summary\": \"\",\n\t\t\"content\": \"时值冬日，我们来到了2019年的岁尾。在二〇一九年新年贺词中，习近平主席勉励大家“我们都在努力奔跑，我们都是追梦人”，为无数追梦人增添奔跑的豪情。2019年，在一路奔跑中，我们度过了新中国70华诞；2020年，我们将奔向全面小康。如何在历史的交汇点上开创更加美好的未来？人民日报从12月27日起推出系列评论，和读者一起奔跑、继续追梦。——编 者时间是万物的尺度，刻写下中国人民闯关夺隘的不平凡历程。站在2019年的岁尾回望，一连串闪光的时间刻度，标注着这个不平凡的年份。对很多人来说，若干年后回想起2019年，最难以忘记的可能就是新中国70华诞盛典。当银鹰刺破苍穹，烟花照亮天空，人们比以往任何时候都更加真切地感受到国家的繁荣富强，也比以往任何时候都油然而生一种自豪感。70年来，我们越过高山，跨过平原，也经历过蜿蜒曲折的林中路。如今的中国大地上，高铁飞驰、道路通达，人畅其行、货畅其流，昭示着我们正昂首阔步于一条人间正道上。连接昨天与今天、照亮来路与征途的，是我们坚持真理、走自己路的执着探索。广阔的追梦空间，为无数勤劳勇敢的追梦人打开。世界之大，光阴之长，需要用奋斗者的脚步去丈量。2019年，人们的记忆中留下了一连串闪光的名字。从荣获“共和国勋章”的张富清、袁隆平、屠呦呦等共和国功臣，到来自工矿车间、科研一线、村镇社区、大中小学的“最美奋斗者”；从朱有勇、卢永根、李夏等“时代楷模”，到奋战在脱贫一线的驻村干部、第一书记，千千万万个劳动者、追梦人，用自己的奉献、爱心和拼搏，汇聚起国家奔腾向前的历史潮流，构筑成一个民族的精神丰碑。亿万人胼手胝足的勤劳奋斗，不仅成为中国人民70年的集体记忆，也共同凝聚成新时代铿锵的雄浑乐章。正如习近平总书记强调的，“人民是共和国的坚实根基，人民是我们执政的最大底气。”跨越一道道雄关的中国，行进在更高水平对外开放之路上，成为经济全球化的坚定维护者。2019年，从第二届“一带一路”国际合作高峰论坛，到亚洲文明对话大会，再到吸引全世界目光的第二届中国国际进口博览会，中国展示出扩大开放的坚定决心，也显示出经济发展的旺盛活力和巨大潜力。现在，不论是北京茶饮店里的美国夏威夷新鲜水果，上海商场橱窗里的孟加拉国手工艺品，还是携手中国电商的意大利企业的“网红”小家电，都让人看到越开越大的中国开放之门。正如国际人士的评价：“今天的中国正在搭建三座桥：通往世界之桥，通往繁荣之桥，通往未来之桥。”展望未来，中国将以更多务实行动和举措，推动经济全球化的时代浪潮奔流向前。看似寻常最奇崛，成如容易却艰辛。今天，我们的道路越走越宽广、我们的理论不断发展、我们的制度日趋成熟、我们的文化持续繁荣。2019年10月召开的党的十九届四中全会，系统总结了我国国家制度和国家治理体系的显著优势，目的就是推动全党全国各族人民坚定制度自信，使我国国家制度和治理体系的显著优势更加充分地发挥出来。习近平总书记强调，“当今世界，要说哪个政党、哪个国家、哪个民族能够自信的话，那中国共产党、中华人民共和国、中华民族是最有理由自信的。”我们的自信和底气，来自对历史与现实、理论与实践的把握，来自对时与势、破与立的思考。面向未来，“中国之治”必将在国际竞争中赢得更大的比较优势，展现出更为旺盛的生机活力。在新的起点上展望未来，我们深知，道阻且长，行则将至。前行道路上不可避免有这样那样的风险挑战，但路走对了就不怕山高路远。迈向新征程，志不改、道不变，我们有底气、更有信心把发展的主动权牢牢掌握在自己手中，一步步朝着实现中国梦而前行。\",\n\t\t\"time\": 2.384185791015625e-7\n\t},\n\t{\n\t\t\"id\": 7,\n\t\t\"title\": \"\",\n\t\t\"summary\": \"\",\n\t\t\"content\": \"中国的减贫奇迹，引发了全世界的广泛关注。许多国际观察家都在解读中国的“脱贫密码”。习近平总书记的一段话给出了答案：“我们在脱贫攻坚领域取得了前所未有的成就，彰显了中国共产党领导和我国社会主义制度的政治优势。”贫有百样，困有千种。各地自然禀赋、经济基础、发展阶段不同，贫困的源头和特征各异，要解决超大规模国家的贫困问题，难度可想而知，甚至曾被一些人称为“不可能完成的任务”。然而，这些年来，人们看到各种要素向农村贫困地区汇集，一批批党员干部扎根贫困地区，一个上下联动、左右衔接的扶贫工作系统有序运转，贫中之贫、困中之困的堡垒逐一被攻破……是什么力量推动我们知难攻难、知重负重？是什么力量在确保不获全胜、决不收兵？这个力量，就是中国共产党领导和我国社会主义制度的政治优势。政治优势，来自党的集中统一领导。世界上从来没有哪个政党，像中国共产党这样把脱贫攻坚作为优先政策目标，并且集中全党全国力量持之以恒投入其中，在接续奋斗中，创造脱贫攻坚的历史伟业。从脱贫攻坚战打响，到攻克贫困堡垒，人们总是喜欢用战役来形容脱贫攻坚，党中央是坐镇中军帐的“帅”，车马炮各展其长，一盘棋大局分明，形成万众一心、无坚不摧的强大合力。五级书记抓扶贫，党员干部冲在最前、守到最后，一面面党旗在脱贫一线高高飘扬，成为“中国特色社会主义制度的最大优势是中国共产党领导”的生动诠释。政治优势，来自中国特色社会主义集中力量办大事的制度优势。“积力之所举，则无不胜也。”在曾经深度贫困的四川凉山，一支支工作队扎进贫困山村；在贵州大石山区，当地土特产飞向全国；在曾经贫瘠的宁夏西海固，一个个东西扶贫协作项目带来新活力……从东北林海到西南边陲，从沿海发达地区到深度贫困地区，优质项目在贫困地区落地，帮扶平台与贫困群众对接。党政机关、企事业单位、社会组织都积极投身到脱贫攻坚行动中，真正做到了全民动员、全民参与，画出了脱贫攻坚的最大同心圆。政治优势，来自中国特色脱贫攻坚制度体系。从实行“中央统筹、省负总责、市县抓落实”的工作机制，到建立各司其职、各负其责的责任体系，精准识别、精准脱贫的工作体系，上下联动、统一协调的政策体系，保障资金、强化人力的投入体系，因地制宜、因村因户因人施策的帮扶体系，广泛参与、合力攻坚的社会动员体系，多渠道全方位的监督体系和最严格的考核评估体系……党的十八大以来，政府、市场、社会协同参与的大扶贫格局逐步形成。正是这些具体的制度安排，形成了中国特色脱贫攻坚制度体系，确保脱贫攻坚始终在制度的轨道上砥砺前行。2020年以来，即便遭遇新冠肺炎疫情冲击，中国仍然能够克服各种风险挑战，如期完成新时代脱贫攻坚目标任务，充分证明政治优势的重要作用。把中国特色社会主义制度的显著优势发挥好，我们一定能在脱贫攻坚战全面胜利之后，继续走好乡村振兴之路，在中华民族伟大复兴的浩荡征程中，书写新的辉煌篇章。\",\n\t\t\"time\": 0\n\t},\n\t{\n\t\t\"id\": 8,\n\t\t\"title\": \"\",\n\t\t\"summary\": \"\",\n\t\t\"content\": \"原标题：拱卫亿万人共同的绿色梦想——学习领会习近平主席在2019年中国北京世界园艺博览会开幕式上的重要讲话精神系列评论之一人与自然在这里相遇，中国与世界在这里交互。4月28日，2019年中国北京世界园艺博览会拉开帷幕，习近平主席在开幕式上发表重要讲话，阐释“绿色生活，美丽家园”的主题，重申“生态兴则文明兴，生态衰则文明衰”的观点，描摹“遥望星空、看见青山、闻到花香”的未来，提出“五个追求”的要求，传递“道阻且长，行则将至”的决心，发出全球“同筑生态文明之基，同走绿色发展之路”的邀约。北京世园会是美丽中国建设的一个缩影，绿色中国建设的一张名片。留下约5万棵树的原树林，建设长约20公里的生态草沟，构建湿地缓冲区减少对多物种的干扰，生态优先的理念在这里落地。人工营造梯田，选用覆土建筑结构、搭建1024块光伏玻璃，“有生命”“会呼吸”的中国馆浓缩了师法自然的传统智慧和天人合一的崇高追求。浙江园中“海绵城市”理念的影子，江西园中天人合一哲学的演绎，北京园中智能节水灌溉的科技色彩，无一不是对中国生态文明建设探索的再现。从贫瘠山地到万花之园，北京世园会960公顷的园区内，“绿色”的纯度十足。放眼960万平方公里的中国大地，绿色的实践宏阔而生动，绿色的力量积蓄并拓展，绿色的梦想众人珍视和拱卫。现在的中国，生态文明建设已经纳入中国国家发展总体布局，建设美丽中国已经成为中国人民心向往之的奋斗目标。中国生态文明建设进入了快车道，天更蓝、山更绿、水更清将不断展现在世人面前。“绿水青山”“金山银山”的“两山论”，开辟了人与自然和谐发展的现代化建设新格局；“良好生态环境是最普惠民生福祉”，开启了生态利民、生态为民的新时代；“山水林田湖是一个生命共同体”，开创了全方位、系统性生态治理的新路径……党的十八大以来，以习近平同志为核心的党中央，深刻回答了为什么建设生态文明，建设怎样的生态文明，怎样建设生态文明的重要理论和实践问题，为生态文明建设提供了根本遵循。把生态文明写入执政纲领，务实践行绿色发展和生活理念，携手各国共谋治理之策……中国绿色发展道路越走越宽广，深刻改变着社会的面貌和人们的生活。“中国积极有效地推进绿色发展理念，付出巨大努力来改善环境、保护自然，这对全世界具有示范作用。”中国生态文明建设的生动探索和巨大成就，担得起国际社会如此赞誉。但面对三期叠加的现实——压力叠加、负重前行的关键期，提供更多优质生态产品以满足人民日益增长的优美生态环境需要的攻坚期，有条件有能力解决生态环境突出问题的窗口期，我们没有理由松懈和停滞，唯有咬紧牙关，爬坡过坎，只争朝夕，持之以恒。以北京世园会为契机，走好新时代生态文明建设之路，一个人与自然和谐共生的美丽中国必将实现；将这片园区所阐释的绿色发展理念传导至世界各个角落，世界各国同筑生态文明之基，同走绿色发展之路，一个更加“绿色”的地球必将承载人类文明永续发展。\",\n\t\t\"time\": 0\n\t},\n\t{\n\t\t\"id\": 9,\n\t\t\"title\": \"\",\n\t\t\"summary\": \"\",\n\t\t\"content\": \"在第三十六个教师节到来之际，习近平总书记代表党中央，向全国广大教师和教育工作者致以节日的祝贺和诚挚的慰问。总书记希望广大教师不忘立德树人初心，牢记为党育人、为国育才使命，积极探索新时代教育教学方法，不断提升教书育人本领，为培养德智体美劳全面发展的社会主义建设者和接班人作出新的更大贡献。亲切关怀心暖如春，殷殷嘱托催人奋进。习近平总书记充分肯定了全国广大教师在抗击疫情和“停课不停学、不停教”两条战线上作出的重要贡献，高度赞扬了人民教师在决胜全面建成小康社会之路上用爱心和智慧阻断贫困代际传递的高尚师德和责任担当，激励着广大教师不忘初心、持之以恒，为中国特色社会主义伟大事业育人育才，为实现中华民族伟大复兴凝魂筑梦。教师是立教之本、兴教之源。从身体力行弘扬尊师重教之风，到深入校园走访倾听教师心声，再到深刻阐释教育改革意见……习近平总书记始终高度重视教育工作，真切关心教师发展，亲自部署、亲自推动，全面深化新时代教师队伍建设改革，大力提高乡村教师补助待遇，全面完善中小学教师职称评定制度，以实际行动为广大教师排忧解难，以深化改革激励广大教师全身心投入教育事业，为新时代人民教师提供了广阔舞台。立业先立人，立人先立德。广大教师要不忘立德树人初心，坚持以德立身，自觉践行社会主义核心价值观，带头弘扬中华民族传统美德，为学生树立道德榜样；坚持以德立学，将严谨、严肃、严格的优良治学风气贯穿教育始终，在言传身教中引导学生正确对待知识和真理，教育其树立崇高理想、矢志报效祖国；坚持以德施教，在点滴生活、知识传授、价值评判等方方面面，使学生明大德、守公德、严私德，让道德力量内化于心、外化于行。教育的根本任务是立德树人。广大教师要牢记为党育人、为国育才使命，一方面，解决好“培养什么人”这个首要问题，坚持以习近平新时代中国特色社会主义思想为统领，把培养社会主义建设者和接班人作为根本任务，培养一代又一代拥护中国共产党领导和我国社会主义制度、立志为中国特色社会主义事业奋斗终身的有用人才；另一方面，要加强学习，增强知识储备，提升育人“内功”，同时与时俱进，不断改进教学手段，探索适应新时代的教学规律和方法，当好人类灵魂工程师，做好人类文明传承者。广大教师是打造中华民族“梦之队”的筑梦人。在新学期开学之际，各级党委和政府要牢记习近平总书记殷切嘱托，充分认识教育事业的重要地位，统筹做好常态化疫情防控和教育教学工作，确保全面复学、正常复学、安全复学，满腔热情关心教师，让教师真正成为最受社会尊重和令人羡慕的职业，在全社会营造尊师重教的良好风尚，让广大教师为党和国家事业发展培育更多永远听党话、跟党走的栋梁之材。\",\n\t\t\"time\": 0\n\t},\n\t{\n\t\t\"id\": 10,\n\t\t\"title\": \"\",\n\t\t\"summary\": \"\",\n\t\t\"content\": \"习近平同志在全国网络安全和信息化工作会议上就提高网络综合治理能力作出深刻阐述，为新时代加强网络综合治理提供了基本遵循。加强网络综合治理涉及方方面面，净化网络语言是其中不可忽视的重要内容。当前，互联网的发展正在深刻改变着语言使用生态，在“两微一端”、网络论坛等媒介中，新潮网络词汇随处可见。一些网络语言与时代发展相契合，犀利传神、精确达意，其流行对丰富语言表达是有积极意义的。但也应看到，网络语言存在泥沙俱下问题，低俗浮夸语言屡见不鲜。加强网络综合治理，需要多管齐下、多方发力净化网络语言。网络语言通常都想追求一种个性化表达，其使用主体大多是青少年网民。为了表达自我、彰显个性，他们往往打破规矩说话、不按套路书写，追求新奇和吸引眼球的效果，其中出现了一些值得重视的倾向。一是情绪化表达。一些网络语言片面追求情感宣泄，比较喜欢使用夸张、矫情的字眼。二是感觉至上。一些网络语言不讲究正确、精准、严谨，一切跟着感觉走，只要好玩、有趣就行，是否符合语言规则已不重要，数字、字母、表情符号、拼音、外文等都可以杂糅在一起。三是“无厘头”恶搞。一些网络语言并不追求有意义的表达，而是习惯于“无厘头”恶搞，有意无意地消解意义。四是戏谑性。一些网络语言倾向于调侃、戏谑，对社会共同价值理念和行为操守缺乏基本尊重。网络语言传播力强，不规范甚至低俗的网络语言绝非无伤大雅，实际上会对语言安全、文化安全、意识形态安全带来负面影响，需要引起高度警惕。一是导致“看不懂”。不规范网络语言的流行会使语言所承担的正常沟通功能受到影响，尤其是中老年网民往往看不懂青少年网民的网络语言，抓不住准确的语义和话语背后的情感色彩。二是导致“不会说”。一些青少年网民用外文字符、谐音字、数字随意替代汉字的书写形式，如不加以纠正，久而久之就会影响其语言的正确表达。三是导致“听不进”。语言能够塑造思维。不规范网络语言的流行会使价值风向标悄然发生变化，一些低俗网络语言会销蚀社会正能量，导致对青少年网民进行思想引导、价值引领的难度进一步加大。一些不良网络语言的传播，甚至会降低青少年对汉语的认同、对中华文化的自信。针对网络语言泥沙俱下的局面，亟须采取有效措施加以净化，进一步营造清朗网络空间。净化网络语言并非易事，需要多管齐下、多方发力，从源头、传播等方面入手。当前，尤须从以下几方面着力。一是可以定期公布汉语禁用词和慎用词清单。语言文字工作部门可以定期公布汉语禁用词和慎用词清单，重点对教育、新闻、出版、互联网有关行业中汉语使用情况进行规范约束。有关部门要对汉语非规范使用现象采取纠正措施。二是进一步加强中小学生汉语规范化教育。开展网络用语辨析教育，引导学生自觉抵制违反汉语规则的行为，清楚语言文字使用的“对错美丑”。学校可以组织演讲、征文等活动，引导学生热爱汉语、正确规范使用汉语。三是建立网络语言使用传播监管机制。加强技术手段的运用，重点对视频弹幕、网络游戏、社交平台等网络应用中的语言输入采取技术管理措施。媒体要增强语言把关意识，对综艺娱乐节目的主持、嘉宾等明确提出规范用语要求。四是加强对青少年的社会主义核心价值观教育。用青少年易于接受的方式，把枯燥的理论教学转化为活生生的事例引导和具体的活动感悟，引导青少年牢固树立文化自信，牢固树立社会主义核心价值观，自觉抵制庸俗的网络语言。比如，可以开设以汉语传播推广为内容的电视和网络节目，弘扬汉语言文化之美。《 人民日报 》（ 2018年06月05日   07 版）\",\n\t\t\"time\": 0\n\t},\n\t{\n\t\t\"id\": 11,\n\t\t\"title\": \"\",\n\t\t\"summary\": \"\",\n\t\t\"content\": \"美国副总统彭斯、国务卿蓬佩奥18日分别发表演讲，污蔑中国“压制”宗教自由，“侵犯”人权。作为美国政府高官，他们的言论罔顾事实，颠倒黑白，是打着宗教和人权的幌子，粗暴干涉中国内政，企图在中国制造分裂和混乱，无疑对中美关系造成严重冲击。以新疆与西藏为例来诋毁中国的民族宗教政策，一直是美方某些人的“兴趣点”。这次也不例外。彭斯和蓬佩奥在演讲中将新疆去极端化的职业技能教育培训中心歪曲成“再教育营”，污蔑中国对西藏佛教人士进行“迫害”。他们俩就像是偏执狂与睁眼瞎，根本看不到国际社会都承认的事实：在新疆，平均每530位穆斯林就拥有一座清真寺，总数量达到2.44万座；当地政府依法设立职业技能教育培训中心，设置以学习国家通用语言文字、法律知识、职业技能和去极端化为主要内容的教学课程，以教育挽救有轻微犯罪行为或违法行为人员，努力将恐怖活动消灭在未发之前、萌芽状态。截至目前，新疆已近3年没有发生暴恐案（事）件，这说明新疆设立教培中心等预防性反恐举措成效显著，深得民心。在西藏，宗教活动场所达1700多处，住寺僧尼4.6万多人，开办西藏佛学院、重视和保护藏传佛教各教派特有的活佛转世制度与宗教仪轨、出版大量宗教论著等举措都表明：西藏民众充分享有中国宪法所规定的宗教信仰自由。近年来，不少到过新疆、西藏并实地探访的多国外交官都认为，中国政府在人权保护、特别是对少数民族人权保护方面做了大量行之有效的工作。俄罗斯、沙特、巴基斯坦等37国常驻日内瓦大使最近联名致函联合国人权理事会主席和人权事务高级专员，积极评价新疆人权事业发展成就和反恐、去极端化成果。美国某些人根本没去过新疆与西藏，他们对当地宗教与人权保护的事实闭眼不看，对国际社会的公允评价蒙耳不听，一味醉心于编织各种谎言，以达到其不可告人的政治目的。但是，美国自己在宗教自由和人权保护上早就声名狼藉，哪有资格对他国的事指手画脚、说三道四？！目前，全美清真寺数量还不到新疆的十分之一，本届美国政府一上台便发布“禁穆令”，进一步恶化了美国国内少数族裔的宗教与人权状况。盖洛普和皮尤中心民调数据显示，美国42％的民众对种族关系感到极度担忧，75％的穆斯林认为美国社会对穆斯林存在严重歧视。美国这座自诩的“自由灯塔”都快熄灭了，有些政客居然还好意思出来公开表演，真是大言不惭，令人不齿。需要指出的是，中国宪法保障公民享有充分的宗教信仰自由，但同时绝不允许任何人利用宗教进行破坏社会秩序、损害公民身体健康、妨碍国家教育制度的活动。对于境外组织和个人打着宗教旗号、从事各种违反中国宪法和法律的活动，中国坚决反对并将依法处置。这是任何一个法治国家的正当做法。然而，美国有些人揣着明白装糊涂，采取“双重标准”，将中国依法处置宗教违法活动污蔑成“迫害”，甚至公然会见一些违法分子，为他们撑腰站台，干涉中国内政。这种基于一己私利的做法，不仅损害中美关系，也令美国名声进一步扫地，有损于美国自身利益。不久前，中美两国元首在大阪会晤，同意继续推进以协调、合作、稳定为基调的中美关系，同意在平等和相互尊重的基础上重启经贸磋商。近日，来自美国学术界、外交界、军界以及商界的人士联名发表一份致美国总统特朗普和美国国会的公开信，指出美国视中国为敌适得其反，华盛顿并不存在一个“同中国全面对抗的共识”。在这样的背景下，彭斯、蓬佩奥等美国一些人以宗教为名干涉中国内政的做法，既违背两国元首共识，也背离两国民意。无论他们出于何种企图，都绝不会得逞。中美合作是大势所趋、民心所向。彭斯和蓬佩奥等人作为美国高官，应当多做有利于促进中美关系发展的事情，而不是反其道行之。若他们一意孤行，只会令自身留下永久的历史污名。\",\n\t\t\"time\": 0\n\t},\n\t{\n\t\t\"id\": 12,\n\t\t\"title\": \"\",\n\t\t\"summary\": \"\",\n\t\t\"content\": \"新冠肺炎疫情形势严峻，战“疫”拐点尚未到来，返工潮和疫情扩散压力叠加下的“城市保卫战”，成为这场阻击战、总体战的战略重点之一。2月10日是复工日，大量务工人员返回北上广深和诸多大城市，“城市保卫战”已经打响，大城市社会治理能力面临又一场大考。城市是各类要素资源和经济社会活动最集中的地方，人口大量流动，人口产业高度集聚，高层建筑和重要设施高度密集，轨道交通承载量接近甚至超过负荷，既要防输入，又要防扩散。打赢遏制疫情蔓延的“城市保卫战”，迫切需要打好关口战、阵地战、街巷战，步步为营。打赢“城市保卫战”，首先要打关口战——关口不限于车站、地铁等地，还应前移到企事业单位甚至住宅小区门口，加强检测和管理，从源头上切断病毒肆虐的途径；“城市保卫战”的关键是阵地战——主阵地是定点医院和发热门诊，社区卫生服务中心和集中隔离点也是重要组成部分；“城市保卫战”的基础是街巷战——基础不牢，地动山摇，建立健全社区防控体系，是赢得这场疫情防控阻击战的重要环节。近期，由于各地优质医疗资源大规模驰援湖北，其他地方处于“紧平衡”状态，不容疏忽，更不容疫情失控。而在眼下，有的省份初期疫情风险较低，近期却开始加快，亟待加强防控措施，严防疫情扩散。当务之急，是要形成全社会动员、全方位部署、全民皆防控的局面。一方面要严格排查，一方面仍需多管齐下。比如，在严格防护前提下，可以复工复产，但符合居家办公条件的单位，应尽量让员工居家办公，减少密度聚集，减小会议规模。大疫当前，无度放松就是恣意放纵，每个人都需加强自我防护，确保自身不感染，就是给战“疫”贡献。无论是农业社会还是工业社会，应对疫情，我们都寄望于新药、新的治疗技术，但关键还是要建立包括预警、隔离等在内的严密防疫体系。面对严峻形势，有些城市已经行动起来：在深圳，住宅小区和城中村已全面实施人员通行认证管理；在北京，将进一步加强社区（村）疫情防控工作，严格居住小区（村）封闭式管理和抵京人员登记制度……早发现、早报告、早隔离、早治疗，才是硬道理。只有这样，才能早日实现新增确诊病例持续下降，早日迎来各地战“役”拐点，北京保卫战、深圳保卫战、上海保卫战乃至“国家保卫战”才能最终胜利。\",\n\t\t\"time\": 2.384185791015625e-7\n\t},\n\t{\n\t\t\"id\": 13,\n\t\t\"title\": \"\",\n\t\t\"summary\": \"\",\n\t\t\"content\": \"新冠肺炎疫情防控形势严峻复杂，如何实现疫情防控与社会运转的有效兼顾，在社会正常运转过程中解决疫情防控问题？近日召开的中央政治局常委会会议强调，在加强疫情防控的同时，努力保持生产生活平稳有序。这一要求，对于妥善处理疫情防控中出现的各类矛盾和问题，保障人民群众生产生活合理有序开展，具有重要指导意义。比如，当大多数人减少外出，确保各家各户蔬菜、肉蛋奶、粮食等生活必需品供应成为当务之急。相关部门必须加强物资调配和市场供应。又如，疫情当前，少数人造谣传谣、散布恐慌情绪，甚至利用疫情哄抬物价、囤积居奇，制售假劣药品、医用卫生材料。只有依法加强社会治安工作，严厉打击各类扰乱社会秩序的违法犯罪行为，才能维护好社会稳定和人民群众健康安全。流行病学专家曾光在接受媒体采访时表示，公共卫生工作不是在一个理想状态下做事情，要兼顾到社会正常运转的需求。社会的正常运转会为疫情防控提供必需的物质基础和可持续动力。没有社会必要的运转，疫情防控就会基础不牢、动力不足。反过来，科学、有效的疫情防控，也是为了最大程度保证社会正常运转。所以，防控措施必须充分兼顾疫情防控和社会运转的需求，在动态中实现二者的互相支撑、互相促进。前几天，某地农村为了防控疫情，把进出村子的路都堵死了，里面的车没法出去运饲料，外面的车也进不来，养鸡场数量不小的鸡面临饿死的危险。这不是孤例。一些没有发生疫情的社区封锁出入口，不允许返城人员正常进家；有的村子挖断进出村庄的道路，禁绝人的进出和物的流通……这些“用力过猛”的措施，既不符合法治要求，也不利于满足人民群众正常的生活需要。疫情面前，惟有做到精准施策，把防控要求落实落细，才能避免正常的生产生活需求被“误伤”。当此疫情防控紧要时刻，我们必须强化对疫情和病毒的科学认知，通过分类施策、精准施策，在严格防控疫情的基础上保障社会正常运转。兼顾疫情防控和社会正常运转，必须严格依法防控。习近平总书记强调：“当前，疫情防控正处于关键时期，依法科学有序防控至关重要。”对各级党委和政府而言，这意味着必须依法审慎决策，严格依法实施防控措施，坚决防止疫情蔓延。对人民群众而言，这意味着必须增强法治意识，依法支持和配合疫情防控工作。精准防控、依法防控，保障人民群众基本生活，才能确保防控工作有力有序、科学周密推进。\",\n\t\t\"time\": 2.384185791015625e-7\n\t},\n\t{\n\t\t\"id\": 14,\n\t\t\"title\": \"\",\n\t\t\"summary\": \"\",\n\t\t\"content\": \"5月22日下午，习近平总书记在参加内蒙古代表团审议时强调，“中国共产党根基在人民、血脉在人民。”“必须坚持人民至上、紧紧依靠人民、不断造福人民、牢牢植根人民，并落实到各项决策部署和实际工作之中，落实到做好统筹疫情防控和经济社会发展工作中去。”为什么人、靠什么人的问题，是检验一个政党、一个政权性质的试金石。人民立场是中国共产党的根本政治立场，是我们党作为马克思主义政党区别于其他政党的显著标志。坚持以人民为中心的根本立场，任何时候都把人民群众的利益放在第一位，这是中国共产党始终得到人民信赖和拥护的根本原因，也是这个百年大党带领亿万人民不断创造新奇迹的成功秘诀。与天下同利者，天下持之。擅天下之利者，天下谋之。中国共产党没有自己特殊的利益，党在任何时候都把群众利益放在第一位。“不惜一切代价”“无论年龄再大、病情再重我们都绝不放弃”，习近平总书记参加内蒙古代表团审议时的讲话，令人动容，体现了党全心全意为人民服务的根本宗旨，彰显了大国领袖的为民情怀。人民至上、生命至上，这是一个执政党对人民的深情与担当。在重大疫情面前，习近平总书记要求党员干部牢记人民利益高于一切，把人民生命安全和身体健康放在第一位，在全国范围调集最优秀的医生、最先进的设备、最急需的资源，全力以赴投入疫病救治，救治费用全部由国家承担，最大程度提高了检测率、治愈率，最大程度降低了感染率、病亡率，取得抗击疫情重大战略成果。求木之长者，必固其根本；欲流之远者，必浚其泉源。人民是我们党执政的最大底气，是我们共和国的坚实根基，是我们强党兴国的根本所在。在抗击新冠肺炎疫情过程中，习近平总书记多次指出，打赢疫情防控这场人民战争，必须紧紧依靠人民群众。在参加内蒙古代表团审议时，习近平总书记再次强调“人民是我们党执政的最大底气”。人民是历史的创造者，是决定党和国家前途命运的根本力量。革命年代，中国共产党带领和依靠人民以血肉之躯拯救民族危亡、捍卫民族尊严；建设岁月，中国共产党带领和依靠人民战天斗地、艰苦创业，在短时间内实现了社会主义制度的伟大跨越，用心血和汗水为经济社会发展打下了坚实基础；改革开放以来，中国共产党带领和依靠人民团结奋进、勠力同心，在历史前进的逻辑中前进，在时代发展的潮流中发展，实现了中华民族从站起来到富起来强起来的伟大飞跃，中华民族比历史上任何时期都更接近、更有信心和能力实现伟大复兴的目标。同人民风雨同舟、血脉相通、生死与共，是我们党战胜一切困难和风险、取得胜利的根本保证。利在一身勿谋也，利在天下者必谋之。利在一时固谋也，利在万世者更谋之。共产党就是为人民谋幸福的。习近平总书记参加内蒙古代表团审议时指出，“我们推动经济社会发展，归根到底是为了不断满足人民群众对美好生活的需要。”“党团结带领人民进行革命、建设、改革，根本目的就是为了让人民过上好日子，无论面临多大挑战和压力，无论付出多大牺牲和代价，这一点都始终不渝、毫不动摇。”中国共产党把为民办事、为民造福作为最重要的政绩，把为老百姓做了多少好事实事作为检验政绩的重要标准。党员、干部特别是领导干部要清醒认识到，自己手中的权力、所处的岗位，是党和人民赋予的，只能用来为党分忧、为国干事、为民谋利。只有始终坚守人民立场，牢固树立正确的权力观、政绩观、事业观，明确好政绩为谁而树、树什么样的政绩、靠什么树政绩，不慕虚荣，不务虚功，不图虚名，做让老百姓看得见、摸得着、得实惠的实事，做为后人作铺垫、打基础、利长远的好事，脚踏实地把既定的行动纲领、战略目标、工作蓝图变为现实，才能真正做到对历史和人民负责。党的根基在人民，人民是我们党执政的最大底气。我们党来自于人民，为人民而生，因人民而兴。共和国的根基在人民，人民是这个国家的主人，人民有无穷无尽、无难不克的主人翁力量！有了这样的力量，什么人间奇迹都能够创造出来！\",\n\t\t\"time\": 2.384185791015625e-7\n\t},\n\t{\n\t\t\"id\": 15,\n\t\t\"title\": \"\",\n\t\t\"summary\": \"\",\n\t\t\"content\": \"习近平总书记提出的加快形成新发展格局这一重大战略决策，具有极其重大的战略意义。这是顺应世界正经历百年未有之大变局、服务于中华民族伟大复兴的战略全局，根据我国发展阶段、环境、条件变化作出的战略决策，是事关全局的系统性深层次变革。从“十四五”时期及更长远未来发展趋势看，加快形成新发展格局的关键在于如何畅通国民经济循环。其着力点就在于以更深层次改革，推动构建中国完整的内需体系。一、新发展格局充分反映现代经济活动的本质要求和发展趋势第一，新发展格局强调的是经济循环，具有系统性和动态性，更能反映经济活动的本质。无论是从生产、分配、交换、消费各个经济环节看，还是从要素及产品市场的供给—需求经济分析框架看，经济活动都不是孤立存在的，而是一个动态的、周而复始的过程，是一个基于价值增值的信息、资金和商品（含服务）在居民、企业和政府等不同主体之间的流动循环。为此，新发展格局提出的是一个在社会分工基础上的系统动态协同战略。第二，新发展格局强调“以国内大循环为主体”，并不意味着对参与国际大循环的否定。这不仅仅是因为新发展格局必然要求国内国际双循环相互促进，更因为当前国内经济循环还存在诸多堵点、淤点，亟待通过畅通双循环推动经济高质量发展。单从数量看，我国进出口贸易依存度已经从2006年的峰值64％降低到2019年的32％左右，这在一定程度上似乎说明中国已经是国内大循环为主体、国内国际相互促进的发展格局了。但是，这显然不是中央所要求的“新发展格局”。实际上，“新发展格局”的战略意义在于把发展的立足点更多放到国内来，通过畅通国内大循环为中国经济发展提质增效、培育新动能，从而主动加速国际大循环、带动世界经济复苏，最终形成以国内大循环为主体、国内国际双循环相互促进的新发展格局。第三，形成“国内大循环为主体”的新发展格局，必须坚持扩大内需战略。但是，站在新的起点上，对扩大内需的政策内涵不能仅仅理解为“扩大总需求”；如果仅仅理解为“扩大总需求”，那么就意味着这个“格局”并不“新”。回顾2006年的“十一五”发展规划，就强调立足扩大国内需求推动经济发展，把扩大国内需求特别是消费需求作为基本立足点。今天，我们要以扩大内需推动形成新发展格局，其政策内涵一定包括深化供给侧结构性改革。2018年12月召开的中央经济工作会议，提出了供给侧结构性改革的“巩固、增强、提升、畅通”的八字方针，其中“畅通”就是要求畅通国民经济循环，加快建设统一开放、竞争有序的现代市场体系、提高金融体系服务实体经济能力，形成国内市场和生产主体、经济增长和就业扩大、金融和实体经济良性循环。在这个意义上，通过畅通国民经济循环形成“新发展格局”，其政策内涵包括了供给侧结构性改革的深化，使生产、分配、流通、消费更多依托国内市场，提升供给体系对国内需求的适配性，形成需求牵引供给、供给创造需求的更高水平动态平衡。二、完善内需体系，畅通国民经济循环具体而言，应该从构建现代市场体系、现代产业体系、收入分配体系和新型消费体系几个方面改革入手完善内需体系、畅通国民经济循环。第一，加快完善社会主义市场经济体制，深入推进要素市场化改革，加快构建统一开放、竞争有序的现代市场体系。经济循环畅通与否，最为关键的因素是市场体系的健全程度与运行效率。在现代社会复杂分工体系下，频繁的市场交易活动构成了产品、资金、劳动力、土地、技术、数据等在各个经济主体之间不停地循环流动。市场主体数量和类型、市场进入与退出障碍、政府与市场的关系、市场主体参与市场竞争的规则、政府规制与反垄断法等，都会影响市场效率，进而决定了整体经济循环是否畅通。统一开放、竞争有序，是现代市场体系的基本要求，也是经济循环畅通的根本保证。当前，我国建设现代化市场体系、完善社会主义市场经济体制，就要围绕公平竞争建立市场体系高效运行的基础规则，保证市场主体之间公平竞争，充分发挥竞争政策的基础性作用。一是坚持“两个毫不动摇”，营造各类所有制主体依法平等使用资源要素、公开公平参与竞争，同等受法律保护的市场环境。二是正确处理产业政策与竞争政策关系，积极推进产业政策转型，充分发挥竞争政策的基础性作用，落实公平竞争审查制度，加强和改进反垄断和反不正当竞争执法。三是通过更大范围、更高水平的市场开放，加强知识产权保护、强化竞争政策等，努力营造国际一流营商环境，使国外更加依赖中国的产品消费市场和要素供给市场。四是积极探索生产要素市场化配置的体制机制，实现要素价格市场决定、流动自主有序和配置高效公平。五是加快建设现代流通体系，完善国内统一大市场，形成商品和资源有效集散、高效配置、价值增值统一开放的交通运输市场，统筹推进现代流通体系硬件和软件建设，发展流通新技术新业态新模式，实现分工深化、交易扩大、供需互促、产销并进、效率提升的经济良性循环。第二，加快完善科技和产业创新体制机制，提高金融服务实体经济能力和高质量实体经济供给能力，加快建设创新引领、协同发展的现代产业体系。从产业体系角度看，一个突出问题是实体经济产业与虚拟经济产业发展不平衡，经济“脱实向虚”趋势明显，金融业和实体经济产业之间资金循环仍存在堵点和淤点；从产业链角度看，我国高技术产业链和高附加值产业环节占有不足，产业基础能力和产业链现代化水平亟待提升，在“工业四基”上存在着大量“卡脖子”问题，极大影响产业链供应链的安全性稳定性。针对上述制约问题，需要通过深化科技和产业创新体制机制改革，加快建设实体经济、科技创新、现代金融、人力资源协同发展的现代产业体系。一是深化科技和教育体制改革，高度重视基础研究、共性技术、前瞻技术和战略性技术的研究，形成从基础研究到应用研究完整的创新体系，努力修补创新链，弥补技术研发与产业化之间的创新链缺失，提高科技成果转化率。二是深化产业创新体制改革，建立产业基础能力评估制度，分析创新链、供应链、产业链和价值链分布，在生产制造层面围绕“工业四基”集成要素、优化流程、培育人才，完善试验验证、计量、标准、检验检测、认证、信息服务等基础服务体系。构建开放协同产业创新网络，有效发挥中小企业在提升工业基础能力和产业链水平的作用。三是深化金融供给侧结构性改革，强化支付结算等金融基础设施建设，提供更多直达各流通环节经营主体的金融产品。四是把握智能化、高级化、绿色化和服务化的产业转型升级方向，加快推进新型工业化和新型城镇化进程，加快新型基础设施建设。第三，坚持和完善社会主义收入分配制度，切实提高居民收入水平，建立和完善体现效率、促进公平的收入分配体系。居民收入水平直接决定了居民消费能力，进而影响着国家的内需消费潜力。如何合理调节城乡、区域和不同群体之间的收入水平，增加低收入者收入，扩大中等收入群体，调节过高不合理收入，都是深化收入分配制度改革的重要任务，也是完善内需体系、畅通我国经济循环在收入分配领域的重要要求。“按劳分配为主体、多种分配方式并存”是社会主义基本经济制度的重要内容之一，需要在深化收入分配制度改革中坚持和不断完善。一是正确处理国家、企业和个人之间的关系，保证居民可支配收入增速与经济增长基本同步。二是坚持就业优先的政策导向，积极拓展就业渠道，鼓励创新创业，切实提高居民就业水平和质量，做好“稳就业”各项工作。三是积极拓展居民投资理财渠道，健全通过劳动、资本、土地、技术等生产要素获取报酬的市场化机制。四是继续推进减税降费，尤其是在不明显减少稳定宏观税负的基础上继续推进结构性减税降费，加大对居民收入的减税、退税力度，适度提升个税起征点和最低工资水平。五是健全以税收、社会保障、转移支付等为主要手段的再分配机制，大幅提高基本公共服务水平和均等化水平。第四，加快完善促进消费的体制机制，挖掘国内消费潜力，在新型城镇化中加快消费转型升级、塑造新型消费体系。国民经济循环中的最后环节体现在消费上，人民日益增长的美好生活需要最为直接的体现也是居民消费。消费体系无疑对于扩大内需、畅通国民经济循环具有最终牵引效应。我国正处于工业化后期和城镇化中期阶段，居民消费快速转型升级。今年新冠肺炎疫情冲击使得居民消费受到了巨大的影响，但是线上线下融合趋势加强，数字化消费迅速扩张。然而，长期以来制约消费体系转型升级的体制机制问题一直没有得到有效解决，严重抑制了消费的转型升级。推进消费转型升级、塑造新型消费体系，一是要积极推进新型城镇化进程，加快释放巨大的消费潜力；二是要构建政府自身消费与社会性消费、公共消费与居民消费、公共消费与公共投资三方面平衡的消费体系，合理增加公共消费，尤其重视教育、医疗、社保和就业等方面的公共支出，为持续释放居民部门消费需求创造条件；三是要加快新型消费基础设施建设，多措施大力促进消费数字化转型，一方面继续促进网上购物等新型商业业态的发展，另一方面借助“新基建”，不断开发新的网络消费形态和服务场景；四是要加快完善有利于新型消费体系建设的体制机制，为消费者营造放心消费、敢于消费的制度环境，抑制房价和居民杠杆率的继续上涨，积极推进消费领域的信用体系建设，优化市场监管机制，提升市场监管效能，实现信息共融共享，推动消费经济高质量发展。（作者系中国社会科学院经济研究所所长、中国社会科学院习近平新时代中国特色社会主义思想研究中心研究员）\",\n\t\t\"time\": 2.384185791015625e-7\n\t},\n\t{\n\t\t\"id\": 16,\n\t\t\"title\": \"\",\n\t\t\"summary\": \"\",\n\t\t\"content\": \"突如其来的新冠肺炎疫情，不仅是对医药卫生领域的一场大考，也是对新闻舆论工作的一次考验。对于各类媒体尤其是主流媒体而言，如何适应公众获取信息渠道的变化，正面引领、回应关切、澄清谬误，是疫情期间的一道考题。通过创新传播，成为抗疫信息传播与舆论导向的引领者，发挥好“定海神针”作用，是主流媒体的应尽之责。疫情发生以来，中央媒体在新媒体领域快速出击，将轻量化的新媒体产品作为重要信息发布窗口，通过多元信息产品满足群众需求，形成强大主流声音和立体化的传播格局，其中的不少经验值得总结。主流媒体必须主动发声，把握正向价值引导，有序做好信息传播分发。在疫情防控的新媒体报道中，各大媒体及时传递中央精神，不断提升主流媒体的声量。同时，相关媒体搭建信息高效聚合平台，利用专题化模块，融汇图文视频等多种形式，克服了传统媒体在报道频度和篇幅上的局限。比如，使用数据可视化等技术，让疫情走势数据图“动”起来，让用户更快更直接地获取信息。习近平总书记强调，“要多层次、高密度发布权威信息，正视存在的问题，回应群众的关切，增强及时性、针对性、专业性，引导群众增强信心、坚定信心”。落实好这一重要要求，主流媒体必须及时发布权威信息，满足群众信息刚需。在移动社交网络中，每个用户都是疫情信息传播的节点。主流媒体应充分利用权威专业渠道，通过专家采访、科普图文等形式，填补人们的知识盲区，把影响力渗透到千家万户。疫情期间，面对患者及其家属、承受巨大压力的一线工作者、居家生活的群众，主流媒体也需要通过适当形式，加强心理疏导和心理干预，帮助他们稳定情绪、调剂生活。“人民好医生”平台开通公益心理援助专线，为网友提供专业心理服务；“武汉加油”视频众筹，鼓舞人们共克时艰；“客厅战‘疫’舞”挑战活动，满足居家群众娱乐健身需求……各大媒体立足情感抚慰，探索用户参与度较高的形式，在温暖人心、寻求共鸣的同时，帮助人们纾解压力、丰富居家生活，为媒体融合创新提供了新的参考。疫情是新闻舆论工作的大考，也是媒体生产方式变革的契机。复杂的舆情、海量的信息，考验着媒体的应急反应能力、报道策划能力及融合创新能力。更好守护正向价值、创新融合传播，尤其在新媒体生产传播领域不断提质升级，主流媒体才能更好强信心、暖人心、聚民心，为打赢疫情防控阻击战提供助力。（作者系北京市习近平新时代中国特色社会主义思想研究中心研究员，中国传媒大学电视学院教授）\",\n\t\t\"time\": 0\n\t},\n\t{\n\t\t\"id\": 17,\n\t\t\"title\": \"\",\n\t\t\"summary\": \"\",\n\t\t\"content\": \"人生在世，生死问题，看似平常，但在面临重大抉择之时，能否直面险境、一往无前，其实并不简单。“生，我所欲也；义，亦我所欲也。二者不可得兼，舍生而取义者也”。连日来，面对蔓延肆虐的病毒疫情，无数战斗在一线的防控斗士选择在重大关头的向死而生，体现在价值观上就是不畏艰难、英勇奋斗、敢于牺牲的民族精神。取义成仁的民族气节。纵览一部中华文化史，杀身成仁、舍生取义，是数千年来中华优秀传统文化的精髓之一，也是古往今来激励无数仁人志士保家卫国的重要核心价值观念。在世界文明史上，古老的中华文明一路逶迤而来，虽饱经磨难，而终能薪火相传、屡开新境，正是得益于中华民族强大的文化基因。鲁迅先生说得好，“我们自古以来，就有埋头苦干的人，有拼命硬干的人，有为民请命的人，有舍身求法的人……这就是中国的脊梁”。如今，“取义成仁”已经成为新时代中华民族精神谱系的鲜亮底色。直面新冠肺炎这个“魔鬼”，从中央到地方，从各级党委政府到人民群众，从广大医务工作者到大批社区工作者……中华民族越是艰险越向前的英雄赞歌震撼人心。义无反顾的牺牲精神。在中国传统文化里，国家兴亡、民族存续、民众福祉所系就是最大的公义所在。疫情面前，火神山医院建设开工不足10日就拔地而起，有媒体惊叹“中国速度背后，凝结着7000个不要命的建设者的共同努力”。其实，这“7000个不要命的建设者”不过是这场声势浩大的“人民战争”的一个缩影。疫情就是命令，防控就是责任。庚子新春之际，面对突如其来的新冠肺炎疫情，在习近平总书记亲自部署指挥下，在党中央集中统一领导下，医疗卫生战线全力以赴，解放军官兵紧急驰援前线，全国各地人员和物资快速调动起来，在极短时间内铸就了空前的民族凝聚力和强大的意志力，以必胜的信念共同对付新冠肺炎，生动地展现了中华民族的伟大牺牲精神。敢于斗争的豪迈气度。正如世人看到的那样，因为疫情，武汉、湖北乃至全中国都成为了舆论关注的焦点所在，世界卫生组织将其定为“国际关注的突发公共卫生事件”，但身处疫情一线的人们不仅没有退缩，而是在党中央的集中统一领导下，愈加万众一心、和衷共济，展现出克服一切困难去争取胜利的必胜信念和豪迈气度。回顾历史，不难看出，与世界上其他一些文明相比，中国人赖以生存的环境其实十分恶劣，历朝历代可以说都是强敌环伺，因为“敌国外患”，加上时不时发生的地震、洪涝、瘟疫、内乱等天灾人祸，但在无数艰难险阻、惊涛骇浪面前，中华文明没有中绝，而且成为世界各大古文明中唯一绵延至今的文明，正是在于深植于中国人骨子里那种不怕鬼、不信邪、不屈不挠、敢于胜利的强大民族精神。追求大我的道德境界。对于生死，在《为人民服务》中，毛泽东借用司马迁的话“人固有一死，或重于泰山，或轻于鸿毛”，接着他讲“为人民利益而死，就比泰山还重”。这清楚表明了以马克思主义为思想指南的中国共产党人持有的“生死观”，就是自觉地“把有限的生命投入到无限的为人民服务之中去”。在这场疫情阻击战中，成千上万的共产党员以及众多来自四面八方的民众，他们克服对疫情肆虐的恐惧，毅然舍小家顾大家、置生死于度外，奔赴战役最前沿，以壮烈的实际行动践行了“我将无我”的价值原则，向全世界展现了中国共产党领导下的中国人民所具有的道德风范。只争朝夕的人生态度。习近平总书记在主持中央政治局常委会时强调“要同时间赛跑、与病魔较量，坚决遏制疫情蔓延势头，坚决打赢疫情防控阻击战”。兵贵神速。这次疫情暴发从时空上看的确有些突然，但对于已经成为历史主人翁的新时代中国人民和中华民族来讲，在具有高度历史自觉的“带头人”——中国共产党人的指挥和部署下，正在打一场世所罕见、超高效率的人民战争。完全可以预见的是，在一个具有强烈历史责任感和时代紧迫感的马克思主义执政党的坚强领导下，最广泛地动员、组织和凝聚起人民群众，跑在时间前面、赢得与病魔较量最终胜利的，必是属于只争朝夕的我们。（立言）\",\n\t\t\"time\": 0\n\t},\n\t{\n\t\t\"id\": 18,\n\t\t\"title\": \"\",\n\t\t\"summary\": \"\",\n\t\t\"content\": \"近日，习近平总书记就安全生产作出重要指示强调，当前，全国正在复工复产，要加强安全生产监管，分区分类加强安全监管执法，强化企业主体责任落实，牢牢守住安全生产底线，切实维护人民群众生命财产安全。不久前，中共中央政治局常务委员会召开会议，也明确强调要抓实安全风险防范各项工作。安全生产事关经济社会发展大局。当此复工复产加速推进之际，习近平总书记的重要指示精神极具针对性、警示性、指导性。在夺取疫情防控和全面建成小康社会“双胜利”的进程中，各地更需要时刻绷紧安全生产这根弦，正确处理好安全与发展的关系，抓实抓细复工复产安全防范工作，坚决守住安全生产底线。祸患积于忽微，安全失于大意。总体上，我国安全生产形势持续向好，但最近一段时间连续发生的安全事故，看似突发、意外，背后却多缘于疏忽、麻痹，教训深刻，必须引以为戒。特别是在经济遭受疫情冲击之后，为夺回损失，复工复产中容易出现“重生产、轻安全”的急迫心态，安全监管有可能发生“走过场、摆样子”的敷衍问题。疏忽大意从来是安全生产的大忌，各地要警钟长鸣，把安全生产摆在重要位置，容不得半点马虎，由不得丝毫放松，时刻保持警惕，守住底线。思想上“绷紧弦”，工作中要“拉满弓”。行动上，要坚持问题导向，聚焦重点领域，深入排查各领域各环节安全生产隐患，把解决问题、推动企业主体责任落实作为整治的关键，层层压实责任，狠抓整改落实，确保见到实效；法律上，要加强监管执法力度，彰显法律权威，形成震慑效应；制度上，要加快建立健全安全生产责任和管理制度体系、隐患排查治理和风险防控体系，全力根除事故隐患，有效遏制重特大事故发生。生命至上，安全第一。当前，全国正处于统筹推进新冠肺炎疫情防控和复工复产的关键时期，安全生产责任重大。各级党委和政府要坚持未雨绸缪，做好充足准备，以扎实有效的措施持续推进安全生产治理体系和治理能力现代化，不断增强人民群众的获得感、幸福感和安全感，为夺取疫情防控和经济社会发展“双胜利”营造稳定的安全生产环境。\",\n\t\t\"time\": 0\n\t},\n\t{\n\t\t\"id\": 19,\n\t\t\"title\": \"\",\n\t\t\"summary\": \"\",\n\t\t\"content\": \"习近平总书记指出，国有企业是中国特色社会主义的重要物质基础和政治基础，是党执政兴国的重要支柱和依靠力量。坚持党的领导、加强党的建设是国有企业的“根”和“魂”，是我国国有企业的光荣传统和独特优势。近日，中共中央印发《中国共产党国有企业基层组织工作条例（试行）》，对国有企业党组织工作作出全面规范，为新时代加强国有企业党的建设提供了基本遵循。现代经济发展表明，企业强则国家强。我国发展需要一大批优秀企业，国有企业在其中的作用不可替代。办好国有企业，党的领导、党的建设在企业精神、领导力、队伍建设等方面发挥着重要作用。全国国有企业现有基层党组织80多万个、党员1000多万名、在岗职工4200多万人。总体上这支队伍是坚强有力的。党的十八大特别是全国国有企业党的建设工作会议以来，国有企业管党治党意识和责任明显增强，党的领导弱化、党的建设缺失、从严治党不力状况明显改观，改革发展取得明显成效。但与全面从严治党的要求相比，与国有企业肩负的责任使命相比，国有企业党的建设还有较大的提升空间。推动国有企业深化改革，增强国有经济竞争力、创新力、控制力、影响力、抗风险能力，为做强做优做大国有资本提供坚强政治和组织保证，使国有企业成为党和国家最可信赖的依靠力量，国有企业党建大有可为，也必有作为。必须坚持和加强党对国有企业的全面领导。党政军民学，东西南北中，党是领导一切的。国有企业是党领导的国家治理体系的重要组成部分，理所当然要坚持党的领导。党对国有企业的领导是具体的，要把党建工作要求写入公司章程，明确党组织研究讨论是董事会、经理层决策重大问题的前置程序，实行“双向进入、交叉任职”领导体制，充分发挥国有企业党委（党组）把方向、管大局、保落实的领导作用，确保企业广大党员干部职工始终听党话、跟党走，确保国有企业国有资产牢牢掌握在党和人民手中。必须坚持和完善中国特色现代企业制度。中国特色现代企业制度，“特”就特在把党的领导融入公司治理各环节，把企业党组织内嵌到公司治理结构之中。要注意厘清国有企业党组织和董事会、监事会、经理层等其他治理主体的权责，形成各司其职、各负其责、协调运转、有效制衡的公司治理机制。党组织既不能缺位失位，也不能越位错位。必须明确，借口建立现代企业制度否定或取消党的领导无疑是错误的，但把党组织直接作为企业生产经营的决策和指挥中心也不符合企业党组织的功能定位。必须坚持和推动党建工作与企业生产经营深度融合。国有企业党建工作脱离生产经营就没有了生命力，就会成为“两张皮”。要积极适应新形势新任务新要求，找准企业基层党组织服务生产经营、凝聚职工群众、参与基层治理的着力点，推进基层党建理念创新、机制创新、手段创新，在基本组织、基本队伍、基本活动、基本制度上下功夫，严密企业党的组织体系，增强政治功能和组织力，充分发挥党支部战斗堡垒作用和党员先锋模范作用，以高质量党建工作推动企业各项生产经营任务落实，以企业改革发展成果检验党组织工作成效。\",\n\t\t\"time\": 0\n\t},\n\t{\n\t\t\"id\": 20,\n\t\t\"title\": \"\",\n\t\t\"summary\": \"\",\n\t\t\"content\": \"“坚持一切合作都在阳光下运作，共同以零容忍态度打击腐败。我们发起了《廉洁丝绸之路北京倡议》，愿同各方共建风清气正的丝绸之路。”在第二届“一带一路”国际合作高峰论坛上，习近平总书记在开幕式发表主旨演讲，再次提及“廉洁之路”。将“一带一路”建设成为廉洁之路是习近平总书记在2017年5月举行的首届“一带一路”国际合作高峰论坛上提出的明确目标。两年来，中国在廉洁之路建设方面开展了卓有成效的工作，赢得了国际各方广泛认可。在第二届高峰论坛上，“廉洁丝绸之路”首次成为一个正式的分论坛，以“共商共建共享廉洁丝绸之路”为主题，探讨建设风清气正的营商环境，提升企业廉洁合规经营能力，共建“一带一路”反腐败和法治交流合作平台。这一系列重大举措，充分体现了中国对“一带一路”建设过程中树立廉洁意识、加强反腐败国际合作的高度重视，更彰显了中国推进建设廉洁之路的决心和信心。建设廉洁之路是“一带一路”参与国家和地区的共同价值追求。“一带一路”倡议是推动构建人类命运共同体的重要实践平台，是促进不同国家和地区共同发展、实现共同繁荣的合作共赢之路。这一倡议的顺利推进与合作项目的有效实施都与廉洁建设密不可分。中国作为“一带一路”倡议的发起国，明确提出建设廉洁之路的目标，是我们向国际社会做出的庄严承诺。在“一带一路”实践过程中，廉洁理念是各方对参与“一带一路”建设的包括中国企业在内的世界各国各地区企业的共同期望，已经成为“一带一路”沿线国家和地区的共同意愿。特别是通过这次廉洁丝绸之路分论坛的举行，廉洁理念更是成为联结“一带一路”的价值纽带，成为推动“一带一路”建设快速健康发展的价值力量。建设廉洁之路是推动加强反腐败国际合作的生动实践。由于不同国家和地区的政治体制、法律制度和文化传统具有很大差异，因此对于腐败和贿赂的界定与认识也会存在明显不同。对于跨国企业来说，在境外的经营与本土有所不同，企业监管的难度也会增加，跨国业务则更加容易滋生腐败。这就需要通过反腐败国际合作的形式进行有效治理。建设廉洁之路目标的提出为进一步深化反腐败国际合作提供了有利契机，中国在这方面已经发挥了良好的表率作用。《倡议》中，明确呼吁要加强对“一带一路”合作项目的监督管理，加强企业自律意识、法律意识和责任意识，坚决抵制商业贿赂行为等，这些举措都是凝聚反腐败国际共识、推进反腐败国际合作的具体实践。建设廉洁之路，传递中国反腐败声音，为世界贡献中国智慧。中国高度重视建设廉洁之路，不仅体现出中国作为“一带一路”倡议发起国的责任与担当，同时也反映了中国在反腐败方面的坚定自信。党的十八大以来，在以习近平同志为核心的党中央的坚强领导下，中国的反腐败工作取得了有目共睹的显著成效，廉政治理体系得到了前所未有的创新发展，开拓探索出了一条具有中国特色的日益完善的反腐败道路。这一系列成绩的取得让我们有充足的底气、坚定的信心推动建设好廉洁之路。中国在反腐败方面取得的宝贵经验，对其他国家和地区，特别是对发展中国家、转型国家具有重要的启发意义。在“一带一路”倡议的合作框架下，中国能够更好地将中国反腐败故事播撒在新时代的丝绸之路上，能够更好地为反腐败国际合作贡献中国智慧、分享中国方案。（作者系清华大学廉政与治理研究中心主任、公共管理学院教授）\",\n\t\t\"time\": 0\n\t},\n\t{\n\t\t\"id\": 21,\n\t\t\"title\": \"\",\n\t\t\"summary\": \"\",\n\t\t\"content\": \"关于阅读的意义，习近平总书记深刻指出，人民群众多读书，我们的民族精神就会厚重起来、深邃起来。要提倡多读书，建设书香社会。在《之江新语》一书中，他深有感触地写道，“要真正把读书当成一种生活态度、一种工作责任、一种精神追求、一种境界要求” 。疫情之下，社交距离暂时被扩大，许多人与书本的距离，因为“宅”被拉近。因为阅读，许多恐惧、紧张和悲观的情绪得以释放，进而通过思维的天马行空，渐渐找回希望、信心和温暖，从阅读中获得了不一样的“免疫力”。在算法越来越被依赖、信息越来越碎片化，保持深度阅读的能力和习惯，才是我们建构完整精神世界，拥有独立思考能力的最优解。这也是为何，在又一个世界读书日到来之时，我们想认真地提醒，千万别抹去那些从阅读中汲取前行力量的记忆，继续下去，让“爱读书、读好书、善读书”成为一生的习惯，每个人都要努力成为书香社会的一分子。许多爱书人士都说，阅读习惯的养成，正始于孩提时代。第一次对阅读萌发兴趣，往往就始于牙牙学语之时，耳旁响起的父母读出的一段段文字。越来越多的家长也开始意识到，始于人之初的引导，大概率会让阅读的好习惯伴随孩子一生。正因为这越来越成为社会共识，全国妇联自2016年起，已连续4年在亿万家庭中开展的“书香飘万家”家庭亲子阅读活动，才会如此深入人心，成为让4.3亿家庭积极实践亲子阅读的“最强推广者”。无论是手捧纸质书、掌“握”或耳听电子书，都无碍我们将阅读视为“心头好”。重要的是，成长与前行的路上，我们需要一直与知识为伴。\",\n\t\t\"time\": 2.384185791015625e-7\n\t},\n\t{\n\t\t\"id\": 22,\n\t\t\"title\": \"\",\n\t\t\"summary\": \"\",\n\t\t\"content\": \"在基层工作头绪多、任务重、难度大的情势下，基层干部如何纾解工作压力，接好招、干好事、能胜任、打赢各项攻坚战？这不仅涉及“技”的掂量，更要注重“道”的抉择，考验着基层干部的工作智慧。从认识、理念、思维、策略等方面着手练好内功，才能由被动接受压力转为主动纾解压力，闯出基层工作新路子。纾解压力的首要任务是调动个人的主观能动性，把待人、律己、做事、立业四个关键问题想清楚。待人要谈胸怀，“和而不同才能仁者爱人”，特别是对待群众多元化的诉求，用民主协商的办法凝聚人心，画好同心圆。律己要谈执行，“以上率下才能不令而行”，只有时时处处事事都有带头示范意识，才能真正得到组织认同、干部认同、群众认同。做事要谈大局，单兵冲锋模式解决问题的时代已经过去，只有政府、群众、社会等多方力量承担起各自应尽之责，才能破解基层难题。立业要谈改革，新时代社会主要矛盾已经发生变化，基层工作要紧跟形势变化，深入开展调查研究，找准问题症结，破立并举，打开工作新局面。理念是行动的先导。抓住工作的龙头，关键是树立四个方面的工作理念。一看精神面貌，敢不敢迎难而上动真碰硬、敢不敢自我加压变“乱”为“治”、敢不敢示范引领走在前列；二看工作标尺，能否出于公心、为了公众、促进公平；三看工作目标，可不可以马上就办、一抓到底；四看实现路径，有没有充分依赖信任班子成员、干部队伍、群众智慧。时常对照这四个层面的工作理念找差距，便能及时发现并解决工作中精神懈怠、标准不高、精力不足等问题，从千头万绪的工作中理清思路、轻装上阵。破解基层难题的关键是摒弃僵化思维，要把握好八种思维方法，提升解决复杂问题的能力。一要有底线思维。规矩和纪律是带电的高压线，必须划红线、知敬畏。二要有法治思维。落实法无授权不可为、法定职责必须为的要求，严格规范公正文明执法，用法律手段调节多元利益纠纷。三要有开放思维。最大限度汲取开门办公的营养，集众力、聚众智。四要有数据思维。汇聚数据既是精细化管理的基础工作，也是工作创新的源头活水，更是科学决策、精准决策的基本要求，需要在工作中不断强化。五要有依据思维。本着对工作高度负责的态度，追溯工作依据，避免工作拉抽屉、做无用功。六要有标准思维。各项工作有规范，组织才能高效、有序运行。七要有节俭思维。对待财政资金要精打细算，切实用好用活。八要有风险思维。牢记习近平总书记关于增强忧患意识、防范风险挑战的要求，结合本职岗位职责系统梳理风险点，主动防范。从策略角度来看，要辩证把握好三个关系。一是“争”与“不争”的关系，争责不争功、争活不争利。二是“快”与“不快”的关系，以群众意见为首要标准，多数群众支持的事立马就干，多数群众还有意见的事必须缓一缓。三是“看”与“不看”的关系，用欣赏的眼光看人优点，用包容的心态看人缺点。基础不牢，地动山摇。基层干部作为党联系百姓的末梢神经，学会弹钢琴，提高工作艺术，调整工作心态，才能实现与百姓最近、与百姓最亲。 《 人民日报 》（ 2018年02月01日   05 版）\",\n\t\t\"time\": 0\n\t},\n\t{\n\t\t\"id\": 23,\n\t\t\"title\": \"\",\n\t\t\"summary\": \"\",\n\t\t\"content\": \"初夏时节，水清鱼跃，岸绿景美。不久前，湖北、安徽、江西、湖南、重庆五省（市）在湖北武汉签署《长江流域重点水域“十年禁渔”联合执法合作协议》，明确了联席会商制度、执法联络员制度、联合巡查机制等内容，提出在深化执法合作、完善协同机制上下功夫，共同落实好长江十年禁渔的工作安排。习近平总书记强调：“长江禁渔是为全局计、为子孙谋的重要决策。”作为我国在生物多样性方面最具典型性的一条生态河流，长江拥有独特的生态系统，是我国重要的生态宝库。然而一段时间内，受过度捕捞等活动的影响，长江水域珍稀特有物种持续衰退，经济鱼类资源量接近枯竭。去年11月，习近平总书记在江苏南通考察调研时指出：“长江‘十年禁渔’是一个战略性举措，主要还是为了恢复长江的生态。10年后我们再看效果。”以空前严格的措施实施禁渔，关乎长江水生生物多样性。今年1月1日起，长江流域重点水域“十年禁渔”全面启动。11.1万艘渔船、23.1万渔民已退捕上岸，助力长江休养生息。事实上，早在10多年前，我国就对长江分区域分时段实施禁渔，对水生生物的保护初见成效。近年来，各地坚持“共抓大保护、不搞大开发”战略部署，长江禁捕退捕的范围日渐扩大、力度日益强化。经过沿江省市和有关部门前一阶段的共同努力，长江禁捕退捕已经取得阶段性成效。如何在前期成果的基础上，由阶段性禁捕变成常态化监管，由全面退捕向全面禁捕阶段转变？这对接下来的工作提出了更高要求。令行禁止应出重拳。确保“十年禁渔”取得实效，需要全面加大对非法捕鱼的打击整治力度，坚决消除非法捕捞隐患。今年以来，沿江各地持续开展专项打击整治行动。仅1月至3月，沿江省市就出动渔政执法人员36.06万人次、执法船艇3.21万艘次，检查水产品销售经营点8.13万个，清理涉渔“三无”船舶3374艘，清理违规网具4.1万顶，查办案件1848起，查获涉案船舶458艘，查获涉案人员1968人。“江上打、陆上堵、市场查”的高压态势，全天候、全覆盖、无死角执法监管彰显了禁捕退捕的决心，形成了强大震慑。长江禁渔需要雷霆万钧之势，更要有“十年磨一剑”的坚持，以健全的长效机制、完善的配套措施，巩固成果、持续推进。这离不开从相关部门到全社会的协调配合。今年以来，各地检察机关既依法惩治非法捕捞行为，又促进综合运用刑事、行政、经济手段推动社会治理；四川省把长江“十年禁渔”纳入地方政府绩效；江西湖口县曾经的“捕鱼人”变身“护鱼员”，协助渔政开展长江、鄱阳湖水生态保护工作……实践表明，齐抓共管的意识越浓厚，执法能力和监管效率越高，保护长江生物资源的防护网就能织得越严实。长江禁渔是件大事，也是系统工程。从“长江头”到“长江尾”，从捕捞、运输到销售、餐饮，从做好渔民退捕安置保障到规范天然水域垂钓行为……只有各个环节的工作都跟得上、做得细、落得实，保持监管定力、执法压力，形成保护合力，才能让鱼类多起来、水质好起来，让长江焕发生机活力。\",\n\t\t\"time\": 0\n\t},\n\t{\n\t\t\"id\": 24,\n\t\t\"title\": \"\",\n\t\t\"summary\": \"\",\n\t\t\"content\": \"谁说她们“娇弱”？面对巨大的压力，她们没有怨言、忍住不哭。在疫情防控阻击战打响以来的几十个日夜里，太多的女性让我们感动并铭记。平日里，她们是女儿、是妻子、是母亲，但当危险的警报拉响，穿上战衣，她们勇毅向前。还记得73岁再战一线的李兰娟院士吗？那一头华发任谁看到了都会心酸。还记得战功赫赫的女少将陈薇吗？出征前注射增强免疫力药物的那张照片里，镜片背后的眼睛中满是坚毅。还记得生命永远定格在29岁的医生夏思思吗？在生的机会面前，她把ICU床位让给了其他病患。还记得环卫工人突击队队员朱连芳吗？一句“这里是武汉，我们是武汉人”戳中了多少人的泪点。还记得女卡车司机谢琳吗？疫情期间她两次进入武汉运送物资，只为报武汉人的“滴水之恩”。有的人在这段历史中留下了名字，还有更多的人来不及或者压根没想要留下痕迹。她们有的战斗在医院等社会关注度高的地方，更多的人则默默坚守在媒体的探照灯扫不到的地方。交通站、实验室、基建工地、物流站点、口罩工厂流水线……前方，后方，不管被看见还是不被看见，她们就在那里，用自己的专业技能、职业操守和奉献精神，在每一条战线上拼尽全力，在这场与病毒的对抗中贡献自己的那一份力量。这场危机让我们又一次看到坚忍的女性力量。2020年这个特殊的妇女节，属于所有在一线战“疫”的女性！向每一个“她”致敬！深深祝福每一个“她”！追溯历史可知，100多年前，不满劳工待遇的纽约女工为争取和平、自由和平等的权利而发出呐喊。今天，虽然中国女性的权利、地位和价值都已得到了前所未有的提高和保障，但在女童教育与保护、妇女就业平等、安全保障等方面还存在一些不足。在此次战“疫”初期，个别前线女性医护人员切身需求被忽略，正是这一社会问题的部分折射。因此，除了感动和致敬，这个节日也应该是我们反思并改进问题的一个契机。战“疫”，有“她”。当疫情防控画下句点，经济社会重回正常轨道，建设美好未来，也有“她”。尊重“她”权利、保障“她”公平，不应只在战“疫”这一特殊时期，也不应只在妇女节这一天，还应该在这之后的每一天。给女性更多人生出彩的机会，凝聚“她”力量，时间等待我们写下新的故事。\",\n\t\t\"time\": 0\n\t},\n\t{\n\t\t\"id\": 25,\n\t\t\"title\": \"\",\n\t\t\"summary\": \"\",\n\t\t\"content\": \"在3月6日召开的决战决胜脱贫攻坚座谈会上，习近平总书记发表重要讲话指出，“脱贫摘帽不是终点，而是新生活、新奋斗的起点”。新生活需要我们倍加珍惜，新奋斗激励我们勇往直前。我们要牢记习近平总书记的要求，针对实际情况的变化，接续推进全面脱贫与乡村振兴有效衔接，把全面小康的基础打得更牢、底色擦得更亮。脱贫攻坚是全面建成小康社会的标志性指标，乡村振兴是建设现代化国家的重要历史任务。当前，我国正处于打赢脱贫攻坚战与实施乡村振兴战略的历史交汇期。随着脱贫攻坚进入收官之年、冲刺之时，做好二者的有机衔接与协同推进，既有利于巩固脱贫攻坚成果、培育长效脱贫机制，又有利于促进农业农村优先发展、推动乡村全面振兴。实施脱贫攻坚战以来，我们以脱贫攻坚统揽贫困地区经济社会发展全局。扶贫贵在精准，精准识别、精准施策、精准退出、精准考核。发展生产脱贫一批，易地搬迁脱贫一批，生态补偿脱贫一批，发展教育脱贫一批，社会保障兜底一批，脱贫分类施策。经过努力，贫困地区经济社会发展明显加快，发展后劲明显增强，农民群众收入明显提高，中国农村贫困人口全部脱贫的郑重承诺正在加快实现。“其作始也简，其将毕也必巨。”随着脱贫攻坚进入冲刺阶段，绝大多数贫困县已经摘帽，新的问题和挑战也开始凸显。例如，一些地方认为脱贫摘帽就是“终点站”，没有认识到脱贫的下一站是乡村振兴、农民富裕；一些基层干部群众对于脱贫之后主要靠自身发展心里没谱，一定程度上还存在着继续“等靠要”的思想。显然，剩余脱贫攻坚任务更加艰巨，必须瞄准突出问题和薄弱环节狠抓政策落实，攻坚克难，决不能松劲懈怠。要保持脱贫攻坚成果稳定，还需要扶上马送一程。在新型工业化和城镇化的进程中，乡村有其内在发展规律，农民脱贫增收亦如此。因此，对退出的贫困县、贫困人口，在方向上，主要政策措施不能急刹车，摘帽不能摘责任、摘帽不能摘政策、摘帽不能摘帮扶、摘帽不能摘监管，确保频道不换、靶心不变。在力度上，要加大财政涉农资金整合力度，加强扶贫资金监管，提高资金使用效率和效益，用好扶贫的土地和金融政策。要巩固脱贫成果，防止返贫和边缘人口致贫。要对存在返贫风险的近200万人群和存在致贫风险的近300万人群实施针对性预防措施，及时将这部分人口纳入帮扶。加快建立防止返贫监测和帮扶机制，对因新冠肺炎疫情或其他原因收入骤减或支出骤增户加强监测，提前采取针对性措施。对已经实现稳定脱贫的地方，可以统筹安排专项扶贫资金，支持非贫困县、非贫困村的贫困人口脱贫。要推动减贫战略和工作体系平稳转型。如期脱贫既是实现全面小康的前提，也是下一步乡村振兴的基础。2020年乡村要告别绝对贫困，而农民的持续增收、补齐乡村短板、缩小城乡差距，还要靠继续推进乡村振兴战略。要把减贫战略和工作体系统筹纳入乡村振兴战略，建立长短结合、标本兼治的体制机制。已摘帽的贫困地区在后续脱贫攻坚工作中，应参照乡村振兴战略的目标要求，瞄准持续增收，推动乡村产业融合，促进农民全面发展。脱贫摘帽不是终点，而是新起点。让我们进一步振奋精神，以更大决心、更强力度推进工作，确保高质量完成脱贫攻坚任务，夯实全面建成小康社会的基础，向党和人民交出高水平的答卷。\",\n\t\t\"time\": 0\n\t},\n\t{\n\t\t\"id\": 26,\n\t\t\"title\": \"\",\n\t\t\"summary\": \"\",\n\t\t\"content\": \"新华社北京2月23日电 “我们党的百年历史，就是一部践行党的初心使命的历史，就是一部党与人民心连心、同呼吸、共命运的历史。”习近平总书记在党史学习教育动员大会上深刻总结党的奋斗历程和历史经验，号召全党深刻认识党的性质宗旨，为人民幸福继续奋斗，为我们在新征程上书写践行初心使命的历史新篇章指明了实践方向。江山就是人民，人民就是江山。我们党自成立之日起，就把为人民谋幸福写在自己的旗帜上，把为中华民族谋复兴的使命扛在肩上。百年来，我们党从最初的50多人发展壮大到拥有9100多万名党员的世界最大马克思主义执政党，在攻坚克难中不断从胜利走向新的胜利，根本原因就在于始终坚守初心和使命，不畏艰难险阻，不惧流血牺牲，矢志不渝奋勇前进，赢得了最广大人民衷心拥护和坚定支持。历史充分证明，人心向背关系党的生死存亡，人民是我们党执政的最大底气。站在最广大人民之中，赢得人民信任，得到人民支持，党就能够克服任何困难，就能够无往而不胜。为什么人的问题，是检验一个政党、一个政权性质的试金石。扎实开展党史学习教育，书写践行初心使命的历史新篇章，要求全党始终保持对人民的赤子之心，坚持一切为了人民、一切依靠人民，始终把人民放在心中最高位置、把人民对美好生活的向往作为奋斗目标，不断回答好“我是谁、为了谁、依靠谁”。党的根基在人民、血脉在人民、力量在人民，牢记全心全意为人民服务的根本宗旨，坚持以人民为中心，归根到底要体现在维护最广大人民根本利益，让人民过上好日子。回望党的奋斗历史，一批批优秀共产党员深怀爱民之心，担当为民之责，用毕生奋斗诠释了对党和人民的忠诚。新征程上，书写践行初心使命的历史新篇章，就要时刻心系人民安危冷暖，把为民造福作为最重要的政绩，切实解决群众“急难愁盼”问题，多办暖人心、得人心的实事，推动改革发展成果更多更公平惠及全体人民，推动共同富裕取得更为明显的实质性进展，不断增强人民群众的获得感、幸福感、安全感。人民是历史的创造者，人民是真正的英雄。实现民族复兴不可能一帆风顺，前进道路上还有不少风险挑战。越有艰险险阻，越是风高浪急，就越要深深扎根于广大人民之中，依靠人民的力量攻坚克难、开拓前进。书写践行初心使命的历史新篇章，就要坚持人民主体地位，切实贯彻党的群众路线，调动亿万人民的积极性、主动性，把蕴藏在人民之中的创新智慧和创造伟力激发出来，凝聚起14亿中国人民的磅礴力量，在新时代不断把民族复兴的伟大事业推向前进。\",\n\t\t\"time\": 0\n\t},\n\t{\n\t\t\"id\": 27,\n\t\t\"title\": \"\",\n\t\t\"summary\": \"\",\n\t\t\"content\": \"原标题：让世界文明百花园群芳竞艳——学习领会习近平主席在亚洲文明对话大会开幕式上的主旨演讲之二孟夏万物滋，好风从东来。在亚洲文明对话大会开幕式上，习近平主席指出：“每一种文明都是美的结晶，都彰显着创造之美。”“我们既要让本国文明充满勃勃生机，又要为他国文明发展创造条件，让世界文明百花园群芳竞艳。”站在人类历史进程的高度，内涵深邃而所向高远，习近平主席的主旨演讲反映了各国各民族的共同利益和普遍期待，为亚洲乃至世界不同文明超越隔阂、凝聚力量、走向繁荣指出了实践路径。亚洲历史悠久、地大物博、山水秀美，这片土地上居住着全球三分之二的人口，他们创造了无数辉煌多彩的人类精神财富。在南亚季风的滋养下，印度文明的先人们观察世界运转、思考自身存在，撰写了饱含智慧的《吠陀》诗歌集、《梵书》、《奥义书》；在中世纪早期，伴随着横跨亚欧非的阿拉伯帝国诞生，阿拉伯文化迎来了鼎盛时期，泰比特·伊本·奎拉、伊本·赫勒敦等文化巨人，不仅创造了绚烂的民族文化，还在东西方文化交流中作出重要贡献；在大陆东端，中韩文化融通，中日一衣带水，彼此都在历史交往中留下了美好回忆。亚洲文明是各大洲文明中最复杂多样的，亚洲是世界最具发展潜力的地区之一。近现代以来，发端自英国的工业革命取得巨大成就，欧美国家纷纷快步走入现代化进程。这在一方面造成了亚洲经济逐渐落后于世界；另一方面也让亚洲诸文明被忽视和淡忘。从全球历史角度观察，这是亚洲文明的一个低谷，但绝非常态。世界在发展，亚洲在前进，中国在飞跃。改革开放以来，中国逐步成为全球第二大经济体，不断深入参与国际分工、与世界分享发展红利，并为整个世界注入新的发展动力。党的十八大以来，在以习近平同志为核心的党中央带领下，中国提出“一带一路”倡议，坚持推动构建人类命运共同体，积极参与全球治理体系变革和建设，努力支持并加强各国文化交流和文明互鉴，亚洲文明的多元性、丰富性得以全面释放，亚洲人民也享受到更丰富更多样的精神生活。“现在，大量外国优秀文化产品进入中国，许多中国优秀文化产品走向世界。”2018年，中国文化产品进出口总额1024亿美元，较上年增长5.4%；文化服务进出口总额346亿美元，较上年增长17.8%。大量外国留学生来华学习，印度、日本影视佳作在中国广受欢迎；2018年年底，中国在“一带一路”相关国家设立了140所孔子学院和135个孔子课堂，网络文学作品风靡海外。在中国进一步扩大开放的背景下，亚洲和世界各国对中国文化产品的需求、对中国智慧的渴望不断增强，人类文明正在进入更有活力的新时代。马克思在《共产党宣言》中写道：“过去那种地方的和民族的自给自足和闭关自守状态，被各民族的各方面的互相往来和各方面的互相依赖所代替了。物质的生产是如此，精神的生产也是如此。”今天，我们正面临世界百年未有之大变局，只有以更加开放的姿态拥抱世界，才能共同创造亚洲文明和世界文明的美好未来。\",\n\t\t\"time\": 2.384185791015625e-7\n\t}\n]","parameter":[{"is_checked":-1,"type":"text","key":"","value":"","description":"","field_type":"Text","static":true,"__DATAKEY__":"821e43b3-d776-4556-b845-3b40aa34b5a8"}]},"error":{"raw":"","parameter":[]}}},{"local_target_id":"76628f1e-123a-43f6-89fc-f94240be2f76","local_parent_id":"0","name":"展示某个文件名对应的生成结果文件","method":"POST","mark":"complated","is_doc":0,"target_type":"api","status":1,"sort":3,"create_dtime":1656747367,"update_dtime":1656751700,"target_id":32155854,"create_users":{"create_user":"chenthirteen","update_user":"chenthirteen"},"request":{"url":"http:\/\/127.0.0.1:8000\/summary\/show_generate?{file_name}=&{size}=&{page}=","description":"","auth":{"type":"noauth","kv":{"key":"","value":""},"bearer":{"key":""},"basic":{"username":"","password":""}},"body":{"mode":"form-data","parameter":[{"is_checked":1,"type":"Text","key":"file_name","value":"train.json","not_null":1,"description":"原文件名","field_type":"Text","__DATAKEY__":"65e1fcaf-92ba-4696-b888-528a233abb40","key_var":"","value_var":""},{"is_checked":1,"type":"Text","key":"size","value":"10","not_null":1,"description":"每页大小","field_type":"Text","__DATAKEY__":"591c48b1-7690-4933-a9f0-cad0e0fc5e72","key_var":"","value_var":""},{"is_checked":1,"type":"Text","key":"page","value":"2","not_null":1,"description":"分页页码，数字类型","field_type":"Text","__DATAKEY__":"5f92be28-2064-4083-9594-4cd4f259886e","key_var":"","value_var":""}],"raw":"","raw_para":[]},"event":{"pre_script":"","test":""},"header":{"parameter":[]},"query":{"parameter":[{"description":"对应原文件名","is_checked":1,"key":"{file_name}","type":"Text","not_null":"1","field_type":"Text","value":"","__DATAKEY__":"d5db39b9-d976-4ce3-8d81-9f05e2bdef29","key_var":"","value_var":""},{"description":"每页大小","is_checked":1,"key":"{size}","type":"Text","not_null":"1","field_type":"Text","value":"","__DATAKEY__":"f001ba34-e6c3-4465-b998-ee3737237e6d","key_var":"","value_var":""},{"description":"当前页数","is_checked":1,"key":"{page}","type":"Text","not_null":"1","field_type":"Text","value":"","__DATAKEY__":"ae1bd336-0e4b-453a-ac40-6a926087a981","key_var":"","value_var":""}]},"cookie":{"parameter":[]},"resful":{"parameter":[]},"url_var":"http:\/\/127.0.0.1:8000\/summary\/show_generate?{file_name}=&{size}=&{page}="},"response":{"success":{"raw":"{\n\t\"code\": 200,\n\t\"message\": \"success\",\n\t\"data\": [\n\t\t{\n\t\t\t\"id\": 11,\n\t\t\t\"title\": \"\",\n\t\t\t\"summary\": \"\",\n\t\t\t\"content\": \"美国副总统彭斯、国务卿蓬佩奥18日分别发表演讲，污蔑中国“压制”宗教自由，“侵犯”人权。作为美国政府高官，他们的言论罔顾事实，颠倒黑白，是打着宗教和人权的幌子，粗暴干涉中国内政，企图在中国制造分裂和混乱，无疑对中美关系造成严重冲击。以新疆与西藏为例来诋毁中国的民族宗教政策，一直是美方某些人的“兴趣点”。这次也不例外。彭斯和蓬佩奥在演讲中将新疆去极端化的职业技能教育培训中心歪曲成“再教育营”，污蔑中国对西藏佛教人士进行“迫害”。他们俩就像是偏执狂与睁眼瞎，根本看不到国际社会都承认的事实：在新疆，平均每530位穆斯林就拥有一座清真寺，总数量达到2.44万座；当地政府依法设立职业技能教育培训中心，设置以学习国家通用语言文字、法律知识、职业技能和去极端化为主要内容的教学课程，以教育挽救有轻微犯罪行为或违法行为人员，努力将恐怖活动消灭在未发之前、萌芽状态。截至目前，新疆已近3年没有发生暴恐案（事）件，这说明新疆设立教培中心等预防性反恐举措成效显著，深得民心。在西藏，宗教活动场所达1700多处，住寺僧尼4.6万多人，开办西藏佛学院、重视和保护藏传佛教各教派特有的活佛转世制度与宗教仪轨、出版大量宗教论著等举措都表明：西藏民众充分享有中国宪法所规定的宗教信仰自由。近年来，不少到过新疆、西藏并实地探访的多国外交官都认为，中国政府在人权保护、特别是对少数民族人权保护方面做了大量行之有效的工作。俄罗斯、沙特、巴基斯坦等37国常驻日内瓦大使最近联名致函联合国人权理事会主席和人权事务高级专员，积极评价新疆人权事业发展成就和反恐、去极端化成果。美国某些人根本没去过新疆与西藏，他们对当地宗教与人权保护的事实闭眼不看，对国际社会的公允评价蒙耳不听，一味醉心于编织各种谎言，以达到其不可告人的政治目的。但是，美国自己在宗教自由和人权保护上早就声名狼藉，哪有资格对他国的事指手画脚、说三道四？！目前，全美清真寺数量还不到新疆的十分之一，本届美国政府一上台便发布“禁穆令”，进一步恶化了美国国内少数族裔的宗教与人权状况。盖洛普和皮尤中心民调数据显示，美国42％的民众对种族关系感到极度担忧，75％的穆斯林认为美国社会对穆斯林存在严重歧视。美国这座自诩的“自由灯塔”都快熄灭了，有些政客居然还好意思出来公开表演，真是大言不惭，令人不齿。需要指出的是，中国宪法保障公民享有充分的宗教信仰自由，但同时绝不允许任何人利用宗教进行破坏社会秩序、损害公民身体健康、妨碍国家教育制度的活动。对于境外组织和个人打着宗教旗号、从事各种违反中国宪法和法律的活动，中国坚决反对并将依法处置。这是任何一个法治国家的正当做法。然而，美国有些人揣着明白装糊涂，采取“双重标准”，将中国依法处置宗教违法活动污蔑成“迫害”，甚至公然会见一些违法分子，为他们撑腰站台，干涉中国内政。这种基于一己私利的做法，不仅损害中美关系，也令美国名声进一步扫地，有损于美国自身利益。不久前，中美两国元首在大阪会晤，同意继续推进以协调、合作、稳定为基调的中美关系，同意在平等和相互尊重的基础上重启经贸磋商。近日，来自美国学术界、外交界、军界以及商界的人士联名发表一份致美国总统特朗普和美国国会的公开信，指出美国视中国为敌适得其反，华盛顿并不存在一个“同中国全面对抗的共识”。在这样的背景下，彭斯、蓬佩奥等美国一些人以宗教为名干涉中国内政的做法，既违背两国元首共识，也背离两国民意。无论他们出于何种企图，都绝不会得逞。中美合作是大势所趋、民心所向。彭斯和蓬佩奥等人作为美国高官，应当多做有利于促进中美关系发展的事情，而不是反其道行之。若他们一意孤行，只会令自身留下永久的历史污名。\",\n\t\t\t\"time\": 0\n\t\t},\n\t\t{\n\t\t\t\"id\": 12,\n\t\t\t\"title\": \"\",\n\t\t\t\"summary\": \"\",\n\t\t\t\"content\": \"新冠肺炎疫情形势严峻，战“疫”拐点尚未到来，返工潮和疫情扩散压力叠加下的“城市保卫战”，成为这场阻击战、总体战的战略重点之一。2月10日是复工日，大量务工人员返回北上广深和诸多大城市，“城市保卫战”已经打响，大城市社会治理能力面临又一场大考。城市是各类要素资源和经济社会活动最集中的地方，人口大量流动，人口产业高度集聚，高层建筑和重要设施高度密集，轨道交通承载量接近甚至超过负荷，既要防输入，又要防扩散。打赢遏制疫情蔓延的“城市保卫战”，迫切需要打好关口战、阵地战、街巷战，步步为营。打赢“城市保卫战”，首先要打关口战——关口不限于车站、地铁等地，还应前移到企事业单位甚至住宅小区门口，加强检测和管理，从源头上切断病毒肆虐的途径；“城市保卫战”的关键是阵地战——主阵地是定点医院和发热门诊，社区卫生服务中心和集中隔离点也是重要组成部分；“城市保卫战”的基础是街巷战——基础不牢，地动山摇，建立健全社区防控体系，是赢得这场疫情防控阻击战的重要环节。近期，由于各地优质医疗资源大规模驰援湖北，其他地方处于“紧平衡”状态，不容疏忽，更不容疫情失控。而在眼下，有的省份初期疫情风险较低，近期却开始加快，亟待加强防控措施，严防疫情扩散。当务之急，是要形成全社会动员、全方位部署、全民皆防控的局面。一方面要严格排查，一方面仍需多管齐下。比如，在严格防护前提下，可以复工复产，但符合居家办公条件的单位，应尽量让员工居家办公，减少密度聚集，减小会议规模。大疫当前，无度放松就是恣意放纵，每个人都需加强自我防护，确保自身不感染，就是给战“疫”贡献。无论是农业社会还是工业社会，应对疫情，我们都寄望于新药、新的治疗技术，但关键还是要建立包括预警、隔离等在内的严密防疫体系。面对严峻形势，有些城市已经行动起来：在深圳，住宅小区和城中村已全面实施人员通行认证管理；在北京，将进一步加强社区（村）疫情防控工作，严格居住小区（村）封闭式管理和抵京人员登记制度……早发现、早报告、早隔离、早治疗，才是硬道理。只有这样，才能早日实现新增确诊病例持续下降，早日迎来各地战“役”拐点，北京保卫战、深圳保卫战、上海保卫战乃至“国家保卫战”才能最终胜利。\",\n\t\t\t\"time\": 0\n\t\t},\n\t\t{\n\t\t\t\"id\": 13,\n\t\t\t\"title\": \"\",\n\t\t\t\"summary\": \"\",\n\t\t\t\"content\": \"新冠肺炎疫情防控形势严峻复杂，如何实现疫情防控与社会运转的有效兼顾，在社会正常运转过程中解决疫情防控问题？近日召开的中央政治局常委会会议强调，在加强疫情防控的同时，努力保持生产生活平稳有序。这一要求，对于妥善处理疫情防控中出现的各类矛盾和问题，保障人民群众生产生活合理有序开展，具有重要指导意义。比如，当大多数人减少外出，确保各家各户蔬菜、肉蛋奶、粮食等生活必需品供应成为当务之急。相关部门必须加强物资调配和市场供应。又如，疫情当前，少数人造谣传谣、散布恐慌情绪，甚至利用疫情哄抬物价、囤积居奇，制售假劣药品、医用卫生材料。只有依法加强社会治安工作，严厉打击各类扰乱社会秩序的违法犯罪行为，才能维护好社会稳定和人民群众健康安全。流行病学专家曾光在接受媒体采访时表示，公共卫生工作不是在一个理想状态下做事情，要兼顾到社会正常运转的需求。社会的正常运转会为疫情防控提供必需的物质基础和可持续动力。没有社会必要的运转，疫情防控就会基础不牢、动力不足。反过来，科学、有效的疫情防控，也是为了最大程度保证社会正常运转。所以，防控措施必须充分兼顾疫情防控和社会运转的需求，在动态中实现二者的互相支撑、互相促进。前几天，某地农村为了防控疫情，把进出村子的路都堵死了，里面的车没法出去运饲料，外面的车也进不来，养鸡场数量不小的鸡面临饿死的危险。这不是孤例。一些没有发生疫情的社区封锁出入口，不允许返城人员正常进家；有的村子挖断进出村庄的道路，禁绝人的进出和物的流通……这些“用力过猛”的措施，既不符合法治要求，也不利于满足人民群众正常的生活需要。疫情面前，惟有做到精准施策，把防控要求落实落细，才能避免正常的生产生活需求被“误伤”。当此疫情防控紧要时刻，我们必须强化对疫情和病毒的科学认知，通过分类施策、精准施策，在严格防控疫情的基础上保障社会正常运转。兼顾疫情防控和社会正常运转，必须严格依法防控。习近平总书记强调：“当前，疫情防控正处于关键时期，依法科学有序防控至关重要。”对各级党委和政府而言，这意味着必须依法审慎决策，严格依法实施防控措施，坚决防止疫情蔓延。对人民群众而言，这意味着必须增强法治意识，依法支持和配合疫情防控工作。精准防控、依法防控，保障人民群众基本生活，才能确保防控工作有力有序、科学周密推进。\",\n\t\t\t\"time\": 0\n\t\t},\n\t\t{\n\t\t\t\"id\": 14,\n\t\t\t\"title\": \"\",\n\t\t\t\"summary\": \"\",\n\t\t\t\"content\": \"5月22日下午，习近平总书记在参加内蒙古代表团审议时强调，“中国共产党根基在人民、血脉在人民。”“必须坚持人民至上、紧紧依靠人民、不断造福人民、牢牢植根人民，并落实到各项决策部署和实际工作之中，落实到做好统筹疫情防控和经济社会发展工作中去。”为什么人、靠什么人的问题，是检验一个政党、一个政权性质的试金石。人民立场是中国共产党的根本政治立场，是我们党作为马克思主义政党区别于其他政党的显著标志。坚持以人民为中心的根本立场，任何时候都把人民群众的利益放在第一位，这是中国共产党始终得到人民信赖和拥护的根本原因，也是这个百年大党带领亿万人民不断创造新奇迹的成功秘诀。与天下同利者，天下持之。擅天下之利者，天下谋之。中国共产党没有自己特殊的利益，党在任何时候都把群众利益放在第一位。“不惜一切代价”“无论年龄再大、病情再重我们都绝不放弃”，习近平总书记参加内蒙古代表团审议时的讲话，令人动容，体现了党全心全意为人民服务的根本宗旨，彰显了大国领袖的为民情怀。人民至上、生命至上，这是一个执政党对人民的深情与担当。在重大疫情面前，习近平总书记要求党员干部牢记人民利益高于一切，把人民生命安全和身体健康放在第一位，在全国范围调集最优秀的医生、最先进的设备、最急需的资源，全力以赴投入疫病救治，救治费用全部由国家承担，最大程度提高了检测率、治愈率，最大程度降低了感染率、病亡率，取得抗击疫情重大战略成果。求木之长者，必固其根本；欲流之远者，必浚其泉源。人民是我们党执政的最大底气，是我们共和国的坚实根基，是我们强党兴国的根本所在。在抗击新冠肺炎疫情过程中，习近平总书记多次指出，打赢疫情防控这场人民战争，必须紧紧依靠人民群众。在参加内蒙古代表团审议时，习近平总书记再次强调“人民是我们党执政的最大底气”。人民是历史的创造者，是决定党和国家前途命运的根本力量。革命年代，中国共产党带领和依靠人民以血肉之躯拯救民族危亡、捍卫民族尊严；建设岁月，中国共产党带领和依靠人民战天斗地、艰苦创业，在短时间内实现了社会主义制度的伟大跨越，用心血和汗水为经济社会发展打下了坚实基础；改革开放以来，中国共产党带领和依靠人民团结奋进、勠力同心，在历史前进的逻辑中前进，在时代发展的潮流中发展，实现了中华民族从站起来到富起来强起来的伟大飞跃，中华民族比历史上任何时期都更接近、更有信心和能力实现伟大复兴的目标。同人民风雨同舟、血脉相通、生死与共，是我们党战胜一切困难和风险、取得胜利的根本保证。利在一身勿谋也，利在天下者必谋之。利在一时固谋也，利在万世者更谋之。共产党就是为人民谋幸福的。习近平总书记参加内蒙古代表团审议时指出，“我们推动经济社会发展，归根到底是为了不断满足人民群众对美好生活的需要。”“党团结带领人民进行革命、建设、改革，根本目的就是为了让人民过上好日子，无论面临多大挑战和压力，无论付出多大牺牲和代价，这一点都始终不渝、毫不动摇。”中国共产党把为民办事、为民造福作为最重要的政绩，把为老百姓做了多少好事实事作为检验政绩的重要标准。党员、干部特别是领导干部要清醒认识到，自己手中的权力、所处的岗位，是党和人民赋予的，只能用来为党分忧、为国干事、为民谋利。只有始终坚守人民立场，牢固树立正确的权力观、政绩观、事业观，明确好政绩为谁而树、树什么样的政绩、靠什么树政绩，不慕虚荣，不务虚功，不图虚名，做让老百姓看得见、摸得着、得实惠的实事，做为后人作铺垫、打基础、利长远的好事，脚踏实地把既定的行动纲领、战略目标、工作蓝图变为现实，才能真正做到对历史和人民负责。党的根基在人民，人民是我们党执政的最大底气。我们党来自于人民，为人民而生，因人民而兴。共和国的根基在人民，人民是这个国家的主人，人民有无穷无尽、无难不克的主人翁力量！有了这样的力量，什么人间奇迹都能够创造出来！\",\n\t\t\t\"time\": 0\n\t\t},\n\t\t{\n\t\t\t\"id\": 15,\n\t\t\t\"title\": \"\",\n\t\t\t\"summary\": \"\",\n\t\t\t\"content\": \"习近平总书记提出的加快形成新发展格局这一重大战略决策，具有极其重大的战略意义。这是顺应世界正经历百年未有之大变局、服务于中华民族伟大复兴的战略全局，根据我国发展阶段、环境、条件变化作出的战略决策，是事关全局的系统性深层次变革。从“十四五”时期及更长远未来发展趋势看，加快形成新发展格局的关键在于如何畅通国民经济循环。其着力点就在于以更深层次改革，推动构建中国完整的内需体系。一、新发展格局充分反映现代经济活动的本质要求和发展趋势第一，新发展格局强调的是经济循环，具有系统性和动态性，更能反映经济活动的本质。无论是从生产、分配、交换、消费各个经济环节看，还是从要素及产品市场的供给—需求经济分析框架看，经济活动都不是孤立存在的，而是一个动态的、周而复始的过程，是一个基于价值增值的信息、资金和商品（含服务）在居民、企业和政府等不同主体之间的流动循环。为此，新发展格局提出的是一个在社会分工基础上的系统动态协同战略。第二，新发展格局强调“以国内大循环为主体”，并不意味着对参与国际大循环的否定。这不仅仅是因为新发展格局必然要求国内国际双循环相互促进，更因为当前国内经济循环还存在诸多堵点、淤点，亟待通过畅通双循环推动经济高质量发展。单从数量看，我国进出口贸易依存度已经从2006年的峰值64％降低到2019年的32％左右，这在一定程度上似乎说明中国已经是国内大循环为主体、国内国际相互促进的发展格局了。但是，这显然不是中央所要求的“新发展格局”。实际上，“新发展格局”的战略意义在于把发展的立足点更多放到国内来，通过畅通国内大循环为中国经济发展提质增效、培育新动能，从而主动加速国际大循环、带动世界经济复苏，最终形成以国内大循环为主体、国内国际双循环相互促进的新发展格局。第三，形成“国内大循环为主体”的新发展格局，必须坚持扩大内需战略。但是，站在新的起点上，对扩大内需的政策内涵不能仅仅理解为“扩大总需求”；如果仅仅理解为“扩大总需求”，那么就意味着这个“格局”并不“新”。回顾2006年的“十一五”发展规划，就强调立足扩大国内需求推动经济发展，把扩大国内需求特别是消费需求作为基本立足点。今天，我们要以扩大内需推动形成新发展格局，其政策内涵一定包括深化供给侧结构性改革。2018年12月召开的中央经济工作会议，提出了供给侧结构性改革的“巩固、增强、提升、畅通”的八字方针，其中“畅通”就是要求畅通国民经济循环，加快建设统一开放、竞争有序的现代市场体系、提高金融体系服务实体经济能力，形成国内市场和生产主体、经济增长和就业扩大、金融和实体经济良性循环。在这个意义上，通过畅通国民经济循环形成“新发展格局”，其政策内涵包括了供给侧结构性改革的深化，使生产、分配、流通、消费更多依托国内市场，提升供给体系对国内需求的适配性，形成需求牵引供给、供给创造需求的更高水平动态平衡。二、完善内需体系，畅通国民经济循环具体而言，应该从构建现代市场体系、现代产业体系、收入分配体系和新型消费体系几个方面改革入手完善内需体系、畅通国民经济循环。第一，加快完善社会主义市场经济体制，深入推进要素市场化改革，加快构建统一开放、竞争有序的现代市场体系。经济循环畅通与否，最为关键的因素是市场体系的健全程度与运行效率。在现代社会复杂分工体系下，频繁的市场交易活动构成了产品、资金、劳动力、土地、技术、数据等在各个经济主体之间不停地循环流动。市场主体数量和类型、市场进入与退出障碍、政府与市场的关系、市场主体参与市场竞争的规则、政府规制与反垄断法等，都会影响市场效率，进而决定了整体经济循环是否畅通。统一开放、竞争有序，是现代市场体系的基本要求，也是经济循环畅通的根本保证。当前，我国建设现代化市场体系、完善社会主义市场经济体制，就要围绕公平竞争建立市场体系高效运行的基础规则，保证市场主体之间公平竞争，充分发挥竞争政策的基础性作用。一是坚持“两个毫不动摇”，营造各类所有制主体依法平等使用资源要素、公开公平参与竞争，同等受法律保护的市场环境。二是正确处理产业政策与竞争政策关系，积极推进产业政策转型，充分发挥竞争政策的基础性作用，落实公平竞争审查制度，加强和改进反垄断和反不正当竞争执法。三是通过更大范围、更高水平的市场开放，加强知识产权保护、强化竞争政策等，努力营造国际一流营商环境，使国外更加依赖中国的产品消费市场和要素供给市场。四是积极探索生产要素市场化配置的体制机制，实现要素价格市场决定、流动自主有序和配置高效公平。五是加快建设现代流通体系，完善国内统一大市场，形成商品和资源有效集散、高效配置、价值增值统一开放的交通运输市场，统筹推进现代流通体系硬件和软件建设，发展流通新技术新业态新模式，实现分工深化、交易扩大、供需互促、产销并进、效率提升的经济良性循环。第二，加快完善科技和产业创新体制机制，提高金融服务实体经济能力和高质量实体经济供给能力，加快建设创新引领、协同发展的现代产业体系。从产业体系角度看，一个突出问题是实体经济产业与虚拟经济产业发展不平衡，经济“脱实向虚”趋势明显，金融业和实体经济产业之间资金循环仍存在堵点和淤点；从产业链角度看，我国高技术产业链和高附加值产业环节占有不足，产业基础能力和产业链现代化水平亟待提升，在“工业四基”上存在着大量“卡脖子”问题，极大影响产业链供应链的安全性稳定性。针对上述制约问题，需要通过深化科技和产业创新体制机制改革，加快建设实体经济、科技创新、现代金融、人力资源协同发展的现代产业体系。一是深化科技和教育体制改革，高度重视基础研究、共性技术、前瞻技术和战略性技术的研究，形成从基础研究到应用研究完整的创新体系，努力修补创新链，弥补技术研发与产业化之间的创新链缺失，提高科技成果转化率。二是深化产业创新体制改革，建立产业基础能力评估制度，分析创新链、供应链、产业链和价值链分布，在生产制造层面围绕“工业四基”集成要素、优化流程、培育人才，完善试验验证、计量、标准、检验检测、认证、信息服务等基础服务体系。构建开放协同产业创新网络，有效发挥中小企业在提升工业基础能力和产业链水平的作用。三是深化金融供给侧结构性改革，强化支付结算等金融基础设施建设，提供更多直达各流通环节经营主体的金融产品。四是把握智能化、高级化、绿色化和服务化的产业转型升级方向，加快推进新型工业化和新型城镇化进程，加快新型基础设施建设。第三，坚持和完善社会主义收入分配制度，切实提高居民收入水平，建立和完善体现效率、促进公平的收入分配体系。居民收入水平直接决定了居民消费能力，进而影响着国家的内需消费潜力。如何合理调节城乡、区域和不同群体之间的收入水平，增加低收入者收入，扩大中等收入群体，调节过高不合理收入，都是深化收入分配制度改革的重要任务，也是完善内需体系、畅通我国经济循环在收入分配领域的重要要求。“按劳分配为主体、多种分配方式并存”是社会主义基本经济制度的重要内容之一，需要在深化收入分配制度改革中坚持和不断完善。一是正确处理国家、企业和个人之间的关系，保证居民可支配收入增速与经济增长基本同步。二是坚持就业优先的政策导向，积极拓展就业渠道，鼓励创新创业，切实提高居民就业水平和质量，做好“稳就业”各项工作。三是积极拓展居民投资理财渠道，健全通过劳动、资本、土地、技术等生产要素获取报酬的市场化机制。四是继续推进减税降费，尤其是在不明显减少稳定宏观税负的基础上继续推进结构性减税降费，加大对居民收入的减税、退税力度，适度提升个税起征点和最低工资水平。五是健全以税收、社会保障、转移支付等为主要手段的再分配机制，大幅提高基本公共服务水平和均等化水平。第四，加快完善促进消费的体制机制，挖掘国内消费潜力，在新型城镇化中加快消费转型升级、塑造新型消费体系。国民经济循环中的最后环节体现在消费上，人民日益增长的美好生活需要最为直接的体现也是居民消费。消费体系无疑对于扩大内需、畅通国民经济循环具有最终牵引效应。我国正处于工业化后期和城镇化中期阶段，居民消费快速转型升级。今年新冠肺炎疫情冲击使得居民消费受到了巨大的影响，但是线上线下融合趋势加强，数字化消费迅速扩张。然而，长期以来制约消费体系转型升级的体制机制问题一直没有得到有效解决，严重抑制了消费的转型升级。推进消费转型升级、塑造新型消费体系，一是要积极推进新型城镇化进程，加快释放巨大的消费潜力；二是要构建政府自身消费与社会性消费、公共消费与居民消费、公共消费与公共投资三方面平衡的消费体系，合理增加公共消费，尤其重视教育、医疗、社保和就业等方面的公共支出，为持续释放居民部门消费需求创造条件；三是要加快新型消费基础设施建设，多措施大力促进消费数字化转型，一方面继续促进网上购物等新型商业业态的发展，另一方面借助“新基建”，不断开发新的网络消费形态和服务场景；四是要加快完善有利于新型消费体系建设的体制机制，为消费者营造放心消费、敢于消费的制度环境，抑制房价和居民杠杆率的继续上涨，积极推进消费领域的信用体系建设，优化市场监管机制，提升市场监管效能，实现信息共融共享，推动消费经济高质量发展。（作者系中国社会科学院经济研究所所长、中国社会科学院习近平新时代中国特色社会主义思想研究中心研究员）\",\n\t\t\t\"time\": 2.384185791015625e-7\n\t\t},\n\t\t{\n\t\t\t\"id\": 16,\n\t\t\t\"title\": \"\",\n\t\t\t\"summary\": \"\",\n\t\t\t\"content\": \"突如其来的新冠肺炎疫情，不仅是对医药卫生领域的一场大考，也是对新闻舆论工作的一次考验。对于各类媒体尤其是主流媒体而言，如何适应公众获取信息渠道的变化，正面引领、回应关切、澄清谬误，是疫情期间的一道考题。通过创新传播，成为抗疫信息传播与舆论导向的引领者，发挥好“定海神针”作用，是主流媒体的应尽之责。疫情发生以来，中央媒体在新媒体领域快速出击，将轻量化的新媒体产品作为重要信息发布窗口，通过多元信息产品满足群众需求，形成强大主流声音和立体化的传播格局，其中的不少经验值得总结。主流媒体必须主动发声，把握正向价值引导，有序做好信息传播分发。在疫情防控的新媒体报道中，各大媒体及时传递中央精神，不断提升主流媒体的声量。同时，相关媒体搭建信息高效聚合平台，利用专题化模块，融汇图文视频等多种形式，克服了传统媒体在报道频度和篇幅上的局限。比如，使用数据可视化等技术，让疫情走势数据图“动”起来，让用户更快更直接地获取信息。习近平总书记强调，“要多层次、高密度发布权威信息，正视存在的问题，回应群众的关切，增强及时性、针对性、专业性，引导群众增强信心、坚定信心”。落实好这一重要要求，主流媒体必须及时发布权威信息，满足群众信息刚需。在移动社交网络中，每个用户都是疫情信息传播的节点。主流媒体应充分利用权威专业渠道，通过专家采访、科普图文等形式，填补人们的知识盲区，把影响力渗透到千家万户。疫情期间，面对患者及其家属、承受巨大压力的一线工作者、居家生活的群众，主流媒体也需要通过适当形式，加强心理疏导和心理干预，帮助他们稳定情绪、调剂生活。“人民好医生”平台开通公益心理援助专线，为网友提供专业心理服务；“武汉加油”视频众筹，鼓舞人们共克时艰；“客厅战‘疫’舞”挑战活动，满足居家群众娱乐健身需求……各大媒体立足情感抚慰，探索用户参与度较高的形式，在温暖人心、寻求共鸣的同时，帮助人们纾解压力、丰富居家生活，为媒体融合创新提供了新的参考。疫情是新闻舆论工作的大考，也是媒体生产方式变革的契机。复杂的舆情、海量的信息，考验着媒体的应急反应能力、报道策划能力及融合创新能力。更好守护正向价值、创新融合传播，尤其在新媒体生产传播领域不断提质升级，主流媒体才能更好强信心、暖人心、聚民心，为打赢疫情防控阻击战提供助力。（作者系北京市习近平新时代中国特色社会主义思想研究中心研究员，中国传媒大学电视学院教授）\",\n\t\t\t\"time\": 2.384185791015625e-7\n\t\t},\n\t\t{\n\t\t\t\"id\": 17,\n\t\t\t\"title\": \"\",\n\t\t\t\"summary\": \"\",\n\t\t\t\"content\": \"人生在世，生死问题，看似平常，但在面临重大抉择之时，能否直面险境、一往无前，其实并不简单。“生，我所欲也；义，亦我所欲也。二者不可得兼，舍生而取义者也”。连日来，面对蔓延肆虐的病毒疫情，无数战斗在一线的防控斗士选择在重大关头的向死而生，体现在价值观上就是不畏艰难、英勇奋斗、敢于牺牲的民族精神。取义成仁的民族气节。纵览一部中华文化史，杀身成仁、舍生取义，是数千年来中华优秀传统文化的精髓之一，也是古往今来激励无数仁人志士保家卫国的重要核心价值观念。在世界文明史上，古老的中华文明一路逶迤而来，虽饱经磨难，而终能薪火相传、屡开新境，正是得益于中华民族强大的文化基因。鲁迅先生说得好，“我们自古以来，就有埋头苦干的人，有拼命硬干的人，有为民请命的人，有舍身求法的人……这就是中国的脊梁”。如今，“取义成仁”已经成为新时代中华民族精神谱系的鲜亮底色。直面新冠肺炎这个“魔鬼”，从中央到地方，从各级党委政府到人民群众，从广大医务工作者到大批社区工作者……中华民族越是艰险越向前的英雄赞歌震撼人心。义无反顾的牺牲精神。在中国传统文化里，国家兴亡、民族存续、民众福祉所系就是最大的公义所在。疫情面前，火神山医院建设开工不足10日就拔地而起，有媒体惊叹“中国速度背后，凝结着7000个不要命的建设者的共同努力”。其实，这“7000个不要命的建设者”不过是这场声势浩大的“人民战争”的一个缩影。疫情就是命令，防控就是责任。庚子新春之际，面对突如其来的新冠肺炎疫情，在习近平总书记亲自部署指挥下，在党中央集中统一领导下，医疗卫生战线全力以赴，解放军官兵紧急驰援前线，全国各地人员和物资快速调动起来，在极短时间内铸就了空前的民族凝聚力和强大的意志力，以必胜的信念共同对付新冠肺炎，生动地展现了中华民族的伟大牺牲精神。敢于斗争的豪迈气度。正如世人看到的那样，因为疫情，武汉、湖北乃至全中国都成为了舆论关注的焦点所在，世界卫生组织将其定为“国际关注的突发公共卫生事件”，但身处疫情一线的人们不仅没有退缩，而是在党中央的集中统一领导下，愈加万众一心、和衷共济，展现出克服一切困难去争取胜利的必胜信念和豪迈气度。回顾历史，不难看出，与世界上其他一些文明相比，中国人赖以生存的环境其实十分恶劣，历朝历代可以说都是强敌环伺，因为“敌国外患”，加上时不时发生的地震、洪涝、瘟疫、内乱等天灾人祸，但在无数艰难险阻、惊涛骇浪面前，中华文明没有中绝，而且成为世界各大古文明中唯一绵延至今的文明，正是在于深植于中国人骨子里那种不怕鬼、不信邪、不屈不挠、敢于胜利的强大民族精神。追求大我的道德境界。对于生死，在《为人民服务》中，毛泽东借用司马迁的话“人固有一死，或重于泰山，或轻于鸿毛”，接着他讲“为人民利益而死，就比泰山还重”。这清楚表明了以马克思主义为思想指南的中国共产党人持有的“生死观”，就是自觉地“把有限的生命投入到无限的为人民服务之中去”。在这场疫情阻击战中，成千上万的共产党员以及众多来自四面八方的民众，他们克服对疫情肆虐的恐惧，毅然舍小家顾大家、置生死于度外，奔赴战役最前沿，以壮烈的实际行动践行了“我将无我”的价值原则，向全世界展现了中国共产党领导下的中国人民所具有的道德风范。只争朝夕的人生态度。习近平总书记在主持中央政治局常委会时强调“要同时间赛跑、与病魔较量，坚决遏制疫情蔓延势头，坚决打赢疫情防控阻击战”。兵贵神速。这次疫情暴发从时空上看的确有些突然，但对于已经成为历史主人翁的新时代中国人民和中华民族来讲，在具有高度历史自觉的“带头人”——中国共产党人的指挥和部署下，正在打一场世所罕见、超高效率的人民战争。完全可以预见的是，在一个具有强烈历史责任感和时代紧迫感的马克思主义执政党的坚强领导下，最广泛地动员、组织和凝聚起人民群众，跑在时间前面、赢得与病魔较量最终胜利的，必是属于只争朝夕的我们。（立言）\",\n\t\t\t\"time\": 2.384185791015625e-7\n\t\t},\n\t\t{\n\t\t\t\"id\": 18,\n\t\t\t\"title\": \"\",\n\t\t\t\"summary\": \"\",\n\t\t\t\"content\": \"近日，习近平总书记就安全生产作出重要指示强调，当前，全国正在复工复产，要加强安全生产监管，分区分类加强安全监管执法，强化企业主体责任落实，牢牢守住安全生产底线，切实维护人民群众生命财产安全。不久前，中共中央政治局常务委员会召开会议，也明确强调要抓实安全风险防范各项工作。安全生产事关经济社会发展大局。当此复工复产加速推进之际，习近平总书记的重要指示精神极具针对性、警示性、指导性。在夺取疫情防控和全面建成小康社会“双胜利”的进程中，各地更需要时刻绷紧安全生产这根弦，正确处理好安全与发展的关系，抓实抓细复工复产安全防范工作，坚决守住安全生产底线。祸患积于忽微，安全失于大意。总体上，我国安全生产形势持续向好，但最近一段时间连续发生的安全事故，看似突发、意外，背后却多缘于疏忽、麻痹，教训深刻，必须引以为戒。特别是在经济遭受疫情冲击之后，为夺回损失，复工复产中容易出现“重生产、轻安全”的急迫心态，安全监管有可能发生“走过场、摆样子”的敷衍问题。疏忽大意从来是安全生产的大忌，各地要警钟长鸣，把安全生产摆在重要位置，容不得半点马虎，由不得丝毫放松，时刻保持警惕，守住底线。思想上“绷紧弦”，工作中要“拉满弓”。行动上，要坚持问题导向，聚焦重点领域，深入排查各领域各环节安全生产隐患，把解决问题、推动企业主体责任落实作为整治的关键，层层压实责任，狠抓整改落实，确保见到实效；法律上，要加强监管执法力度，彰显法律权威，形成震慑效应；制度上，要加快建立健全安全生产责任和管理制度体系、隐患排查治理和风险防控体系，全力根除事故隐患，有效遏制重特大事故发生。生命至上，安全第一。当前，全国正处于统筹推进新冠肺炎疫情防控和复工复产的关键时期，安全生产责任重大。各级党委和政府要坚持未雨绸缪，做好充足准备，以扎实有效的措施持续推进安全生产治理体系和治理能力现代化，不断增强人民群众的获得感、幸福感和安全感，为夺取疫情防控和经济社会发展“双胜利”营造稳定的安全生产环境。\",\n\t\t\t\"time\": 2.384185791015625e-7\n\t\t},\n\t\t{\n\t\t\t\"id\": 19,\n\t\t\t\"title\": \"\",\n\t\t\t\"summary\": \"\",\n\t\t\t\"content\": \"习近平总书记指出，国有企业是中国特色社会主义的重要物质基础和政治基础，是党执政兴国的重要支柱和依靠力量。坚持党的领导、加强党的建设是国有企业的“根”和“魂”，是我国国有企业的光荣传统和独特优势。近日，中共中央印发《中国共产党国有企业基层组织工作条例（试行）》，对国有企业党组织工作作出全面规范，为新时代加强国有企业党的建设提供了基本遵循。现代经济发展表明，企业强则国家强。我国发展需要一大批优秀企业，国有企业在其中的作用不可替代。办好国有企业，党的领导、党的建设在企业精神、领导力、队伍建设等方面发挥着重要作用。全国国有企业现有基层党组织80多万个、党员1000多万名、在岗职工4200多万人。总体上这支队伍是坚强有力的。党的十八大特别是全国国有企业党的建设工作会议以来，国有企业管党治党意识和责任明显增强，党的领导弱化、党的建设缺失、从严治党不力状况明显改观，改革发展取得明显成效。但与全面从严治党的要求相比，与国有企业肩负的责任使命相比，国有企业党的建设还有较大的提升空间。推动国有企业深化改革，增强国有经济竞争力、创新力、控制力、影响力、抗风险能力，为做强做优做大国有资本提供坚强政治和组织保证，使国有企业成为党和国家最可信赖的依靠力量，国有企业党建大有可为，也必有作为。必须坚持和加强党对国有企业的全面领导。党政军民学，东西南北中，党是领导一切的。国有企业是党领导的国家治理体系的重要组成部分，理所当然要坚持党的领导。党对国有企业的领导是具体的，要把党建工作要求写入公司章程，明确党组织研究讨论是董事会、经理层决策重大问题的前置程序，实行“双向进入、交叉任职”领导体制，充分发挥国有企业党委（党组）把方向、管大局、保落实的领导作用，确保企业广大党员干部职工始终听党话、跟党走，确保国有企业国有资产牢牢掌握在党和人民手中。必须坚持和完善中国特色现代企业制度。中国特色现代企业制度，“特”就特在把党的领导融入公司治理各环节，把企业党组织内嵌到公司治理结构之中。要注意厘清国有企业党组织和董事会、监事会、经理层等其他治理主体的权责，形成各司其职、各负其责、协调运转、有效制衡的公司治理机制。党组织既不能缺位失位，也不能越位错位。必须明确，借口建立现代企业制度否定或取消党的领导无疑是错误的，但把党组织直接作为企业生产经营的决策和指挥中心也不符合企业党组织的功能定位。必须坚持和推动党建工作与企业生产经营深度融合。国有企业党建工作脱离生产经营就没有了生命力，就会成为“两张皮”。要积极适应新形势新任务新要求，找准企业基层党组织服务生产经营、凝聚职工群众、参与基层治理的着力点，推进基层党建理念创新、机制创新、手段创新，在基本组织、基本队伍、基本活动、基本制度上下功夫，严密企业党的组织体系，增强政治功能和组织力，充分发挥党支部战斗堡垒作用和党员先锋模范作用，以高质量党建工作推动企业各项生产经营任务落实，以企业改革发展成果检验党组织工作成效。\",\n\t\t\t\"time\": 2.384185791015625e-7\n\t\t},\n\t\t{\n\t\t\t\"id\": 20,\n\t\t\t\"title\": \"\",\n\t\t\t\"summary\": \"\",\n\t\t\t\"content\": \"“坚持一切合作都在阳光下运作，共同以零容忍态度打击腐败。我们发起了《廉洁丝绸之路北京倡议》，愿同各方共建风清气正的丝绸之路。”在第二届“一带一路”国际合作高峰论坛上，习近平总书记在开幕式发表主旨演讲，再次提及“廉洁之路”。将“一带一路”建设成为廉洁之路是习近平总书记在2017年5月举行的首届“一带一路”国际合作高峰论坛上提出的明确目标。两年来，中国在廉洁之路建设方面开展了卓有成效的工作，赢得了国际各方广泛认可。在第二届高峰论坛上，“廉洁丝绸之路”首次成为一个正式的分论坛，以“共商共建共享廉洁丝绸之路”为主题，探讨建设风清气正的营商环境，提升企业廉洁合规经营能力，共建“一带一路”反腐败和法治交流合作平台。这一系列重大举措，充分体现了中国对“一带一路”建设过程中树立廉洁意识、加强反腐败国际合作的高度重视，更彰显了中国推进建设廉洁之路的决心和信心。建设廉洁之路是“一带一路”参与国家和地区的共同价值追求。“一带一路”倡议是推动构建人类命运共同体的重要实践平台，是促进不同国家和地区共同发展、实现共同繁荣的合作共赢之路。这一倡议的顺利推进与合作项目的有效实施都与廉洁建设密不可分。中国作为“一带一路”倡议的发起国，明确提出建设廉洁之路的目标，是我们向国际社会做出的庄严承诺。在“一带一路”实践过程中，廉洁理念是各方对参与“一带一路”建设的包括中国企业在内的世界各国各地区企业的共同期望，已经成为“一带一路”沿线国家和地区的共同意愿。特别是通过这次廉洁丝绸之路分论坛的举行，廉洁理念更是成为联结“一带一路”的价值纽带，成为推动“一带一路”建设快速健康发展的价值力量。建设廉洁之路是推动加强反腐败国际合作的生动实践。由于不同国家和地区的政治体制、法律制度和文化传统具有很大差异，因此对于腐败和贿赂的界定与认识也会存在明显不同。对于跨国企业来说，在境外的经营与本土有所不同，企业监管的难度也会增加，跨国业务则更加容易滋生腐败。这就需要通过反腐败国际合作的形式进行有效治理。建设廉洁之路目标的提出为进一步深化反腐败国际合作提供了有利契机，中国在这方面已经发挥了良好的表率作用。《倡议》中，明确呼吁要加强对“一带一路”合作项目的监督管理，加强企业自律意识、法律意识和责任意识，坚决抵制商业贿赂行为等，这些举措都是凝聚反腐败国际共识、推进反腐败国际合作的具体实践。建设廉洁之路，传递中国反腐败声音，为世界贡献中国智慧。中国高度重视建设廉洁之路，不仅体现出中国作为“一带一路”倡议发起国的责任与担当，同时也反映了中国在反腐败方面的坚定自信。党的十八大以来，在以习近平同志为核心的党中央的坚强领导下，中国的反腐败工作取得了有目共睹的显著成效，廉政治理体系得到了前所未有的创新发展，开拓探索出了一条具有中国特色的日益完善的反腐败道路。这一系列成绩的取得让我们有充足的底气、坚定的信心推动建设好廉洁之路。中国在反腐败方面取得的宝贵经验，对其他国家和地区，特别是对发展中国家、转型国家具有重要的启发意义。在“一带一路”倡议的合作框架下，中国能够更好地将中国反腐败故事播撒在新时代的丝绸之路上，能够更好地为反腐败国际合作贡献中国智慧、分享中国方案。（作者系清华大学廉政与治理研究中心主任、公共管理学院教授）\",\n\t\t\t\"time\": 0\n\t\t}\n\t]\n}","parameter":[]},"error":{"raw":"{\n\t\"code\": 400,\n\t\"message\": \"文件读写错误\"\n}","parameter":[]}}},{"local_target_id":"abc610f0-b744-4211-ab31-8ff75a5485ea","local_parent_id":"0","name":"获取所有生成的文件","method":"POST","mark":"complated","is_doc":0,"target_type":"api","status":1,"sort":4,"create_dtime":1656750055,"update_dtime":1656750055,"target_id":32157155,"create_users":{"create_user":"chenthirteen","update_user":"chenthirteen"},"request":{"url":"http:\/\/127.0.0.1:8000\/summary\/show_generate_files","description":"","auth":{"type":"noauth","kv":{"key":"","value":""},"bearer":{"key":""},"basic":{"username":"","password":""}},"body":{"mode":"form-data","parameter":[],"raw":"","raw_para":[]},"event":{"pre_script":"","test":""},"header":{"parameter":[]},"query":{"parameter":[]},"cookie":{"parameter":[]},"resful":{"parameter":[]},"url_var":"http:\/\/127.0.0.1:8000\/summary\/show_generate_files"},"response":{"success":{"raw":"","parameter":[]},"error":{"raw":"","parameter":[]}}},{"local_target_id":"addf691e-a7ac-4cee-88c5-f9bf0c0d3303","local_parent_id":"0","name":"删除生成的文件","method":"POST","mark":"developing","is_doc":0,"target_type":"api","status":1,"sort":5,"create_dtime":1656751696,"update_dtime":1656751696,"target_id":32158108,"create_users":{"create_user":"chenthirteen","update_user":"chenthirteen"},"request":{"url":"http:\/\/127.0.0.1:8000\/summary\/del_file?{file_name}=","description":"","auth":{"type":"noauth","kv":{"key":"","value":""},"bearer":{"key":""},"basic":{"username":"","password":""}},"body":{"mode":"form-data","parameter":[{"is_checked":1,"type":"Text","key":"file_name","value":"train.json","not_null":1,"description":"原文件名","field_type":"Text","__DATAKEY__":"1e64bdba-faf6-4df0-8e81-a672a9706540","key_var":"","value_var":""}],"raw":"","raw_para":[]},"event":{"pre_script":"","test":""},"header":{"parameter":[]},"query":{"parameter":[{"is_checked":1,"type":"Text","key":"{file_name}","value":"","not_null":1,"description":"要删除的文件名","field_type":"Text","__DATAKEY__":"d5ace55d-dffd-4e05-8c1f-cbac8655da06","key_var":"","value_var":""}]},"cookie":{"parameter":[]},"resful":{"parameter":[]},"url_var":"http:\/\/127.0.0.1:8000\/summary\/del_file?{file_name}="},"response":{"success":{"raw":"{\n\t\"code\": \"200\",\n\t\"message\": \"出现错误\"\n}","parameter":[]},"error":{"raw":"{\n\t\"code\": \"200\",\n\t\"message\": \"删除成功\"\n}","parameter":[]}}}]};
+    function GetUrlQuery(uri) {
+        let url = '';
+        if (typeof uri === 'undefined') {
+            url = window.location.search;
+        } else {
+            url = `?${uri.split('?')[1]}`;
+        }
+        const theRequest = {};
+        if (url.indexOf('?') !== -1) {
+            const str = url.substr(1);
+            const strs = str.split('&');
+            for (let i = 0; i < strs.length; i++) {
+                theRequest[strs[i].split('=')[0]] = unescape(strs[i].split('=')[1]);
+            }
+        }
+        return theRequest;
+    };
+
+    function findFatherDom(el) {
+        if (el.parent().parent().children(":first").hasClass('folder')) {
+            el.parent().parent().show()
+            console.log(el.parent().parent());
+            el.parent().parent().children().show()
+            el.parent().parent().children(":first").find('.folder_select').removeClass('right').addClass('down')
+            el.parent().parent().children(":first").nextAll('.folder').find('folder_select').removeClass('down').addClass('right')
+            findFatherDom(el.parent().prev())
+        } else {
+            el.parent().children().show()
+            return
+        }
+    }
+    window.onload = function () {
+        // const { url, salt } = GetUrlQuery();
+        const head_obj = {
+            portrait: arr.portrait,
+        }
+        let head_html = template('doc-head-tpl', head_obj);
+
+        $('.doc-head .container').html(head_html)
+        let _html = template('template-target-sidebar-list-tpl', {
+            list: arr.children
+        });
+
+        $('.new').html(_html)
+        let project_name_html = template('project-name-tpl', {
+            project_name: arr.project_name
+        });
+        $('.box-first .title').html(project_name_html)
+
+        $('.target.folder').find('.folder_select').removeClass('down').addClass('right')
+        $('.target.folder').nextAll().hide()
+        let urlLink = window.location.href;
+        let id = urlLink.split('#')[1] ? urlLink.split('#')[1] : '001'
+        if ($(`.target[data-target_id="${id}"]`).length > 0) {
+            if (id != '001') {
+                findFatherDom($(`.target[data-target_id="${id}"]`))
+            }
+
+            $(`.target[data-target_id="${id}"]`).trigger('click')
+        } else {
+            location.href = urlLink.split('#')[0] + "#001"
+            return
+        }
+        var resize = document.getElementsByClassName("bar");
+        var left = document.getElementsByClassName("box-first");
+        var mid = document.getElementsByClassName("box-third");
+        var box = document.getElementsByClassName("box");
+        console.log(123434);
+        dragControllerDiv(resize, left, mid, box);
+        $('.target.folder').find('.folder_select').removeClass('down').addClass('right')
+        $('.target.folder').nextAll().hide()
+
+    }
+    $('.body').show()
+    $(document).on('click', '.target', function () {
+        let _local_target_id = $(this).attr('data-target_id');
+        let urlLink = window.location.href.split('#')[0] + '#' + _local_target_id;
+
+        const { url, salt } = GetUrlQuery();
+        const token = localStorage.getItem(`token${url}`);
+        history.replaceState(null, null, urlLink)
+        console.log(url);
+
+        $('.target').each((i, el) => {
+            $(el).removeClass('active')
+        })
+        if ($(this).attr('data-type') == 'folder') {
+            $('.box-nav').show()
+            $(this).nextAll().show()
+            $(this).find('.folder_select').removeClass('right').addClass('down')
+            $('.box-nav .folder').show()
+            $('.box-nav .api').hide()
+        } else if ($(this).attr('data-type') == 'example' || $(this).attr('data-type') == 'api') {
+            $('.box-nav').show()
+            $('.box-nav .api').show()
+            $('.box-nav .folder').hide()
+        } else {
+            $('.box-nav').hide()
+        }
+
+        $(this).addClass('active')
+        // if (_local_target_id == 001 || !_local_target_id) {
+        //   return;
+        // }
+        let newdata = JSON.parse(JSON.stringify(arr))
+        let LevelArr = []
+
+        function levelTree(arr1, newarr) {
+            arr1.forEach(item => {
+                if (item.children && item.children.length > 0) {
+                    newarr.push(item)
+                    levelTree(item.children, newarr)
+                } else {
+                    newarr.push(item)
+                }
+            })
+        }
+
+        levelTree(newdata.children, LevelArr)
+        LevelArr.forEach(item => {
+            if (item.local_target_id == _local_target_id) {
+                if (item.target_type == 'example' || item.target_type == 'api') {
+                    switch (item.request.body.mode) {
+                        case "none":
+                            break;
+                        case "form-data":
+                            item.request.body.mode = "multipart/form-data";
+                            break;
+                        case "urlencoded":
+                            item.request.body.mode = "application/x-www-form-urlencoded";
+                            break;
+                        case "json":
+                            item.request.body.mode = "application/json";
+                            break;
+                        case "xml":
+                            item.request.body.mode = "application/xml";
+                            break;
+                        case "javascript":
+                            item.request.body.mode = "application/javascript";
+                            break;
+                        case "plain":
+                            item.request.body.mode = "text/plain";
+                            break;
+                        case "html":
+                            item.request.body.mode = "text/html";
+                            break;
+                    }
+                    $('.template-nav-menu').html(template('template-nav-menu-tpl', item));
+                    if (item.target_type != 'folder') {
+                        let _export_data = new ClipboardJS('.CopyCurrentData', {
+                            text: function (trigger) {
+                                return trigger.getAttribute('data-clipboard-text');
+                            }
+                        });
+                        console.log(_export_data);
+                        _export_data.on('success', function (e) {
+                            $('.CopyCurrentData').text('已复制').addClass('success');
+                            e.clearSelection();
+                        });
+                        _export_data.on('error', function (e) {
+                            console.log('失败');
+                        });
+                    }
+                }
+                arr?.project?.vars?.mark.forEach((it) => {
+                    if (it.key == item.mark) {
+                        if (it.color == '') {
+                            if (item.mark == 'developing') {
+                                item.markName = '开发中'
+                                item.markColor = 'rgb(58, 134, 255)'
+                            }
+                            if (item.mark == 'complated') {
+                                item.markName = '已完成'
+                                item.markColor = 'rgb(46, 196, 182)'
+                            }
+                            if (item.mark == 'modifying') {
+                                item.markName = '需修改'
+                                item.markColor = 'rgb(236, 70, 70)'
+                            }
+                        } else {
+                            item.markName = it.name
+                            item.markColor = it.color
+                        }
+                    }
+                })
+                let _html = template('template-example-doc-tpl', item);
+                $('.preview-markdown').html(_html)
+                if (item.target_type == 'folder') {
+                    const folderData = { ...item }
+                    if (item.target_type == 'folder') {
+                        folderData?.request?.header?.forEach((it, index) => !it.key && folderData.request?.header.splice(index, 1))
+                        folderData?.request?.query?.forEach((it, index) => !it.key && folderData.request?.query.splice(index, 1))
+                        folderData?.request?.body?.forEach((it, index) => !it.key && folderData.request?.body.splice(index, 1))
+                    }
+                    let _html = template('template-example-doc-tpl', folderData);
+                    if ($('table.header tr').length <= 1) {
+                        $('table.header').parent().hide()
+                        $('table.header').parent().prev().hide()
+                        $('.nav-folder-btn[data-id="1"]').hide()
+                        // $('table.header tr').after('<tr><td colspan="4" style="text-align:center">暂无数据</td></tr>')
+                    }
+                    if ($('table.query tr').length <= 1) {
+                        $('table.query').parent().hide()
+                        $('table.query').parent().prev().hide()
+                        $('.nav-folder-btn[data-id="2"]').hide()
+                        // $('table.query tr').after('<tr><td colspan="4" style="text-align:center">暂无数据</td></tr>')
+                    }
+                    if ($('table.body tr').length <= 1) {
+                        $('table.body').parent().hide()
+                        $('table.body').parent().prev().hide()
+                        $('.nav-folder-btn[data-id="3"]').hide()
+                        // $('table.body tr').after('<tr><td colspan="4" style="text-align:center">暂无数据</td></tr>')
+                    }
+                    if ($('table.header tr').length <= 1 && $('table.query tr').length <= 1 && $('table.body tr').length <= 1) {
+                        $('table.header').parents('.markdown-request').prev().hide()
+                        $('.box-nav .nav-folder-btn[data-id="0"]').hide()
+                        $('.preview-markdown .markdown-request').after('<div style="overflow: hidden;text-align: center;height: 100%;"><img src="https://img.cdn.apipost.cn/v6/docs/img/empty.svg" style="width:100px;margin: 70px auto 20px;;">暂无参数</div>')
+
+                    }
+                    hljs.initHighlighting();
+                } else {
+                    let _export_data = new ClipboardJS('.CopyCurrentData', {
+                        text: function (trigger) {
+                            return trigger.getAttribute('data-clipboard-text');
+                        }
+                    });
+                    console.log(_export_data);
+                    _export_data.on('success', function (e) {
+                        $('.CopyCurrentData').text('已复制').addClass('success');
+                        e.clearSelection();
+                    });
+                    _export_data.on('error', function (e) {
+                        console.log('失败');
+                    });
+                    $('.CopyCurrentData').attr('data-clipboard-text', JSON.stringify(item));
+                }
+                try {
+                    let obj = item.request.body.raw_para.map(item => {
+                        let arr = item.key.split('.')
+                        item.newKey = arr[arr.length - 1]
+                        return item
+                    })
+
+                    let editor = new JsonEditor('#request_body_raw_editor_json', JSON5.parse($('#request_body_raw_editor_input').val()), {}, obj).load(JSON5.parse($('#request_body_raw_editor_input').val()), obj)
+                } catch (e) {
+                    console.log(e);
+                }
+                // 成功响应示例
+                try {
+                    let obj = item.response.success.parameter.map(item => {
+                        let arr = item.key.split('.')
+                        item.newKey = arr[arr.length - 1]
+                        return item
+                    })
+                    let editor = new JsonEditor('#response_success_editor_json', JSON5.parse($('#response_success_editor_input').val()), {}, obj).load(JSON5.parse($('#response_success_editor_input').val()), obj)
+                } catch (e) { console.log(e); }
+                // 失败响应示例
+                try {
+                    let obj = item.response.error.parameter.map(item => {
+                        let arr = item.key.split('.')
+                        item.newKey = arr[arr.length - 1]
+                        return item
+                    })
+
+                    let editor = new JsonEditor('#response_error_editor_json', JSON5.parse($('#response_error_editor_input').val()), {}, obj).load(JSON5.parse($('#response_error_editor_input').val()), obj)
+                } catch (e) { console.log(e); }
+                aptIndent.init();
+            }
+        })
+        $("table").colResizable({
+            liveDrag: true,
+            gripInnerHtml: "<div class='grip'></div>",
+            draggingClass: "dragging",
+            resizeMode: 'fit'
+        });
+    })
+        .on('click', '.control', function (e) {
+            e.stopPropagation()
+            let type = $(this).find('.folder_select').hasClass('down')
+            if (type) {
+                $(this).find('.folder_select').removeClass('down').addClass('right')
+            } else {
+                $(this).find('.folder_select').removeClass('right').addClass('down')
+            }
+            $(this).parents('.target').nextAll().toggle()
+        })
+        .on('input', '.search', function (e) {
+            if (timer) {
+                clearTimeout(timer);
+            }
+            timer = setTimeout(() => {
+                let searchVal = $(this).val().toLocaleLowerCase()
+                let TreeData = JSON.parse(JSON.stringify(arr.children))
+                let searchArr = []
+                let LevelArr = []
+                let fatherArr = []
+                function openTree(tree, parent_id) {
+                    tree.forEach((item) => {
+                        if (item.children && item.children.length > 0) {
+                            openTree(item.children, item.local_target_id)
+                        }
+                        item.parent_id = parent_id
+                    })
+                }
+                openTree(TreeData, 0);
+                function levelTree(arr, newarr) {
+                    arr.forEach(item => {
+                        if (item.children && item.children.length > 0) {
+                            newarr.push(item)
+                            levelTree(item.children, newarr)
+                        } else {
+                            newarr.push(item)
+                        }
+                    })
+                }
+                levelTree(TreeData, LevelArr)
+                if ($.trim(searchVal) != '') {
+                    LevelArr.forEach(item => {
+                        if (item.target_type == 'folder') {
+                            if (item.name.toString().toLocaleLowerCase().indexOf(searchVal) > -1) {
+                                searchArr.push(item)
+                            }
+                        } else {
+                            if (item.name.toString().toLocaleLowerCase().indexOf(searchVal) > -1 || item.method.toString().toLocaleLowerCase().indexOf(searchVal) > -1) {
+                                searchArr.push(item)
+                            }
+                        }
+                    })
+                    searchArr.forEach(item => {
+                        findFather(fatherArr, LevelArr, item)
+                    })
+
+                    function findFather(tempArr, arr, self) {
+                        if (self.parent_id != 0) {
+                            arr.filter(item => {
+                                if (self.parent_id == item.local_target_id) {
+                                    findFather(tempArr, arr, item);
+                                    if (tempArr.indexOf(item) === -1) {
+                                        tempArr.push(item);
+                                    }
+                                }
+                            })
+                        }
+                    }
+
+                    let finnalArr = searchArr.concat(fatherArr)
+                    $('.target').hide()
+                    $('.target[data-target_id="001"]').show()
+                    finnalArr.forEach(item => {
+                        $(`.target[data-target_id="${item.local_target_id}"]`).parent().show()
+                        $(`.target[data-target_id="${item.local_target_id}"]`).show()
+                        $('.target.folder').find('.folder_select').removeClass('right').addClass('down')
+                    })
+                } else {
+                    $('.target').parent().show()
+                    $('.target').show()
+                }
+            }, 100)
+        })
+        .on('mouseover', '.target.api', function () {
+            // $(this).find('em').css({ visibility: 'visible' })
+        })
+        .on('mouseleave', '.target.api', function () {
+            // $(this).find('em').css({ visibility: 'hidden' })
+        })
+        .on('click', '.nav-btn', function () {
+            let index = parseInt($(this).attr('data-id'))
+            $('.nav-btn').removeClass('cur')
+            $(this).addClass('cur')
+            console.log(index, $('.box-third .title').eq(index)[0]);
+            let top = $('.box-third .title').eq(index)[0].offsetTop
+            $('.box-third').scrollTop(top)
+        })
+        .on('click', '.nav-folder-btn', function () {
+            let index = parseInt($(this).attr('data-id'))
+            $('.nav-folder-btn').removeClass('cur')
+            $(this).addClass('cur')
+            let top = $('.box-third .title').eq(index)[0].offsetTop
+            $('.box-third').scrollTop(top)
+        })
+        .on('click', '.box-first .top', function () {
+            $('.target').removeClass('active')
+            $(this).addClass('active')
+            const obj = { ...arr?.project }
+            obj.create_dtime = arr?.create_time
+            obj.expire_time = arr?.expire_time
+            obj?.vars?.request?.header?.forEach((it, index) => {
+                if (!it.key) {
+                    obj?.vars?.request?.header?.splice(index, 1)
+                }
+            })
+            obj?.vars?.request?.query?.forEach((it, index) => {
+                if (!it.key) {
+                    obj?.vars?.request?.query?.splice(index, 1)
+                }
+            })
+            obj?.vars?.request?.body?.forEach((it, index) => {
+                if (!it.key) {
+                    obj?.vars?.request?.body?.splice(index, 1)
+                }
+            })
+            let _html = template('golbal-env-tpl', obj);
+            $('.preview-markdown').html(_html)
+        })
+        .on('click', 'h3.title', function () {
+            let type = $(this).find('i').hasClass('fa-angle-down')
+            if (type) {
+                $(this).find('i').removeClass('fa-angle-down').addClass('fa-angle-left')
+            } else {
+                $(this).find('i').removeClass('fa-angle-left').addClass('fa-angle-down')
+            }
+            $(this).next().toggle()
+        })
+        .on('mouseover', '.export', function () {
+            $(this).find('.export_panel').show()
+        })
+        .on('mouseleave', '.export', function () {
+            $(this).find('.export_panel').hide()
+        })
+    $(".box-third").scroll(function () {
+        let arr = []
+        $('.box-third .title').each((i, el) => {
+            arr.push($(el)[0].offsetTop)
+        })
+        arr.push(arr[arr.length - 1] + 10000)
+        let topHeight = $(this).scrollTop();
+        if ($('.target.active').hasClass('api')) {
+            for (let index = 0; index < arr.length; index++) {
+                if (arr[index] < topHeight && topHeight < arr[index + 1]) {
+                    $('.nav-btn').removeClass('cur')
+                    $('.nav-btn').eq(index).addClass('cur')
+                }
+            }
+        } else {
+            for (let index = 0; index < arr.length; index++) {
+                if (arr[index] < topHeight && topHeight < arr[index + 1]) {
+                    $('.nav-folder-btn').removeClass('cur')
+                    $('.nav-folder-btn').eq(index).addClass('cur')
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+
+</html>

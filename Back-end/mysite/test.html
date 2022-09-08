@@ -1,0 +1,22 @@
+<html>
+    <header>
+        <title>首页文件处理</title>
+    </header>
+
+<body>
+        <a href="{%url 'myApp:download1' %}">下载1</a>
+        <a href="{%url 'myApp:download2' %}">下载2</a>
+        <a href="{%url 'myApp:download3' %}">下载3</a>
+
+        <form enctype="multipart/form-data" action="http://127.0.0.1:8000/summary/upload_file" method="post">
+            <!-- django 的csrf 防御机制 -->
+            {%csrf_token%}
+            <input type="file" name="myfile" />
+            <br>
+            <input type="submit" value="上传文件" />
+        </form>
+
+
+</body>
+
+</html>
