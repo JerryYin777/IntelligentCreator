@@ -26,6 +26,8 @@ yarn start
 
 现在你可以在浏览器中访问 <http://localhost:3000/>
 
+![](./imgs/interface.png)
+
 ### 🍟后端
 
 ```shell
