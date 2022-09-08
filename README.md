@@ -1,7 +1,6 @@
 # 🚀智能创作平台使用方法
 
-注：请先将模型文件下载至 `Back-end/mysite/data/` 目录。<br>链接：https://pan.baidu.com/s/1Pf5G7uRknzQ0acM6Wq-ZOg   提取码：hust 
-
+注：请先将模型文件下载至 `Back-end/mysite/data/` 目录。<br>链接：https://pan.baidu.com/s/1hBVIp5RNkvVeyS8TVufEaQ  提取码：asdf
 
 ## 🎒 前置需求
 
