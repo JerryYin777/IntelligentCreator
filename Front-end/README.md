@@ -7,17 +7,10 @@
 - Node.js >= 12.0.0
 - Yarn
 
-### 🍔 安装
-
-```shell
-git clone https://gitee.com/creator_2/creator-vue.git
-cd creator-vue
-yarn install
-```
-
 ### 🍟 运行
 
 ```shell
+yarn install
 yarn start
 ```
 
